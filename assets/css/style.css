@@ -3548,41 +3548,38 @@ hr {
 
 /* line 76, C:/Users/HP/Desktop/jun-2020/283.Personal/assets/scss/_h1-hero.scss */
 .slider-area .hero__caption h1 {
-  font-size: 280px;
+  font-size: 110px;
+  font-family: 'Cormorant Garamond', Georgia, serif;
   font-weight: 300;
   text-transform: uppercase;
+  letter-spacing: 8px;
   color: #670000;
   line-height: 1;
-  margin-bottom: 39px;
   margin-bottom: 39px;
 }
 
 @media only screen and (min-width: 992px) and (max-width: 1199px) {
-  /* line 76, C:/Users/HP/Desktop/jun-2020/283.Personal/assets/scss/_h1-hero.scss */
   .slider-area .hero__caption h1 {
-    font-size: 185px;
+    font-size: 85px;
   }
 }
 
 @media only screen and (min-width: 768px) and (max-width: 991px) {
-  /* line 76, C:/Users/HP/Desktop/jun-2020/283.Personal/assets/scss/_h1-hero.scss */
   .slider-area .hero__caption h1 {
-    font-size: 137px;
+    font-size: 65px;
   }
 }
 
 @media only screen and (min-width: 576px) and (max-width: 767px) {
-  /* line 76, C:/Users/HP/Desktop/jun-2020/283.Personal/assets/scss/_h1-hero.scss */
   .slider-area .hero__caption h1 {
-    font-size: 90px;
+    font-size: 50px;
     margin-bottom: 26px;
   }
 }
 
 @media (max-width: 575px) {
-  /* line 76, C:/Users/HP/Desktop/jun-2020/283.Personal/assets/scss/_h1-hero.scss */
   .slider-area .hero__caption h1 {
-    font-size: 63px;
+    font-size: 38px;
     margin-bottom: 26px;
   }
 }
