@@ -53,7 +53,6 @@
                             <nav>
                                 <ul id="navigation">
                                     <li><a href="index.html">Home</a></li>
-                                    <li><a href="about.html">About</a></li>
                                     <li class="active"><a href="portfolio.html">Portfolio</a></li>
                                     <li><a href="blog.html">Blog</a>
                                         <ul class="submenu">
@@ -96,7 +95,7 @@
         </div>
         <!--Hero Area End-->
         <!--? Projects Area Start -->
-        <section class="about-area section-padding40">
+        <section class="gallery-area section-padding40">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
@@ -105,74 +104,56 @@
                         </div>
                     </div>
                 </div>
-                <div class="row mb-50">
-                    <div class="col-xl-12">
-                        <div class="single-about">
-                            <div class="tittle-experience">
-                                <h3>Self-Hosted Portfolio, Blog & CI/CD Infrastructure</h3>
-                                <p>Kubernetes · k3s · ArgoCD · Drone CI · Ansible · Prometheus · Grafana · WireGuard · Harbor · Trivy</p>
-                            </div>
-                            <p>• Designed and deployed a self-hosted Flask portfolio on Kubernetes (k3s) across homelab and cloud infrastructure, configuring 3-replica horizontal autoscaling and persistent storage.<br>
-                            • Built an end-to-end GitOps pipeline using ArgoCD and Drone CI.<br>
-                            • Hardened infrastructure security by deploying WireGuard VPN.<br>
-                            • Deployed kube-prometheus-stack (Prometheus, Grafana, Alertmanager) with Slack webhook alerts.<br>
-                            • Implemented a container image security pipeline with Harbor and Trivy.<br>
-                            • Automated cluster provisioning using Ansible playbooks for Docker and k3s deployment on Oracle Cloud.</p>
-                            <div class="experience-link">
-                                <a href="https://github.com/BayoJohn/Portfolio-website" target="_blank">View on GitHub <i class="fas fa-external-link-alt"></i></a>
+                <div class="row justify-content-between">
+                    <!-- Project 1 -->
+                    <div class="offset-xl-1 col-xl-5 col-lg-6 col-md-6 col-sm-6">
+                        <div class="box snake mb-30">
+                            <div class="gallery-img small-img" style="background-image: url(assets/img/gallery/gallery1.png);"></div>
+                            <div class="overlay">
+                                <div class="overlay-content">
+                                    <h3 style="color: #FFEFAE; font-size: 20px; font-weight: 700; margin-bottom: 10px; text-transform: uppercase; font-family: 'Poppins', sans-serif;">Self-Hosted Portfolio & CI/CD</h3>
+                                    <p style="color: #fff; font-size: 13px; margin-bottom: 20px; font-family: 'Poppins', sans-serif; padding: 0 15px; line-height: 1.5;">Kubernetes · k3s · ArgoCD · Drone CI · Ansible · Prometheus · Grafana · WireGuard · Harbor · Trivy</p>
+                                    <a href="https://github.com/BayoJohn/Portfolio-website" target="_blank" style="font-size: 28px; color: #FFEFAE; display: inline-block; transition: 0.3s;"><i class="fab fa-github"></i></a>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="row mb-50">
-                    <div class="col-xl-12">
-                        <div class="single-about">
-                            <div class="tittle-experience">
-                                <h3>AWS Serverless E-Commerce Platform</h3>
-                                <p>AWS Lambda · API Gateway · DynamoDB · Terraform · GitHub Actions · Cognito · SNS · SQS</p>
-                            </div>
-                            <p>• Architected a fully serverless, event-driven application on AWS using Lambda, API Gateway, and DynamoDB.<br>
-                            • Designed modular, multi-environment (Dev/Prod) Infrastructure as Code with Terraform.<br>
-                            • Built automated CI/CD pipelines with GitHub Actions integrating test, lint, and Terraform validation workflows.<br>
-                            • Implemented secure authentication and authorization using Amazon Cognito and IAM least-privilege policies.<br>
-                            • Integrated event-driven processing architecture using SNS and SQS to decouple services.</p>
-                            <div class="experience-link">
-                                <a href="https://github.com/BayoJohn/aws-serverless-task-manager" target="_blank">View on GitHub <i class="fas fa-external-link-alt"></i></a>
+                    <!-- Project 2 -->
+                    <div class="col-xl-5 col-lg-6 col-md-6 col-sm-6">
+                        <div class="box snake mb-30">
+                            <div class="gallery-img small-img" style="background-image: url(assets/img/gallery/gallery2.png);"></div>
+                            <div class="overlay">
+                                <div class="overlay-content">
+                                    <h3 style="color: #FFEFAE; font-size: 20px; font-weight: 700; margin-bottom: 10px; text-transform: uppercase; font-family: 'Poppins', sans-serif;">AWS Serverless E-Commerce</h3>
+                                    <p style="color: #fff; font-size: 13px; margin-bottom: 20px; font-family: 'Poppins', sans-serif; padding: 0 15px; line-height: 1.5;">AWS Lambda · API Gateway · DynamoDB · Terraform · GitHub Actions · Cognito · SNS · SQS</p>
+                                    <a href="https://github.com/BayoJohn/aws-serverless-task-manager" target="_blank" style="font-size: 28px; color: #FFEFAE; display: inline-block; transition: 0.3s;"><i class="fab fa-github"></i></a>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="row mb-50">
-                    <div class="col-xl-12">
-                        <div class="single-about">
-                            <div class="tittle-experience">
-                                <h3>Chaos Engineering & Resilience Testing</h3>
-                                <p>Chaos Mesh · Kubernetes · Prometheus · Loki · Grafana · Slack · Alertmanager</p>
-                            </div>
-                            <p>• Deployed Chaos Mesh on a k3s cluster to design and execute fault injection experiments.<br>
-                            • Ran pod termination chaos experiments to measure Flask application recovery time (target SLO: &lt;30 seconds).<br>
-                            • Executed network fault injection scenarios (latency, packet loss, network partition) to identify failure modes.<br>
-                            • Correlated Prometheus metrics, Loki log streams, and Grafana dashboards for incident analysis.<br>
-                            • Integrated real-time alerting with Slack via Prometheus Alertmanager.</p>
-                            <div class="experience-link">
-                                <a href="https://github.com/BayoJohn/homelab-infrastructure" target="_blank">View on GitHub <i class="fas fa-external-link-alt"></i></a>
+                    <!-- Project 3 -->
+                    <div class="offset-xl-1 col-xl-5 col-lg-6 col-md-6 col-sm-6">
+                        <div class="box snake mb-30">
+                            <div class="gallery-img small-img" style="background-image: url(assets/img/gallery/gallery3.png);"></div>
+                            <div class="overlay">
+                                <div class="overlay-content">
+                                    <h3 style="color: #FFEFAE; font-size: 20px; font-weight: 700; margin-bottom: 10px; text-transform: uppercase; font-family: 'Poppins', sans-serif;">Chaos Engineering & Resilience</h3>
+                                    <p style="color: #fff; font-size: 13px; margin-bottom: 20px; font-family: 'Poppins', sans-serif; padding: 0 15px; line-height: 1.5;">Chaos Mesh · Kubernetes · Prometheus · Loki · Grafana · Slack · Alertmanager</p>
+                                    <a href="https://github.com/BayoJohn/homelab-infrastructure" target="_blank" style="font-size: 28px; color: #FFEFAE; display: inline-block; transition: 0.3s;"><i class="fab fa-github"></i></a>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="row mb-50">
-                    <div class="col-xl-12">
-                        <div class="single-about">
-                            <div class="tittle-experience">
-                                <h3>High-Availability Cloud Infrastructure & Monitoring</h3>
-                                <p>AWS EC2 · Docker Compose · Nginx · GitHub Actions · Prometheus · Grafana · Node Exporter</p>
-                            </div>
-                            <p>• Architected highly available infrastructure on AWS EC2 using Docker Compose with multiple application replicas behind an Nginx load balancer.<br>
-                            • Built an automated CI/CD pipeline with GitHub Actions enabling zero-downtime deployments.<br>
-                            • Implemented self-healing mechanisms using Docker health checks and auto-recovery container policies.<br>
-                            • Deployed a full observability stack (Prometheus, Grafana, Node Exporter) for real-time dashboards and alerting.</p>
-                            <div class="experience-link">
-                                <a href="https://github.com/BayoJohn/High-Availability-Cloud-Infrastructure" target="_blank">View on GitHub <i class="fas fa-external-link-alt"></i></a>
+                    <!-- Project 4 -->
+                    <div class="col-xl-5 col-lg-6 col-md-6 col-sm-6">
+                        <div class="box snake mb-30">
+                            <div class="gallery-img small-img" style="background-image: url(assets/img/gallery/gallery4.png);"></div>
+                            <div class="overlay">
+                                <div class="overlay-content">
+                                    <h3 style="color: #FFEFAE; font-size: 20px; font-weight: 700; margin-bottom: 10px; text-transform: uppercase; font-family: 'Poppins', sans-serif;">High-Availability Cloud</h3>
+                                    <p style="color: #fff; font-size: 13px; margin-bottom: 20px; font-family: 'Poppins', sans-serif; padding: 0 15px; line-height: 1.5;">AWS EC2 · Docker Compose · Nginx · GitHub Actions · Prometheus · Grafana · Node Exporter</p>
+                                    <a href="https://github.com/BayoJohn/High-Availability-Cloud-Infrastructure" target="_blank" style="font-size: 28px; color: #FFEFAE; display: inline-block; transition: 0.3s;"><i class="fab fa-github"></i></a>
+                                </div>
                             </div>
                         </div>
                     </div>

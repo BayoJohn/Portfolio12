@@ -3548,11 +3548,9 @@ hr {
 
 /* line 76, C:/Users/HP/Desktop/jun-2020/283.Personal/assets/scss/_h1-hero.scss */
 .slider-area .hero__caption h1 {
-  font-size: 110px;
-  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 280px;
   font-weight: 300;
   text-transform: uppercase;
-  letter-spacing: 8px;
   color: #670000;
   line-height: 1;
   margin-bottom: 39px;
@@ -3560,26 +3558,26 @@ hr {
 
 @media only screen and (min-width: 992px) and (max-width: 1199px) {
   .slider-area .hero__caption h1 {
-    font-size: 85px;
+    font-size: 185px;
   }
 }
 
 @media only screen and (min-width: 768px) and (max-width: 991px) {
   .slider-area .hero__caption h1 {
-    font-size: 65px;
+    font-size: 137px;
   }
 }
 
 @media only screen and (min-width: 576px) and (max-width: 767px) {
   .slider-area .hero__caption h1 {
-    font-size: 50px;
+    font-size: 90px;
     margin-bottom: 26px;
   }
 }
 
 @media (max-width: 575px) {
   .slider-area .hero__caption h1 {
-    font-size: 38px;
+    font-size: 63px;
     margin-bottom: 26px;
   }
 }
