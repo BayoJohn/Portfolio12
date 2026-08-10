@@ -1,640 +1,74 @@
 <!doctype html>
-<html class="no-js" lang="zxx">
+<html lang="en">
 <head>
-   <meta charset="utf-8">
-   <meta http-equiv="x-ua-compatible" content="ie=edge">
-   <title>Omobayonle Ogundele | DevOps Engineer</title>
-   <meta name="description" content="">
-   <meta name="viewport" content="width=device-width, initial-scale=1">
-   <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
-
-  <!-- CSS here -->
-   <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-   <link rel="stylesheet" href="assets/css/owl.carousel.min.css">
-   <link rel="stylesheet" href="assets/css/slicknav.css">
-   <link rel="stylesheet" href="assets/css/animate.min.css">
-   <link rel="stylesheet" href="assets/css/hamburgers.min.css">
-   <link rel="stylesheet" href="assets/css/magnific-popup.css">
-   <link rel="stylesheet" href="assets/css/fontawesome-all.min.css">
-   <link rel="stylesheet" href="assets/css/themify-icons.css">
-   <link rel="stylesheet" href="assets/css/slick.css">
-   <link rel="stylesheet" href="assets/css/nice-select.css">
-   <link rel="stylesheet" href="assets/css/style.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="A hands-on DevOps homelab journey through Kubernetes, monitoring, automation and self-hosted infrastructure.">
+    <title>When My Homelab Started Feeling Like a Platform | Omobayonle Ogundele</title>
+    <script>
+        (function () {
+            try {
+                var savedTheme = localStorage.getItem('theme');
+                if (savedTheme === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+            } catch (error) {}
+        }());
+    </script>
+    <link rel="shortcut icon" href="assets/img/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&amp;family=Source+Code+Pro:wght@400;500;600&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="assets/css/portfolio-home.css">
+    <link rel="stylesheet" href="assets/css/blog.css">
 </head>
+<body class="blog-page article-page">
+    <a class="skip-link" href="#article-content">Skip to article</a>
+    <header class="blog-navbar">
+        <div class="blog-navbar-inner">
+            <a class="blog-brand" href="index.html"><strong>Omobayonle Ogundele</strong><span>DevOps &amp; Cloud Engineer</span></a>
+            <nav class="blog-nav-links" aria-label="Blog navigation">
+                <a class="active" href="blog.html">Blog</a>
+                <a href="index.html">Portfolio</a>
+                <button class="theme-toggle" type="button" aria-label="Switch to dark mode" aria-pressed="false"><i class="far fa-moon" aria-hidden="true"></i><span>Dark</span></button>
+            </nav>
+        </div>
+    </header>
 
-<body>
-   <!-- ? Preloader Start -->
-   <div id="preloader-active">
-      <div class="preloader d-flex align-items-center justify-content-center">
-          <div class="preloader-inner position-relative">
-              <div class="preloader-circle"></div>
-              <div class="preloader-img pere-text">
-                  <img src="assets/img/logo/loder.png" alt="">
-              </div>
-          </div>
-      </div>
-   </div>
-   <!-- Preloader Start -->
-   <header>
-   <div class="header-area header-transparent">
-       <div class="main-header header-sticky">
-           <div class="container-fluid">
-               <div class="menu-wrapper d-flex align-items-center justify-content-between">
-                   <!-- Logo -->
-                   <div class="logo">
-                       <a href="index.html"><img src="assets/img/logo/logo.png" alt=""></a>
-                   </div>
-                   <!-- Main-menu -->
-                   <div class="main-menu f-right d-none d-lg-block">
-                       <nav>
-                           <ul id="navigation">
-                               <li><a href="index.html">Home</a></li>
+    <main class="site-content article-main" id="article-content">
+        <article class="article-shell">
+            <a class="back-to-blog" href="blog.html"><i class="fas fa-arrow-left" aria-hidden="true"></i> All articles</a>
+            <header class="article-header">
+                <p class="article-eyebrow"><span>Writing</span> / Homelab</p>
+                <h1>When My Homelab Started Feeling Like a Platform</h1>
+                <p class="article-deck">A hands-on journey through Kubernetes, monitoring, automation and self-hosted infrastructure.</p>
+                <div class="article-byline"><time datetime="2026-08-10">August 10, 2026</time><span>8 min read</span></div>
+            </header>
+            <figure class="article-cover"><img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&amp;fit=crop&amp;w=1600&amp;q=84" alt="Computer equipment representing a self-hosted homelab"></figure>
 
-                               <li><a href="portfolio.html">Portfolio</a></li>
-                               <li class="active"><a href="blog.html">Blog</a>
-                                   <ul class="submenu">
-                                       <li><a href="blog.html">Blog</a></li>
-                                       <li><a href="blog_details.html">Blog Details</a></li>
-                                       <li><a href="elements.html">Elements</a></li>
-                                   </ul>
-                               </li>
-                               <li><a href="contact.html">Contact</a></li>
-                           </ul>
-                       </nav>
-                   </div>          
-                   <!-- Header-btn -->
-                   <div class="header-info-right d-none d-lg-block">
-                       <a href="#" class="btn header-btn">Let's Talk <i class="ti-arrow-right"></i></a>
-                   </div>
-                   <!-- Mobile Menu -->
-                   <div class="col-12">
-                       <div class="mobile_menu d-block d-lg-none"></div>
-                   </div>
-               </div>
-           </div>
-       </div>
-   </div>
-   <!-- Header End -->
-   </header>
-<main>
-   <!--? Hero Area Start-->
-   <div class="hero-area2 d-flex align-items-center">
-       <div class="container">
-           <div class="row ">
-               <div class="col-xl-12">
-                   <!-- Hero Caption -->
-                   <div class="hero-cap pt-100">
-                       <h2>Blog Details</h2>
-                   </div>
-               </div>
-           </div>
-       </div>
-   </div>
-   <!--Hero Area End-->
-      <!--? Blog Area Start -->
-      <section class="blog_area single-post-area section-padding">
-         <div class="container">
-            <div class="row">
-               <div class="col-lg-8 posts-list">
-                  <div class="single-post">
-                     <div class="feature-img">
-                        <img class="img-fluid" src="assets/img/blog/single_blog_1.png" alt="">
-                     </div>
-                     <div class="blog_details">
-                        <h2 style="color: #2d2d2d;">Second divided from form fish beast made every of seas
-                           all gathered us saying he our
-                        </h2>
-                        <ul class="blog-info-link mt-3 mb-4">
-                           <li><a href="#"><i class="fa fa-user"></i> Travel, Lifestyle</a></li>
-                           <li><a href="#"><i class="fa fa-comments"></i> 03 Comments</a></li>
-                        </ul>
-                        <p class="excert">
-                           MCSE boot camps have its supporters and its detractors. Some people do not understand why you
-                           should have to spend money on boot camp when you can get the MCSE study materials yourself at a
-                           fraction of the camp price. However, who has the willpower
-                        </p>
-                        <p>
-                           MCSE boot camps have its supporters and its detractors. Some people do not understand why you
-                           should have to spend money on boot camp when you can get the MCSE study materials yourself at a
-                           fraction of the camp price. However, who has the willpower to actually sit through a
-                           self-imposed MCSE training. who has the willpower to actually
-                        </p>
-                        <div class="quote-wrapper">
-                           <div class="quotes">
-                              MCSE boot camps have its supporters and its detractors. Some people do not understand why you
-                              should have to spend money on boot camp when you can get the MCSE study materials yourself at
-                              a fraction of the camp price. However, who has the willpower to actually sit through a
-                              self-imposed MCSE training.
-                           </div>
-                        </div>
-                        <p>
-                           MCSE boot camps have its supporters and its detractors. Some people do not understand why you
-                           should have to spend money on boot camp when you can get the MCSE study materials yourself at a
-                           fraction of the camp price. However, who has the willpower
-                        </p>
-                        <p>
-                           MCSE boot camps have its supporters and its detractors. Some people do not understand why you
-                           should have to spend money on boot camp when you can get the MCSE study materials yourself at a
-                           fraction of the camp price. However, who has the willpower to actually sit through a
-                           self-imposed MCSE training. who has the willpower to actually
-                        </p>
-                     </div>
-                  </div>
-                  <div class="navigation-top">
-                     <div class="d-sm-flex justify-content-between text-center">
-                        <p class="like-info"><span class="align-middle"><i class="fa fa-heart"></i></span> Lily and 4
-                           people like this</p>
-                        <div class="col-sm-4 text-center my-2 my-sm-0">
-                        </div>
-                        <ul class="social-icons">
-                           <li><a href="https://www.facebook.com/sai4ull"><i class="fab fa-facebook-f"></i></a></li>
-                           <li><a href="#"><i class="fab fa-twitter"></i></a></li>
-                           <li><a href="#"><i class="fab fa-dribbble"></i></a></li>
-                           <li><a href="#"><i class="fab fa-behance"></i></a></li>
-                        </ul>
-                     </div>
-                     <div class="navigation-area">
-                        <div class="row">
-                           <div
-                              class="col-lg-6 col-md-6 col-12 nav-left flex-row d-flex justify-content-start align-items-center">
-                              <div class="thumb">
-                                 <a href="#">
-                                    <img class="img-fluid" src="assets/img/post/preview.png" alt="">
-                                 </a>
-                              </div>
-                              <div class="arrow">
-                                 <a href="#">
-                                    <span class="lnr text-white ti-arrow-left"></span>
-                                 </a>
-                              </div>
-                              <div class="detials">
-                                 <p>Prev Post</p>
-                                 <a href="#">
-                                    <h4 style="color: #2d2d2d;">Space The Final Frontier</h4>
-                                 </a>
-                              </div>
-                           </div>
-                           <div
-                              class="col-lg-6 col-md-6 col-12 nav-right flex-row d-flex justify-content-end align-items-center">
-                              <div class="detials">
-                                 <p>Next Post</p>
-                                 <a href="#">
-                                    <h4 style="color: #2d2d2d;">Telescopes 101</h4>
-                                 </a>
-                              </div>
-                              <div class="arrow">
-                                 <a href="#">
-                                    <span class="lnr text-white ti-arrow-right"></span>
-                                 </a>
-                              </div>
-                              <div class="thumb">
-                                 <a href="#">
-                                    <img class="img-fluid" src="assets/img/post/next.png" alt="">
-                                 </a>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-                  <div class="blog-author">
-                     <div class="media align-items-center">
-                        <img src="assets/img/blog/author.png" alt="">
-                        <div class="media-body">
-                           <a href="#">
-                              <h4>Harvard milan</h4>
-                           </a>
-                           <p>Second divided from form fish beast made. Every of seas all gathered use saying you're, he
-                              our dominion twon Second divided from</p>
-                        </div>
-                     </div>
-                  </div>
-                  <div class="comments-area">
-                     <h4>05 Comments</h4>
-                     <div class="comment-list">
-                        <div class="single-comment justify-content-between d-flex">
-                           <div class="user justify-content-between d-flex">
-                              <div class="thumb">
-                                 <img src="assets/img/blog/comment_1.png" alt="">
-                              </div>
-                              <div class="desc">
-                                 <p class="comment">
-                                    Multiply sea night grass fourth day sea lesser rule open subdue female fill which them
-                                    Blessed, give fill lesser bearing multiply sea night grass fourth day sea lesser
-                                 </p>
-                                 <div class="d-flex justify-content-between">
-                                    <div class="d-flex align-items-center">
-                                       <h5>
-                                          <a href="#">Emilly Blunt</a>
-                                       </h5>
-                                       <p class="date">December 4, 2017 at 3:12 pm </p>
-                                    </div>
-                                    <div class="reply-btn">
-                                       <a href="#" class="btn-reply text-uppercase">reply</a>
-                                    </div>
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="comment-list">
-                        <div class="single-comment justify-content-between d-flex">
-                           <div class="user justify-content-between d-flex">
-                              <div class="thumb">
-                                 <img src="assets/img/blog/comment_2.png" alt="">
-                              </div>
-                              <div class="desc">
-                                 <p class="comment">
-                                    Multiply sea night grass fourth day sea lesser rule open subdue female fill which them
-                                    Blessed, give fill lesser bearing multiply sea night grass fourth day sea lesser
-                                 </p>
-                                 <div class="d-flex justify-content-between">
-                                    <div class="d-flex align-items-center">
-                                       <h5>
-                                          <a href="#">Emilly Blunt</a>
-                                       </h5>
-                                       <p class="date">December 4, 2017 at 3:12 pm </p>
-                                    </div>
-                                    <div class="reply-btn">
-                                       <a href="#" class="btn-reply text-uppercase">reply</a>
-                                    </div>
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="comment-list">
-                        <div class="single-comment justify-content-between d-flex">
-                           <div class="user justify-content-between d-flex">
-                              <div class="thumb">
-                                 <img src="assets/img/blog/comment_3.png" alt="">
-                              </div>
-                              <div class="desc">
-                                 <p class="comment">
-                                    Multiply sea night grass fourth day sea lesser rule open subdue female fill which them
-                                    Blessed, give fill lesser bearing multiply sea night grass fourth day sea lesser
-                                 </p>
-                                 <div class="d-flex justify-content-between">
-                                    <div class="d-flex align-items-center">
-                                       <h5>
-                                          <a href="#">Emilly Blunt</a>
-                                       </h5>
-                                       <p class="date">December 4, 2017 at 3:12 pm </p>
-                                    </div>
-                                    <div class="reply-btn">
-                                       <a href="#" class="btn-reply text-uppercase">reply</a>
-                                    </div>
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-                  <div class="comment-form">
-                     <h4>Leave a Reply</h4>
-                     <form class="form-contact comment_form" action="#" id="commentForm">
-                        <div class="row">
-                           <div class="col-12">
-                              <div class="form-group">
-                                 <textarea class="form-control w-100" name="comment" id="comment" cols="30" rows="9"
-                                    placeholder="Write Comment"></textarea>
-                              </div>
-                           </div>
-                           <div class="col-sm-6">
-                              <div class="form-group">
-                                 <input class="form-control" name="name" id="name" type="text" placeholder="Name">
-                              </div>
-                           </div>
-                           <div class="col-sm-6">
-                              <div class="form-group">
-                                 <input class="form-control" name="email" id="email" type="email" placeholder="Email">
-                              </div>
-                           </div>
-                           <div class="col-12">
-                              <div class="form-group">
-                                 <input class="form-control" name="website" id="website" type="text" placeholder="Website">
-                              </div>
-                           </div>
-                        </div>
-                        <div class="form-group">
-                           <button type="submit" class="button button-contactForm btn_1 boxed-btn">Post Comment</button>
-                        </div>
-                     </form>
-                  </div>
-               </div>
-               <div class="col-lg-4">
-                  <div class="blog_right_sidebar">
-                     <aside class="single_sidebar_widget search_widget">
-                        <form action="#">
-                           <div class="form-group">
-                              <div class="input-group mb-3">
-                                 <input type="text" class="form-control" placeholder='Search Keyword'
-                                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search Keyword'">
-                                 <div class="input-group-append">
-                                    <button class="btns" type="button"><i class="ti-search"></i></button>
-                                 </div>
-                              </div>
-                           </div>
-                           <button class="button rounded-0 primary-bg text-white w-100 btn_1 boxed-btn"
-                              type="submit">Search</button>
-                        </form>
-                     </aside>
-                     <aside class="single_sidebar_widget post_category_widget">
-                        <h4 class="widget_title" style="color: #2d2d2d;">Category</h4>
-                        <ul class="list cat-list">
-                           <li>
-                              <a href="#" class="d-flex">
-                                 <p>Resaurant food</p>
-                                 <p>(37)</p>
-                              </a>
-                           </li>
-                           <li>
-                              <a href="#" class="d-flex">
-                                 <p>Travel news</p>
-                                 <p>(10)</p>
-                              </a>
-                           </li>
-                           <li>
-                              <a href="#" class="d-flex">
-                                 <p>Modern technology</p>
-                                 <p>(03)</p>
-                              </a>
-                           </li>
-                           <li>
-                              <a href="#" class="d-flex">
-                                 <p>Product</p>
-                                 <p>(11)</p>
-                              </a>
-                           </li>
-                           <li>
-                              <a href="#" class="d-flex">
-                                 <p>Inspiration</p>
-                                 <p>(21)</p>
-                              </a>
-                           </li>
-                           <li>
-                              <a href="#" class="d-flex">
-                                 <p>Health Care</p>
-                                 <p>(21)</p>
-                              </a>
-                           </li>
-                        </ul>
-                     </aside>
-                     <aside class="single_sidebar_widget popular_post_widget">
-                        <h3 class="widget_title" style="color: #2d2d2d;">Recent Post</h3>
-                        <div class="media post_item">
-                           <img src="assets/img/post/post_1.png" alt="post">
-                           <div class="media-body">
-                              <a href="blog_details.html">
-                                 <h3 style="color: #2d2d2d;">From life was you fish...</h3>
-                              </a>
-                              <p>January 12, 2019</p>
-                           </div>
-                        </div>
-                        <div class="media post_item">
-                           <img src="assets/img/post/post_2.png" alt="post">
-                           <div class="media-body">
-                              <a href="blog_details.html">
-                                 <h3 style="color: #2d2d2d;">The Amazing Hubble</h3>
-                              </a>
-                              <p>02 Hours ago</p>
-                           </div>
-                        </div>
-                        <div class="media post_item">
-                           <img src="assets/img/post/post_3.png" alt="post">
-                           <div class="media-body">
-                              <a href="blog_details.html">
-                                 <h3 style="color: #2d2d2d;">Astronomy Or Astrology</h3>
-                              </a>
-                              <p>03 Hours ago</p>
-                           </div>
-                        </div>
-                        <div class="media post_item">
-                           <img src="assets/img/post/post_4.png" alt="post">
-                           <div class="media-body">
-                              <a href="blog_details.html">
-                                 <h3 style="color: #2d2d2d;">Asteroids telescope</h3>
-                              </a>
-                              <p>01 Hours ago</p>
-                           </div>
-                        </div>
-                     </aside>
-                     <aside class="single_sidebar_widget tag_cloud_widget">
-                        <h4 class="widget_title" style="color: #2d2d2d;">Tag Clouds</h4>
-                        <ul class="list">
-                           <li>
-                              <a href="#">project</a>
-                           </li>
-                           <li>
-                              <a href="#">love</a>
-                           </li>
-                           <li>
-                              <a href="#">technology</a>
-                           </li>
-                           <li>
-                              <a href="#">travel</a>
-                           </li>
-                           <li>
-                              <a href="#">restaurant</a>
-                           </li>
-                           <li>
-                              <a href="#">life style</a>
-                           </li>
-                           <li>
-                              <a href="#">design</a>
-                           </li>
-                           <li>
-                              <a href="#">illustration</a>
-                           </li>
-                        </ul>
-                     </aside>
-                     <aside class="single_sidebar_widget instagram_feeds">
-                        <h4 class="widget_title" style="color: #2d2d2d;">Instagram Feeds</h4>
-                        <ul class="instagram_row flex-wrap">
-                           <li>
-                              <a href="#">
-                                 <img class="img-fluid" src="assets/img/post/post_5.png" alt="">
-                              </a>
-                           </li>
-                           <li>
-                              <a href="#">
-                                 <img class="img-fluid" src="assets/img/post/post_6.png" alt="">
-                              </a>
-                           </li>
-                           <li>
-                              <a href="#">
-                                 <img class="img-fluid" src="assets/img/post/post_7.png" alt="">
-                              </a>
-                           </li>
-                           <li>
-                              <a href="#">
-                                 <img class="img-fluid" src="assets/img/post/post_8.png" alt="">
-                              </a>
-                           </li>
-                           <li>
-                              <a href="#">
-                                 <img class="img-fluid" src="assets/img/post/post_9.png" alt="">
-                              </a>
-                           </li>
-                           <li>
-                              <a href="#">
-                                 <img class="img-fluid" src="assets/img/post/post_10.png" alt="">
-                              </a>
-                           </li>
-                        </ul>
-                     </aside>
-                     <aside class="single_sidebar_widget newsletter_widget">
-                        <h4 class="widget_title" style="color: #2d2d2d;">Newsletter</h4>
-                        <form action="#">
-                           <div class="form-group">
-                              <input type="email" class="form-control" onfocus="this.placeholder = ''"
-                                 onblur="this.placeholder = 'Enter email'" placeholder='Enter email' required>
-                           </div>
-                           <button class="button rounded-0 primary-bg text-white w-100 btn_1 boxed-btn" type="submit">Subscribe</button>
-                        </form>
-                     </aside>
-                  </div>
-               </div>
+            <div class="article-body">
+                <p class="article-lead">My homelab began as a place to run containers and learn Linux. It became much more useful when I stopped treating each service as an isolated experiment and started treating the whole environment as a platform.</p>
+                <h2>From individual services to a system</h2>
+                <p>The first version was simple: a few Docker Compose files, manually configured ports and notes scattered across different folders. It worked, but rebuilding anything required remembering decisions that were never captured in code.</p>
+                <p>I started standardising configuration, keeping infrastructure changes in Git and defining a repeatable path from a commit to a running workload. That shift made the lab easier to recover and far more useful for learning operational habits.</p>
+                <blockquote>Reliability started improving when rebuilding the environment became a normal workflow instead of an emergency procedure.</blockquote>
+                <h2>Adding Kubernetes and GitOps</h2>
+                <p>Kubernetes gave me a consistent way to describe applications, health checks, storage and networking. GitOps then made Git the source of truth for what the cluster should be running.</p>
+                <div class="code-block"><div class="code-toolbar"><span>terminal</span><button type="button" data-copy-code>Copy</button></div><pre><code>kubectl get pods -A&#10;kubectl get nodes -o wide&#10;kubectl describe deployment portfolio -n production</code></pre></div>
+                <p>The workflow became deliberately boring:</p>
+                <ol><li>Change a manifest or Helm value in Git.</li><li>Let the delivery workflow validate the change.</li><li>Allow the GitOps controller to reconcile the cluster.</li><li>Confirm health through metrics, logs and workload status.</li></ol>
+                <h2>Observability changed how I debugged</h2>
+                <p>Prometheus and Grafana did more than add dashboards. They helped me move from guessing about failures to asking specific questions about CPU pressure, memory, latency and availability.</p>
+                <div class="code-block"><div class="code-toolbar"><span>shell</span><button type="button" data-copy-code>Copy</button></div><pre><code>docker compose up -d&#10;terraform apply&#10;&#10;git add .&#10;git commit -m "Update monitoring stack"&#10;git push origin main</code></pre></div>
+                <h3>What I would improve next</h3>
+                <ul><li>Automated backups with regular restore tests.</li><li>More deliberate alerting and service-level objectives.</li><li>Network policies and stronger secrets management.</li><li>Better runbooks for common failure scenarios.</li></ul>
+                <h2>The useful lesson</h2>
+                <p>The hardware was never the most important part. The real value came from building repeatable workflows, observing the results and recovering from mistakes. That is when the homelab stopped feeling like a collection of machines and started feeling like a platform.</p>
+                <div class="article-footer-links"><a href="blog.html"><i class="fas fa-arrow-left" aria-hidden="true"></i> Back to all articles</a><a href="index.html#contact">Discuss this article <i class="fas fa-arrow-right" aria-hidden="true"></i></a></div>
             </div>
-         </div>
-      </section>
-      <!-- Blog Area End -->
-   </main>
-   <footer>
-      <div class="footer-wrappr">
-          <div class="footer-top">
-              <!-- Want To work -->
-              <section class="wantToWork-area ">
-                  <div class="container">
-                      <div class="wants-wrapper w-padding2">
-                          <div class="row align-items-center justify-content-between">
-                              <div class="col-xl-7 col-lg-9 col-md-8">
-                                  <div class="wantToWork-caption wantToWork-caption2">
-                                      <h2>Do you want to know more about me?</h2>
-                                  </div>
-                              </div>
-                              <div class="col-xl-2 col-lg-3 col-md-4">
-                                  <a href="#" class="btn white-btn f-right sm-left">Download CV</a>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-              </section>
-              <!-- Want To work End -->
-              <div class="container">
-                  <div class="row">
-                      <div class="col-lg-12">
-                          <!-- contact-form -->
-                          <div class="form-wrapper">
-                              <div class="row ">
-                                  <div class="col-xl-12">
-                                      <div class="small-tittle mb-30">
-                                          <h4>Contact Me</h4>
-                                      </div>
-                                  </div>
-                              </div>
-                              <form id="contact-form" action="#" method="POST">
-                                  <div class="row">
-                                      <div class="col-lg-4 col-md-6">
-                                          <div class="form-box user-icon mb-25">
-                                              <input type="text" name="name" placeholder="Your name">
-                                          </div>
-                                      </div>
-                                      <div class="col-lg-4 col-md-6">
-                                          <div class="form-box email-icon mb-25">
-                                              <input type="text" name="email" placeholder="Email">
-                                          </div>
-                                      </div>
-                                      <div class="col-lg-4 col-md-6">
-                                          <div class="form-box email-icon mb-25">
-                                              <input type="text" name="email" placeholder="Subject">
-                                          </div>
-                                      </div>
-                                      <div class="col-lg-12">
-                                          <div class="form-box message-icon mb-25">
-                                              <textarea name="message" id="message" placeholder="Message"></textarea>
-                                          </div>
-                                          <div class="submit-info">
-                                              <button class="submit-btn2" type="submit">Send Message</button>
-                                          </div>
-                                      </div>
-                                  </div>
-                              </form> 
-                          </div>
-                      </div>
-                  </div>
-              </div>
-          </div>
-          <!-- footer-bottom area -->
-          <div class="footer-bottom-area">
-              <div class="container">
-                  <div class="footer-border">
-                      <div class="row align-items-center">
-                          <div class="col-xl-4 col-lg-4">
-                              <div class="footer-social">
-                                  <a href="https://github.com/BayoJohn" target="_blank"><i class="fab fa-github"></i></a>
-                                  <a href="https://www.linkedin.com/in/bayo123/" target="_blank"><i class="fab fa-linkedin-in"></i></a>
-                              </div>
-                          </div>
-                          <div class="col-xl-8 col-lg-8">
-                              <div class="footer-copy-right f-right">
-                                  <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-  Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-  <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-          </div>
-      </div>
-  </footer>
-  <!-- Scroll Up -->
-  <div id="back-top" >
-      <a title="Go to Top" href="#"> <i class="fas fa-level-up-alt"></i></a>
-  </div>
-
-   <!-- JS here -->
-
-   <script src="./assets/js/vendor/modernizr-3.5.0.min.js"></script>
-   <!-- Jquery, Popper, Bootstrap -->
-   <script src="./assets/js/vendor/jquery-1.12.4.min.js"></script>
-   <script src="./assets/js/popper.min.js"></script>
-   <script src="./assets/js/bootstrap.min.js"></script>
-   <!-- Jquery Mobile Menu -->
-   <script src="./assets/js/jquery.slicknav.min.js"></script>
-
-   <!-- Jquery Slick , Owl-Carousel Plugins -->
-   <script src="./assets/js/owl.carousel.min.js"></script>
-   <script src="./assets/js/slick.min.js"></script>
-   <!-- One Page, Animated-HeadLin -->
-   <script src="./assets/js/wow.min.js"></script>
-   <script src="./assets/js/animated.headline.js"></script>
-   <script src="./assets/js/jquery.magnific-popup.js"></script>
-
-   <!-- Date Picker -->
-   <script src="./assets/js/gijgo.min.js"></script>
-   <!-- Nice-select, sticky -->
-   <script src="./assets/js/jquery.nice-select.min.js"></script>
-   <script src="./assets/js/jquery.sticky.js"></script>
-   
-   <!-- counter , waypoint,Hover Direction -->
-   <script src="./assets/js/jquery.counterup.min.js"></script>
-   <script src="./assets/js/waypoints.min.js"></script>
-   <script src="./assets/js/jquery.countdown.min.js"></script>
-   <script src="./assets/js/hover-direction-snake.min.js"></script>
-
-   <!-- contact js -->
-   <script src="./assets/js/contact.js"></script>
-   <script src="./assets/js/jquery.form.js"></script>
-   <script src="./assets/js/jquery.validate.min.js"></script>
-   <script src="./assets/js/mail-script.js"></script>
-   <script src="./assets/js/jquery.ajaxchimp.min.js"></script>
-   
-   <!-- Jquery Plugins, main Jquery -->	
-   <script src="./assets/js/plugins.js"></script>
-   <script src="./assets/js/main.js"></script>
-
-
-   
-   </body>
+        </article>
+    </main>
+    <footer class="blog-footer"><div class="blog-container"><span>© 2026 StackedByBayo</span><a href="blog.html"><i class="fas fa-arrow-left" aria-hidden="true"></i> Back to all articles</a></div></footer>
+    <script src="assets/js/portfolio-home.js"></script>
+    <script src="assets/js/blog.js"></script>
+</body>
 </html>
