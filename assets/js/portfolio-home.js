@@ -4,7 +4,31 @@
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var toggle = document.querySelector('.sidebar-toggle');
   var sidebar = document.querySelector('.profile-sidebar');
+  var themeToggle = document.querySelector('.theme-toggle');
   var navLinks = Array.prototype.slice.call(document.querySelectorAll('.sidebar-nav a[href^="#"]'));
+
+  function setTheme(theme, persist) {
+    var isDark = theme === 'dark';
+    document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+    if (themeToggle) {
+      themeToggle.setAttribute('aria-pressed', String(isDark));
+      themeToggle.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
+      themeToggle.querySelector('span').textContent = isDark ? 'Light' : 'Dark';
+      themeToggle.querySelector('i').className = isDark ? 'fas fa-sun' : 'far fa-moon';
+    }
+    if (persist) {
+      try { localStorage.setItem('theme', isDark ? 'dark' : 'light'); } catch (error) {}
+    }
+  }
+
+  var initialTheme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+  setTheme(initialTheme, false);
+
+  if (themeToggle) {
+    themeToggle.addEventListener('click', function () {
+      setTheme(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark', true);
+    });
+  }
 
   function closeMenu() {
     if (!toggle || !sidebar) return;

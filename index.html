@@ -5,6 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Omobayonle Ogundele is a DevOps and Cloud Engineer building automated, observable and resilient infrastructure.">
     <title>Omobayonle Ogundele | DevOps &amp; Cloud Engineer</title>
+    <script>
+        (function () {
+            try {
+                var savedTheme = localStorage.getItem('theme');
+                if (savedTheme === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+            } catch (error) {}
+        }());
+    </script>
     <link rel="shortcut icon" href="assets/img/favicon.ico">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -37,6 +45,9 @@
             <a href="#contact">Contact</a>
         </nav>
         <div class="sidebar-footer">
+            <button class="theme-toggle" type="button" aria-label="Switch to dark mode" aria-pressed="false">
+                <i class="far fa-moon" aria-hidden="true"></i><span>Dark</span>
+            </button>
             <a class="availability" href="#contact"><span></span> Available for work</a>
             <p>© 2026 StackedByBayo</p>
             <div class="sidebar-socials">
@@ -234,20 +245,28 @@
 
         <section class="content-section page-section section-tint" id="contact">
             <div class="section-inner">
-                <header class="section-header reveal" data-reveal="left"><span>Get in touch</span><h2>Let’s talk</h2></header>
+                <header class="section-header reveal" data-reveal="left"><span>Get in touch</span><h2>Contact</h2></header>
                 <div class="contact-layout">
                     <div class="contact-details reveal" data-reveal="left">
-                        <p>I’m currently open to DevOps, Cloud Infrastructure and Platform Engineering opportunities.</p>
-                        <a href="mailto:ogundelebayo8@gmail.com"><i class="far fa-envelope"></i><span><small>Email</small>ogundelebayo8@gmail.com</span></a>
-                        <a href="https://www.linkedin.com/in/bayo123/" target="_blank" rel="noreferrer"><i class="fab fa-linkedin-in"></i><span><small>LinkedIn</small>linkedin.com/in/bayo123</span></a>
-                        <div><i class="fas fa-map-marker-alt"></i><span><small>Location</small>Lagos, Nigeria · Remote friendly</span></div>
+                        <a class="contact-row" href="mailto:ogundelebayo8@gmail.com">
+                            <span class="contact-icon"><i class="far fa-envelope" aria-hidden="true"></i></span>
+                            <span><small>Email</small>ogundelebayo8@gmail.com</span>
+                        </a>
+                        <div class="contact-row">
+                            <span class="contact-icon"><i class="fas fa-map-marker-alt" aria-hidden="true"></i></span>
+                            <span><small>Location</small>Lagos, Nigeria</span>
+                        </div>
+                        <a class="contact-row" href="mailto:ogundelebayo8@gmail.com?subject=DevOps%20%26%20Cloud%20Opportunity">
+                            <span class="contact-icon"><i class="fas fa-briefcase" aria-hidden="true"></i></span>
+                            <span><small>Availability</small>Available for DevOps &amp; Cloud opportunities</span>
+                        </a>
                     </div>
                     <form class="contact-form reveal" data-reveal="right" action="mailto:ogundelebayo8@gmail.com" method="post" enctype="text/plain">
-                        <label><span>Name</span><input type="text" name="name" required></label>
-                        <label><span>Email</span><input type="email" name="email" required></label>
-                        <label><span>Subject</span><input type="text" name="subject" required></label>
-                        <label><span>Message</span><textarea name="message" rows="5" required></textarea></label>
-                        <button type="submit">Send message <i class="fas fa-arrow-right"></i></button>
+                        <label><span>Name</span><input type="text" name="name" placeholder="Name" autocomplete="name" required></label>
+                        <label><span>Email</span><input type="email" name="email" placeholder="Email" autocomplete="email" required></label>
+                        <label><span>Subject</span><input type="text" name="subject" placeholder="Subject"></label>
+                        <label><span>Message</span><textarea name="message" placeholder="Message" rows="6" required></textarea></label>
+                        <button type="submit">Send Message <i class="fas fa-arrow-right" aria-hidden="true"></i></button>
                     </form>
                 </div>
             </div>
