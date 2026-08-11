@@ -97,33 +97,41 @@
     reveals.forEach(function (element) { revealObserver.observe(element); });
   }
 
-  var slides = Array.prototype.slice.call(document.querySelectorAll('.hero-slide'));
-  var slideIndex = 0;
-  var slideTimer;
+  var heroImages = Array.prototype.slice.call(document.querySelectorAll('.hero-carousel-image'));
+  var heroImageIndex = 0;
+  var heroImageTimer;
 
-  function showSlide(nextIndex) {
-    if (!slides.length) return;
-    slideIndex = (nextIndex + slides.length) % slides.length;
-    slides.forEach(function (slide, index) {
-      slide.classList.toggle('active', index === slideIndex);
-      slide.setAttribute('aria-hidden', String(index !== slideIndex));
+  function showHeroImage(nextIndex) {
+    if (!heroImages.length) return;
+    heroImageIndex = (nextIndex + heroImages.length) % heroImages.length;
+    heroImages.forEach(function (image, index) {
+      var isActive = index === heroImageIndex;
+      image.classList.toggle('active', isActive);
+      image.setAttribute('aria-hidden', String(!isActive));
     });
   }
 
-  function startSlides() {
-    if (reduceMotion || slides.length < 2) return;
-    window.clearInterval(slideTimer);
-    slideTimer = window.setInterval(function () { showSlide(slideIndex + 1); }, 6000);
+  function stopHeroAutoplay() {
+    window.clearInterval(heroImageTimer);
+    heroImageTimer = null;
+  }
+
+  function startHeroAutoplay() {
+    if (reduceMotion || heroImages.length < 2 || heroImageTimer) return;
+    heroImageTimer = window.setInterval(function () {
+      showHeroImage(heroImageIndex + 1);
+    }, 6000);
   }
 
   document.querySelectorAll('.hero-controls button').forEach(function (button) {
     button.addEventListener('click', function () {
-      showSlide(slideIndex + (button.dataset.direction === 'next' ? 1 : -1));
-      startSlides();
+      stopHeroAutoplay();
+      showHeroImage(heroImageIndex + (button.dataset.direction === 'next' ? 1 : -1));
     });
   });
-  showSlide(0);
-  startSlides();
+
+  showHeroImage(0);
+  startHeroAutoplay();
 
   var counterBand = document.querySelector('.stats-banner');
   var countersStarted = false;
