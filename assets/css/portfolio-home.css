@@ -2093,10 +2093,6 @@ body,
   object-position: center center;
 }
 
-.hero-carousel-image.server-slide {
-  object-position: 58% center;
-}
-
 @media (prefers-reduced-motion: reduce) {
   body,
   .profile-sidebar,
