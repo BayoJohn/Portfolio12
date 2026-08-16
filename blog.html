@@ -43,17 +43,7 @@
                     <p>Notes from my journey learning DevOps, cloud infrastructure, automation, Linux, Kubernetes and everything I break along the way.</p>
                 </header>
 
-                <article class="featured-post">
-                    <a class="featured-post-image" href="blog_details.html" aria-label="Read When My Homelab Started Feeling Like a Platform">
-                        <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&amp;fit=crop&amp;w=1400&amp;q=82" alt="Computer equipment representing a self-hosted homelab" loading="eager">
-                    </a>
-                    <div class="featured-post-content">
-                        <div class="post-meta"><span>Homelab</span><time datetime="2026-08-10">August 10, 2026</time></div>
-                        <h3><a href="blog_details.html">When My Homelab Started Feeling Like a Platform</a></h3>
-                        <p>A hands-on journey through Kubernetes, monitoring, automation and self-hosted infrastructure as my homelab evolved into something that started feeling like a real platform.</p>
-                        <a class="read-link" href="blog_details.html">Read article <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
-                    </div>
-                </article>
+                <div data-featured-post></div>
             </div>
         </section>
 
@@ -74,32 +64,7 @@
                     <button type="button" data-blog-filter="monitoring">Monitoring</button>
                 </div>
 
-                <div class="article-grid" id="article-grid">
-                    <article class="article-card" data-blog-card data-category="homelab kubernetes" data-search="building my first kubernetes homelab cluster linux k3s">
-                        <a class="article-image" href="blog_details.html"><img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&amp;fit=crop&amp;w=1200&amp;q=82" alt="Server racks representing a Kubernetes homelab" loading="lazy"></a>
-                        <div class="article-content"><div class="post-meta"><span>Kubernetes</span><time datetime="2026-07-28">July 28, 2026</time></div><h3><a href="blog_details.html">Building My First Kubernetes Homelab</a></h3><p>What it took to turn a few Linux machines into a practical cluster for learning deployments, networking and operations.</p><a class="read-link" href="blog_details.html">Read article <i class="fas fa-arrow-right" aria-hidden="true"></i></a></div>
-                    </article>
-                    <article class="article-card" data-blog-card data-category="cicd" data-search="what i learned building a ci cd pipeline from scratch github actions docker deployment">
-                        <a class="article-image" href="blog_details.html"><img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&amp;fit=crop&amp;w=1200&amp;q=82" alt="Code editor representing a CI/CD workflow" loading="lazy"></a>
-                        <div class="article-content"><div class="post-meta"><span>CI/CD</span><time datetime="2026-07-14">July 14, 2026</time></div><h3><a href="blog_details.html">What I Learned Building a CI/CD Pipeline From Scratch</a></h3><p>Lessons from connecting source control, testing, image builds and deployment into one repeatable workflow.</p><a class="read-link" href="blog_details.html">Read article <i class="fas fa-arrow-right" aria-hidden="true"></i></a></div>
-                    </article>
-                    <article class="article-card" data-blog-card data-category="monitoring homelab" data-search="setting up prometheus and grafana in my homelab monitoring observability metrics dashboards">
-                        <a class="article-image" href="blog_details.html"><img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&amp;fit=crop&amp;w=1200&amp;q=82" alt="Analytics dashboard representing monitoring and observability" loading="lazy"></a>
-                        <div class="article-content"><div class="post-meta"><span>Monitoring</span><time datetime="2026-06-30">June 30, 2026</time></div><h3><a href="blog_details.html">Setting Up Prometheus and Grafana in My Homelab</a></h3><p>Building useful dashboards, collecting host metrics and learning which signals make infrastructure easier to operate.</p><a class="read-link" href="blog_details.html">Read article <i class="fas fa-arrow-right" aria-hidden="true"></i></a></div>
-                    </article>
-                    <article class="article-card" data-blog-card data-category="linux" data-search="troubleshooting problems that actually taught me linux terminal systems networking permissions">
-                        <a class="article-image" href="blog_details.html"><img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&amp;fit=crop&amp;w=1200&amp;q=82" alt="Computer hardware representing Linux systems troubleshooting" loading="lazy"></a>
-                        <div class="article-content"><div class="post-meta"><span>Linux</span><time datetime="2026-06-16">June 16, 2026</time></div><h3><a href="blog_details.html">Troubleshooting the Problems That Actually Taught Me Linux</a></h3><p>The permissions, networking and service failures that turned Linux concepts into practical operational knowledge.</p><a class="read-link" href="blog_details.html">Read article <i class="fas fa-arrow-right" aria-hidden="true"></i></a></div>
-                    </article>
-                    <article class="article-card" data-blog-card data-category="cicd homelab" data-search="from docker containers to a real deployment workflow compose registry automation">
-                        <a class="article-image" href="blog_details.html"><img src="https://images.unsplash.com/photo-1587620962725-abab7fe55159?auto=format&amp;fit=crop&amp;w=1200&amp;q=82" alt="Developer workstation representing a Docker deployment workflow" loading="lazy"></a>
-                        <div class="article-content"><div class="post-meta"><span>Docker</span><time datetime="2026-06-02">June 2, 2026</time></div><h3><a href="blog_details.html">From Docker Containers to a Real Deployment Workflow</a></h3><p>Moving beyond local containers toward repeatable builds, registries, health checks and automated releases.</p><a class="read-link" href="blog_details.html">Read article <i class="fas fa-arrow-right" aria-hidden="true"></i></a></div>
-                    </article>
-                    <article class="article-card" data-blog-card data-category="cloud" data-search="building my first aws automation project lambda terraform cloud infrastructure">
-                        <a class="article-image" href="blog_details.html"><img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&amp;fit=crop&amp;w=1200&amp;q=82" alt="Cloud technology representing an AWS automation project" loading="lazy"></a>
-                        <div class="article-content"><div class="post-meta"><span>Cloud</span><time datetime="2026-05-19">May 19, 2026</time></div><h3><a href="blog_details.html">Building My First AWS Automation Project</a></h3><p>Using Terraform and managed AWS services to make a small cloud application reproducible from the beginning.</p><a class="read-link" href="blog_details.html">Read article <i class="fas fa-arrow-right" aria-hidden="true"></i></a></div>
-                    </article>
-                </div>
+                <div class="article-grid" id="article-grid"></div>
                 <p class="blog-empty" role="status" hidden>No articles match your search.</p>
             </div>
         </section>
@@ -108,6 +73,7 @@
     <footer class="blog-footer"><div class="blog-container"><span>© 2026 StackedByBayo</span><a href="index.html">Back to portfolio <i class="fas fa-arrow-right" aria-hidden="true"></i></a></div></footer>
 
     <script src="assets/js/portfolio-home.js"></script>
+    <script src="assets/js/blog-data.js"></script>
     <script src="assets/js/blog.js"></script>
 </body>
 </html>

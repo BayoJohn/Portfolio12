@@ -407,6 +407,29 @@
   margin: 0 auto;
 }
 
+.article-not-found {
+  width: min(100%, 720px);
+  margin: 80px auto;
+  text-align: center;
+}
+
+.article-not-found h1 {
+  margin: 0 0 18px;
+  color: var(--text-primary);
+  font-size: clamp(36px, 5vw, 58px);
+  letter-spacing: -.04em;
+}
+
+.article-not-found p {
+  margin: 0 0 28px;
+  color: var(--text-secondary);
+  font-size: 16px;
+}
+
+.article-not-found .read-link {
+  display: inline-flex;
+}
+
 .back-to-blog {
   display: inline-flex;
   align-items: center;
