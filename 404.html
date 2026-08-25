@@ -1,10 +1,11 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="The requested portfolio article could not be found.">
-    <title>Article Not Found | Omobayonle Ogundele</title>
+    <meta name="description" content="The requested page could not be found on Omobayonle Ogundele's portfolio.">
+    <meta name="theme-color" content="#f8fafc">
+    <title>Page Not Found | Omobayonle Ogundele</title>
     <script>
         (function () {
             var marker = '/blog/';
@@ -12,7 +13,7 @@
             var base = markerIndex === -1 ? location.pathname.replace(/[^/]*$/, '') : location.pathname.slice(0, markerIndex + 1);
             document.write('<base href="' + base + '">');
             try {
-                if (localStorage.getItem('theme') === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+                document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') === 'dark' ? 'dark' : 'light');
             } catch (error) {}
         }());
     </script>
@@ -30,14 +31,14 @@
         <div class="blog-navbar-inner">
             <a class="blog-brand" href="index.html"><strong>Omobayonle Ogundele</strong><span>DevOps &amp; Cloud Engineer</span></a>
             <nav class="blog-nav-links" aria-label="Blog navigation">
-                <a class="active" href="blog.html">Blog</a>
+                <a href="blog.html">Blog</a>
                 <a href="index.html">Portfolio</a>
                 <button class="theme-toggle" type="button" aria-label="Switch to dark mode" aria-pressed="false"><i class="far fa-moon" aria-hidden="true"></i><span>Dark</span></button>
             </nav>
         </div>
     </header>
     <main class="site-content article-main" id="article-content" data-blog-post></main>
-    <footer class="blog-footer"><div class="blog-container"><span>© 2026 StackedByBayo</span><a href="blog.html"><i class="fas fa-arrow-left" aria-hidden="true"></i> Back to all articles</a></div></footer>
+    <footer class="blog-footer"><div class="blog-container"><span>© 2026 StackedByBayo</span><a href="index.html"><i class="fas fa-arrow-left" aria-hidden="true"></i> Back to home</a></div></footer>
     <script src="assets/js/portfolio-home.js"></script>
     <script src="assets/js/blog-data.js"></script>
     <script src="assets/js/blog.js"></script>

@@ -1,15 +1,16 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Omobayonle Ogundele is a DevOps and Cloud Engineer building automated, observable and resilient infrastructure.">
+    <meta name="theme-color" content="#f8fafc">
     <title>Omobayonle Ogundele | DevOps &amp; Cloud Engineer</title>
     <script>
         (function () {
             try {
                 var savedTheme = localStorage.getItem('theme');
-                if (savedTheme === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+                document.documentElement.setAttribute('data-theme', savedTheme === 'dark' ? 'dark' : 'light');
             } catch (error) {}
         }());
     </script>
@@ -29,7 +30,7 @@
 
     <aside class="profile-sidebar" id="profile-sidebar">
         <div class="sidebar-profile">
-            <img src="ChatGPT%20Image%20Aug%2011%2C%202026%2C%2011_55_13%20PM.png" alt="Portrait of Omobayonle Ogundele">
+            <img src="assets/img/omobayonle-ogundele.webp" alt="Portrait of Omobayonle Ogundele" width="1024" height="1536">
             <h1>Omobayonle Ogundele</h1>
             <p><strong>DevOps &amp; Cloud Engineer</strong><br>in Lagos, Nigeria</p>
         </div>
@@ -51,8 +52,8 @@
             <a class="availability" href="#contact"><span></span> Available for work</a>
             <p>© 2026 StackedByBayo</p>
             <div class="sidebar-socials">
-                <a href="https://github.com/BayoJohn" target="_blank" rel="noreferrer" aria-label="GitHub"><i class="fab fa-github"></i></a>
-                <a href="https://www.linkedin.com/in/bayo123/" target="_blank" rel="noreferrer" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                <a href="https://github.com/BayoJohn" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><i class="fab fa-github" aria-hidden="true"></i></a>
+                <a href="https://www.linkedin.com/in/bayo123/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i class="fab fa-linkedin-in" aria-hidden="true"></i></a>
                 <a href="mailto:ogundelebayo8@gmail.com" aria-label="Email"><i class="far fa-envelope"></i></a>
             </div>
         </div>
@@ -72,7 +73,7 @@
                 </div>
                 <div class="hero-portrait">
                     <div class="hero-carousel-track">
-                        <img class="hero-carousel-image portrait-slide active" src="ChatGPT%20Image%20Aug%2011%2C%202026%2C%2011_55_13%20PM.png" alt="">
+                        <img class="hero-carousel-image portrait-slide active" src="assets/img/omobayonle-ogundele.webp" alt="Portrait of Omobayonle Ogundele at a workstation" width="1024" height="1536" fetchpriority="high">
                         <img class="hero-carousel-image workstation-slide" src="https://images.unsplash.com/photo-1673885831398-9581891a3155?auto=format&amp;fit=crop&amp;w=1600&amp;q=84" alt="">
                     </div>
                     <p>Linux · Kubernetes · AWS · Terraform</p>
@@ -215,28 +216,28 @@
                 </div>
                 <div class="projects-grid">
                     <article class="project-card reveal" data-category="kubernetes monitoring automation" data-reveal="left">
-                        <div class="project-image"><img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&amp;fit=crop&amp;w=1200&amp;q=82" alt="Server infrastructure used as a temporary preview for the Kubernetes portfolio platform" loading="lazy"><a class="project-image-link" href="https://github.com/BayoJohn/Portfolio-website" target="_blank" rel="noreferrer">View project <i class="fas fa-arrow-right"></i></a></div>
-                        <div class="project-info"><span class="project-category">Kubernetes</span><h3>Production-Style Kubernetes Portfolio Platform</h3><p>A Kubernetes-based portfolio environment using k3s, ArgoCD, autoscaling, monitoring, TLS and GitOps deployment practices.</p><div class="project-tech"><span>Kubernetes</span><span>ArgoCD</span><span>Prometheus</span><span>Grafana</span><span>Docker</span></div><div class="project-links"><a href="https://github.com/BayoJohn/Portfolio-website" target="_blank" rel="noreferrer"><i class="fab fa-github"></i> GitHub</a><a href="https://github.com/BayoJohn/Portfolio-website" target="_blank" rel="noreferrer">View Project <i class="fas fa-external-link-alt"></i></a></div></div>
+                        <div class="project-image"><img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&amp;fit=crop&amp;w=1200&amp;q=82" alt="Server infrastructure used as a temporary preview for the Kubernetes portfolio platform" loading="lazy"><a class="project-image-link" href="https://github.com/BayoJohn/Portfolio-website" target="_blank" rel="noopener noreferrer">View project <i class="fas fa-arrow-right"></i></a></div>
+                        <div class="project-info"><span class="project-category">Kubernetes</span><h3>Production-Style Kubernetes Portfolio Platform</h3><p>A Kubernetes-based portfolio environment using k3s, ArgoCD, autoscaling, monitoring, TLS and GitOps deployment practices.</p><div class="project-tech"><span>Kubernetes</span><span>ArgoCD</span><span>Prometheus</span><span>Grafana</span><span>Docker</span></div><div class="project-links"><a href="https://github.com/BayoJohn/Portfolio-website" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i> GitHub</a><a href="https://github.com/BayoJohn/Portfolio-website" target="_blank" rel="noopener noreferrer">View Project <i class="fas fa-external-link-alt"></i></a></div></div>
                     </article>
                     <article class="project-card reveal" data-category="cloud automation cicd" data-reveal="right">
-                        <div class="project-image"><img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&amp;fit=crop&amp;w=1200&amp;q=82" alt="Cloud technology used as a temporary preview for the AWS serverless platform" loading="lazy"><a class="project-image-link" href="https://github.com/BayoJohn/aws-serverless-task-manager" target="_blank" rel="noreferrer">View project <i class="fas fa-arrow-right"></i></a></div>
-                        <div class="project-info"><span class="project-category">Cloud</span><h3>AWS Serverless Task Management Platform</h3><p>A serverless application architecture built with AWS services and managed through Terraform and automated deployment workflows.</p><div class="project-tech"><span>AWS Lambda</span><span>API Gateway</span><span>DynamoDB</span><span>Terraform</span><span>GitHub Actions</span></div><div class="project-links"><a href="https://github.com/BayoJohn/aws-serverless-task-manager" target="_blank" rel="noreferrer"><i class="fab fa-github"></i> GitHub</a><a href="https://github.com/BayoJohn/aws-serverless-task-manager" target="_blank" rel="noreferrer">View Project <i class="fas fa-external-link-alt"></i></a></div></div>
+                        <div class="project-image"><img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&amp;fit=crop&amp;w=1200&amp;q=82" alt="Cloud technology used as a temporary preview for the AWS serverless platform" loading="lazy"><a class="project-image-link" href="https://github.com/BayoJohn/aws-serverless-task-manager" target="_blank" rel="noopener noreferrer">View project <i class="fas fa-arrow-right"></i></a></div>
+                        <div class="project-info"><span class="project-category">Cloud</span><h3>AWS Serverless Task Management Platform</h3><p>A serverless application architecture built with AWS services and managed through Terraform and automated deployment workflows.</p><div class="project-tech"><span>AWS Lambda</span><span>API Gateway</span><span>DynamoDB</span><span>Terraform</span><span>GitHub Actions</span></div><div class="project-links"><a href="https://github.com/BayoJohn/aws-serverless-task-manager" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i> GitHub</a><a href="https://github.com/BayoJohn/aws-serverless-task-manager" target="_blank" rel="noopener noreferrer">View Project <i class="fas fa-external-link-alt"></i></a></div></div>
                     </article>
                     <article class="project-card reveal" data-category="automation monitoring cicd" data-reveal="left">
-                        <div class="project-image"><img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&amp;fit=crop&amp;w=1200&amp;q=82" alt="Computer hardware used as a temporary preview for the Docker infrastructure project" loading="lazy"><a class="project-image-link" href="https://github.com/BayoJohn/High-Availability-Cloud-Infrastructure" target="_blank" rel="noreferrer">View project <i class="fas fa-arrow-right"></i></a></div>
-                        <div class="project-info"><span class="project-category">DevOps</span><h3>High Availability Docker Infrastructure</h3><p>A multi-container deployment with load balancing, health monitoring, automated recovery, Prometheus and Grafana.</p><div class="project-tech"><span>Docker</span><span>Nginx</span><span>Prometheus</span><span>Grafana</span><span>GitHub Actions</span></div><div class="project-links"><a href="https://github.com/BayoJohn/High-Availability-Cloud-Infrastructure" target="_blank" rel="noreferrer"><i class="fab fa-github"></i> GitHub</a><a href="https://github.com/BayoJohn/High-Availability-Cloud-Infrastructure" target="_blank" rel="noreferrer">View Project <i class="fas fa-external-link-alt"></i></a></div></div>
+                        <div class="project-image"><img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&amp;fit=crop&amp;w=1200&amp;q=82" alt="Computer hardware used as a temporary preview for the Docker infrastructure project" loading="lazy"><a class="project-image-link" href="https://github.com/BayoJohn/High-Availability-Cloud-Infrastructure" target="_blank" rel="noopener noreferrer">View project <i class="fas fa-arrow-right"></i></a></div>
+                        <div class="project-info"><span class="project-category">DevOps</span><h3>High Availability Docker Infrastructure</h3><p>A multi-container deployment with load balancing, health monitoring, automated recovery, Prometheus and Grafana.</p><div class="project-tech"><span>Docker</span><span>Nginx</span><span>Prometheus</span><span>Grafana</span><span>GitHub Actions</span></div><div class="project-links"><a href="https://github.com/BayoJohn/High-Availability-Cloud-Infrastructure" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i> GitHub</a><a href="https://github.com/BayoJohn/High-Availability-Cloud-Infrastructure" target="_blank" rel="noopener noreferrer">View Project <i class="fas fa-external-link-alt"></i></a></div></div>
                     </article>
                     <article class="project-card reveal" data-category="automation kubernetes monitoring" data-reveal="right">
-                        <div class="project-image"><img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&amp;fit=crop&amp;w=1200&amp;q=82" alt="Computer lab equipment used as a temporary preview for the DevOps homelab" loading="lazy"><a class="project-image-link" href="https://github.com/BayoJohn/homelab-infrastructure" target="_blank" rel="noreferrer">View project <i class="fas fa-arrow-right"></i></a></div>
-                        <div class="project-info"><span class="project-category">Automation</span><h3>Self-Hosted DevOps Homelab</h3><p>A practical infrastructure lab for CI/CD, Kubernetes, monitoring, registries, automation, networking and self-hosted services.</p><div class="project-tech"><span>Linux</span><span>Docker</span><span>Kubernetes</span><span>Jenkins</span><span>Prometheus</span></div><div class="project-links"><a href="https://github.com/BayoJohn/homelab-infrastructure" target="_blank" rel="noreferrer"><i class="fab fa-github"></i> GitHub</a><a href="https://github.com/BayoJohn/homelab-infrastructure" target="_blank" rel="noreferrer">View Project <i class="fas fa-external-link-alt"></i></a></div></div>
+                        <div class="project-image"><img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&amp;fit=crop&amp;w=1200&amp;q=82" alt="Computer lab equipment used as a temporary preview for the DevOps homelab" loading="lazy"><a class="project-image-link" href="https://github.com/BayoJohn/homelab-infrastructure" target="_blank" rel="noopener noreferrer">View project <i class="fas fa-arrow-right"></i></a></div>
+                        <div class="project-info"><span class="project-category">Automation</span><h3>Self-Hosted DevOps Homelab</h3><p>A practical infrastructure lab for CI/CD, Kubernetes, monitoring, registries, automation, networking and self-hosted services.</p><div class="project-tech"><span>Linux</span><span>Docker</span><span>Kubernetes</span><span>Jenkins</span><span>Prometheus</span></div><div class="project-links"><a href="https://github.com/BayoJohn/homelab-infrastructure" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i> GitHub</a><a href="https://github.com/BayoJohn/homelab-infrastructure" target="_blank" rel="noopener noreferrer">View Project <i class="fas fa-external-link-alt"></i></a></div></div>
                     </article>
                     <article class="project-card reveal" data-category="cicd automation" data-reveal="left">
-                        <div class="project-image"><img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&amp;fit=crop&amp;w=1200&amp;q=82" alt="Programming workstation used as a temporary preview for the CI/CD pipeline" loading="lazy"><a class="project-image-link" href="https://github.com/BayoJohn" target="_blank" rel="noreferrer">View project <i class="fas fa-arrow-right"></i></a></div>
-                        <div class="project-info"><span class="project-category">CI/CD</span><h3>Automated CI/CD Deployment Pipeline</h3><p>A delivery pipeline covering source control, automated testing, image creation, registry publishing and infrastructure deployment.</p><div class="project-tech"><span>GitHub Actions</span><span>Docker</span><span>CI/CD</span><span>Linux</span></div><div class="project-links"><a href="https://github.com/BayoJohn" target="_blank" rel="noreferrer"><i class="fab fa-github"></i> GitHub</a><a href="https://github.com/BayoJohn" target="_blank" rel="noreferrer">View Project <i class="fas fa-external-link-alt"></i></a></div></div>
+                        <div class="project-image"><img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&amp;fit=crop&amp;w=1200&amp;q=82" alt="Programming workstation used as a temporary preview for the CI/CD pipeline" loading="lazy"><a class="project-image-link" href="https://github.com/BayoJohn" target="_blank" rel="noopener noreferrer">View project <i class="fas fa-arrow-right"></i></a></div>
+                        <div class="project-info"><span class="project-category">CI/CD</span><h3>Automated CI/CD Deployment Pipeline</h3><p>A delivery pipeline covering source control, automated testing, image creation, registry publishing and infrastructure deployment.</p><div class="project-tech"><span>GitHub Actions</span><span>Docker</span><span>CI/CD</span><span>Linux</span></div><div class="project-links"><a href="https://github.com/BayoJohn" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i> GitHub</a><a href="https://github.com/BayoJohn" target="_blank" rel="noopener noreferrer">View Project <i class="fas fa-external-link-alt"></i></a></div></div>
                     </article>
                     <article class="project-card reveal" data-category="monitoring" data-reveal="right">
-                        <div class="project-image"><img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&amp;fit=crop&amp;w=1200&amp;q=82" alt="Analytics dashboard used as a temporary preview for the monitoring and observability project" loading="lazy"><a class="project-image-link" href="https://github.com/BayoJohn" target="_blank" rel="noreferrer">View project <i class="fas fa-arrow-right"></i></a></div>
-                        <div class="project-info"><span class="project-category">Monitoring</span><h3>Infrastructure Monitoring &amp; Observability</h3><p>A monitoring environment using Prometheus and Grafana for system metrics, application visibility, dashboards and alerting.</p><div class="project-tech"><span>Prometheus</span><span>Grafana</span><span>Alertmanager</span><span>Node Exporter</span></div><div class="project-links"><a href="https://github.com/BayoJohn" target="_blank" rel="noreferrer"><i class="fab fa-github"></i> GitHub</a><a href="https://github.com/BayoJohn" target="_blank" rel="noreferrer">View Project <i class="fas fa-external-link-alt"></i></a></div></div>
+                        <div class="project-image"><img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&amp;fit=crop&amp;w=1200&amp;q=82" alt="Analytics dashboard used as a temporary preview for the monitoring and observability project" loading="lazy"><a class="project-image-link" href="https://github.com/BayoJohn" target="_blank" rel="noopener noreferrer">View project <i class="fas fa-arrow-right"></i></a></div>
+                        <div class="project-info"><span class="project-category">Monitoring</span><h3>Infrastructure Monitoring &amp; Observability</h3><p>A monitoring environment using Prometheus and Grafana for system metrics, application visibility, dashboards and alerting.</p><div class="project-tech"><span>Prometheus</span><span>Grafana</span><span>Alertmanager</span><span>Node Exporter</span></div><div class="project-links"><a href="https://github.com/BayoJohn" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i> GitHub</a><a href="https://github.com/BayoJohn" target="_blank" rel="noopener noreferrer">View Project <i class="fas fa-external-link-alt"></i></a></div></div>
                     </article>
                 </div>
             </div>
@@ -279,11 +280,22 @@
                         <label><span>Subject</span><input type="text" name="subject" placeholder="Subject"></label>
                         <label><span>Message</span><textarea name="message" placeholder="Message" rows="6" required></textarea></label>
                         <button type="submit">Send Message <i class="fas fa-arrow-right" aria-hidden="true"></i></button>
+                        <p class="form-note">This opens your default email app. You can also email me directly at <a href="mailto:ogundelebayo8@gmail.com">ogundelebayo8@gmail.com</a>.</p>
                     </form>
                 </div>
             </div>
         </section>
     </main>
+
+    <footer class="site-footer">
+        <p>© 2026 StackedByBayo</p>
+        <nav aria-label="Footer navigation">
+            <a href="blog.html">Blog</a>
+            <a href="https://github.com/BayoJohn" target="_blank" rel="noopener noreferrer">GitHub</a>
+            <a href="https://www.linkedin.com/in/bayo123/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            <a href="mailto:ogundelebayo8@gmail.com">Email</a>
+        </nav>
+    </footer>
 
     <script src="assets/js/portfolio-home.js"></script>
 </body>

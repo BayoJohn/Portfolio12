@@ -83,8 +83,8 @@
     window.scrollTo(0, 0);
 
     if (!post) {
-      document.title = 'Article Not Found | Omobayonle Ogundele';
-      mount.innerHTML = '<section class="article-not-found" role="status"><h1>Article not found</h1><p>The article you\'re looking for doesn\'t exist.</p><a class="read-link" href="' + siteUrl('blog.html') + '"><i class="fas fa-arrow-left" aria-hidden="true"></i> Back to Blog</a></section>';
+      document.title = 'Page Not Found | Omobayonle Ogundele';
+      mount.innerHTML = '<section class="article-not-found" role="status"><p class="error-code">404</p><h1>Page not found</h1><p>The page you\'re looking for doesn\'t exist or may have moved.</p><div class="not-found-actions"><a class="read-link primary-link" href="' + siteUrl('index.html') + '">Back to Home</a><a class="read-link" href="' + siteUrl('blog.html') + '">Browse articles</a></div></section>';
       return;
     }
 

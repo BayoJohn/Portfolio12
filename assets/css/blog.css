@@ -413,6 +413,29 @@
   text-align: center;
 }
 
+.article-not-found .error-code {
+  margin: 0 0 8px;
+  color: var(--blue);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: .18em;
+}
+
+.not-found-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px 22px;
+  margin-top: 28px;
+}
+
+.not-found-actions .primary-link {
+  border-radius: 8px;
+  background: var(--blue);
+  padding: 11px 18px;
+  color: #fff;
+}
+
 .article-not-found h1 {
   margin: 0 0 18px;
   color: var(--text-primary);

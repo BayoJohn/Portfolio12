@@ -10,6 +10,8 @@
   function setTheme(theme, persist) {
     var isDark = theme === 'dark';
     document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+    var themeColor = document.querySelector('meta[name="theme-color"]');
+    if (themeColor) themeColor.setAttribute('content', isDark ? '#0f172a' : '#f8fafc');
     if (themeToggle) {
       themeToggle.setAttribute('aria-pressed', String(isDark));
       themeToggle.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
@@ -35,6 +37,7 @@
     toggle.classList.remove('open');
     sidebar.classList.remove('open');
     toggle.setAttribute('aria-expanded', 'false');
+    document.body.classList.remove('menu-open');
   }
 
   if (toggle && sidebar) {
@@ -42,10 +45,15 @@
       var isOpen = sidebar.classList.toggle('open');
       toggle.classList.toggle('open', isOpen);
       toggle.setAttribute('aria-expanded', String(isOpen));
+      document.body.classList.toggle('menu-open', isOpen);
     });
 
     document.addEventListener('keydown', function (event) {
       if (event.key === 'Escape') closeMenu();
+    });
+
+    document.addEventListener('click', function (event) {
+      if (sidebar.classList.contains('open') && !sidebar.contains(event.target) && !toggle.contains(event.target)) closeMenu();
     });
   }
 

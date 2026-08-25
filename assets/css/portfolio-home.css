@@ -1,4 +1,5 @@
 :root {
+  color-scheme: light;
   --bg-page: #f8fafc;
   --bg-surface: #ffffff;
   --bg-subtle: #f1f5f9;
@@ -36,6 +37,22 @@ body {
   color: var(--portfolio-ink);
   font-family: "Poppins", sans-serif;
   line-height: 1.7;
+  overflow-wrap: break-word;
+}
+
+html { scroll-behavior: smooth; }
+
+html,
+body { max-width: 100%; overflow-x: clip; }
+
+.page-section { scroll-margin-top: 24px; }
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid rgba(37, 99, 235, .35);
+  outline-offset: 3px;
 }
 
 a {
@@ -252,7 +269,7 @@ body > footer {
 .hero-copy {
   position: relative;
   z-index: 2;
-  padding: 70px 30px 70px clamp(60px, 7vw, 118px);
+  padding: 70px 20px 70px clamp(42px, 3.5vw, 58px);
 }
 
 .hero-kicker {
@@ -269,7 +286,7 @@ body > footer {
   margin: 0;
   color: #171b21;
   font-family: "Poppins", sans-serif;
-  font-size: clamp(45px, 5vw, 74px);
+  font-size: clamp(42px, 4vw, 58px);
   font-weight: 600;
   line-height: 1.08;
   letter-spacing: -.055em;
@@ -475,6 +492,7 @@ body > footer {
 }
 
 @media (max-width: 767px) {
+  body.menu-open { overflow: hidden; }
   .profile-sidebar {
     width: min(300px, 84vw);
     padding: 28px 24px 18px;
@@ -541,6 +559,34 @@ body > footer {
   .hero-portrait::after { background: linear-gradient(180deg, #fff 0, transparent 22%); }
   .hero-controls { right: 18px; bottom: 26px; }
 }
+
+.site-footer {
+  display: flex;
+  min-height: 92px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  border-top: 1px solid var(--border);
+  background: var(--bg-surface);
+  padding: 24px clamp(24px, 5vw, 72px);
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+.site-footer p { margin: 0; }
+.site-footer nav { display: flex; flex-wrap: wrap; gap: 12px 22px; }
+.site-footer a { color: var(--text-secondary); font-weight: 500; }
+.site-footer a:hover { color: var(--blue); }
+
+.form-note {
+  max-width: 520px;
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 11px;
+  line-height: 1.7;
+}
+
+.form-note a { color: var(--blue); }
 
 .skip-link {
   position: fixed;
@@ -2114,7 +2160,7 @@ body,
 [data-theme="dark"] .hero-button.primary {
   border-color: var(--accent);
   background: var(--accent);
-  color: #0b1220;
+  color: #fff;
 }
 
 [data-theme="dark"] .focus-card,
@@ -2184,6 +2230,7 @@ body,
 }
 
 @media (max-width: 767px) {
+  .site-footer { min-height: auto; align-items: flex-start; flex-direction: column; padding-block: 28px; }
   #contact .section-header { margin-bottom: 38px; }
   #contact .contact-layout { gap: 42px; }
   #contact .contact-details { gap: 20px; }
