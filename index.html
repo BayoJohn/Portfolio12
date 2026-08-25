@@ -42,7 +42,7 @@
             <a href="#education">Education</a>
             <a href="#experience">Experience</a>
             <a href="#projects">Projects</a>
-            <a href="#writing">Writing</a>
+            <a href="blog/">Blog</a>
             <a href="#contact">Contact</a>
         </nav>
         <div class="sidebar-footer">
@@ -243,16 +243,20 @@
             </div>
         </section>
 
-        <section class="content-section page-section" id="writing">
+        <section class="content-section page-section home-blog" id="blog-preview">
             <div class="section-inner">
-                <header class="section-header reveal" data-reveal="left"><span>Notes</span><h2>Technical writing</h2></header>
-                <div class="writing-grid">
-                    <article class="writing-featured reveal" data-reveal="left"><span>Infrastructure</span><h3>Notes from building reliable cloud systems</h3><p>Practical observations about automation, debugging and operating infrastructure.</p><a href="blog.html">View all articles <i class="fas fa-arrow-right"></i></a></article>
-                    <div class="writing-list">
-                        <a class="reveal" data-reveal="right" href="blog/building-my-first-kubernetes-homelab/"><span>Kubernetes</span><h3>Building My First Kubernetes Homelab</h3><i class="fas fa-arrow-right"></i></a>
-                        <a class="reveal" data-reveal="right" href="blog/setting-up-prometheus-and-grafana-in-my-homelab/"><span>Monitoring</span><h3>Setting Up Prometheus and Grafana in My Homelab</h3><i class="fas fa-arrow-right"></i></a>
-                    </div>
+                <header class="section-header reveal" data-reveal="left"><span>Blog &amp; Journal</span><h2>Notes from the journey</h2><p>Practical stories from building infrastructure, breaking things, fixing them, and learning DevOps along the way.</p></header>
+                <div class="home-blog-grid">
+                    <article class="home-blog-card reveal" data-reveal="left">
+                        <a class="home-blog-image" href="blog/when-my-homelab-started-feeling-like-a-platform/"><img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&amp;fit=crop&amp;w=1000&amp;q=82" alt="Computer equipment representing a self-hosted homelab" loading="lazy"></a>
+                        <div><p class="home-blog-meta"><span>Homelab</span><time datetime="2026-08-10">Aug 10, 2026</time></p><h3><a href="blog/when-my-homelab-started-feeling-like-a-platform/">When My Homelab Started Feeling Like a Platform</a></h3><p>A hands-on journey through Kubernetes, monitoring, automation and self-hosted infrastructure.</p><a class="home-blog-link" href="blog/when-my-homelab-started-feeling-like-a-platform/">Read article <i class="fas fa-arrow-right" aria-hidden="true"></i></a></div>
+                    </article>
+                    <article class="home-blog-card reveal" data-reveal="right">
+                        <a class="home-blog-image" href="blog/building-my-first-kubernetes-homelab/"><img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&amp;fit=crop&amp;w=1000&amp;q=82" alt="Server racks representing a Kubernetes homelab" loading="lazy"></a>
+                        <div><p class="home-blog-meta"><span>Kubernetes</span><time datetime="2026-07-28">Jul 28, 2026</time></p><h3><a href="blog/building-my-first-kubernetes-homelab/">Building My First Kubernetes Homelab</a></h3><p>Turning a few Linux machines into a practical cluster for learning deployments and operations.</p><a class="home-blog-link" href="blog/building-my-first-kubernetes-homelab/">Read article <i class="fas fa-arrow-right" aria-hidden="true"></i></a></div>
+                    </article>
                 </div>
+                <a class="home-blog-all reveal" data-reveal="up" href="blog/">View all articles <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
             </div>
         </section>
 
@@ -290,7 +294,7 @@
     <footer class="site-footer">
         <p>© 2026 StackedByBayo</p>
         <nav aria-label="Footer navigation">
-            <a href="blog.html">Blog</a>
+            <a href="blog/">Blog</a>
             <a href="https://github.com/BayoJohn" target="_blank" rel="noopener noreferrer">GitHub</a>
             <a href="https://www.linkedin.com/in/bayo123/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
             <a href="mailto:ogundelebayo8@gmail.com">Email</a>

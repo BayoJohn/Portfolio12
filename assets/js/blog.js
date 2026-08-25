@@ -10,7 +10,7 @@
   }
 
   function postUrl(post) {
-    return 'blog/' + encodeURIComponent(post.slug) + '/';
+    return siteUrl('blog/' + encodeURIComponent(post.slug) + '/');
   }
 
   function siteUrl(path) {
@@ -33,9 +33,9 @@
           '<a class="featured-post-image" href="' + featuredUrl + '" aria-label="Read ' + escapeHtml(featured.title) + '">' +
             '<img src="' + escapeHtml(featured.image) + '" alt="' + escapeHtml(featured.imageAlt) + '" loading="eager">' +
           '</a>' +
-          '<div class="featured-post-content">' +
+          '<div class="featured-post-content"><span class="featured-label">Featured</span>' +
             '<div class="post-meta"><span>' + escapeHtml(featured.category) + '</span><time datetime="' + featured.dateTime + '">' + escapeHtml(featured.date) + '</time></div>' +
-            '<h3><a href="' + featuredUrl + '">' + escapeHtml(featured.title) + '</a></h3>' +
+            '<h3><a class="card-link" href="' + featuredUrl + '">' + escapeHtml(featured.title) + '</a></h3>' +
             '<p>' + escapeHtml(featured.excerpt) + '</p>' +
             '<a class="read-link" href="' + featuredUrl + '">Read article <i class="fas fa-arrow-right" aria-hidden="true"></i></a>' +
           '</div>' +
@@ -48,7 +48,8 @@
       return '<article class="article-card" data-blog-card data-category="' + escapeHtml(post.categories.join(' ')) + '" data-search="' + escapeHtml(searchText) + '">' +
         '<a class="article-image" href="' + url + '" aria-label="Read ' + escapeHtml(post.title) + '"><img src="' + escapeHtml(post.image) + '" alt="' + escapeHtml(post.imageAlt) + '" loading="lazy"></a>' +
         '<div class="article-content"><div class="post-meta"><span>' + escapeHtml(post.category) + '</span><time datetime="' + post.dateTime + '">' + escapeHtml(post.date) + '</time></div>' +
-        '<h3><a href="' + url + '">' + escapeHtml(post.title) + '</a></h3><p>' + escapeHtml(post.excerpt) + '</p>' +
+        '<h3><a class="card-link" href="' + url + '">' + escapeHtml(post.title) + '</a></h3><p>' + escapeHtml(post.excerpt) + '</p>' +
+        '<span class="post-read-time">' + escapeHtml(post.readTime) + '</span>' +
         '<a class="read-link" href="' + url + '">Read article <i class="fas fa-arrow-right" aria-hidden="true"></i></a></div></article>';
     }).join('');
 
@@ -84,7 +85,7 @@
 
     if (!post) {
       document.title = 'Page Not Found | Omobayonle Ogundele';
-      mount.innerHTML = '<section class="article-not-found" role="status"><p class="error-code">404</p><h1>Page not found</h1><p>The page you\'re looking for doesn\'t exist or may have moved.</p><div class="not-found-actions"><a class="read-link primary-link" href="' + siteUrl('index.html') + '">Back to Home</a><a class="read-link" href="' + siteUrl('blog.html') + '">Browse articles</a></div></section>';
+      mount.innerHTML = '<section class="article-not-found" role="status"><p class="error-code">404</p><h1>Page not found</h1><p>The page you\'re looking for doesn\'t exist or may have moved.</p><div class="not-found-actions"><a class="read-link primary-link" href="' + siteUrl('index.html') + '">Back to Home</a><a class="read-link" href="' + siteUrl('blog/') + '">Browse articles</a></div></section>';
       return;
     }
 
@@ -93,13 +94,12 @@
     if (description) description.setAttribute('content', post.introduction);
 
     mount.innerHTML = '<article class="article-shell">' +
-      '<a class="back-to-blog" href="' + siteUrl('blog.html') + '"><i class="fas fa-arrow-left" aria-hidden="true"></i> All articles</a>' +
-      '<header class="article-header"><p class="article-eyebrow"><span>Writing</span> / ' + escapeHtml(post.category) + '</p>' +
-      '<h1>' + escapeHtml(post.title) + '</h1><p class="article-deck">' + escapeHtml(post.introduction) + '</p>' +
-      '<div class="article-byline"><time datetime="' + post.dateTime + '">' + escapeHtml(post.date) + '</time><span>' + escapeHtml(post.readTime) + '</span></div></header>' +
+      '<a class="back-to-blog" href="' + siteUrl('blog/') + '"><i class="fas fa-arrow-left" aria-hidden="true"></i> Back to Blog</a>' +
+      '<header class="article-header"><p class="article-eyebrow"><span>' + escapeHtml(post.category) + '</span> · ' + escapeHtml(post.date) + ' · ' + escapeHtml(post.readTime) + '</p>' +
+      '<h1>' + escapeHtml(post.title) + '</h1><p class="article-deck">' + escapeHtml(post.introduction) + '</p></header>' +
       '<figure class="article-cover"><img src="' + escapeHtml(post.image) + '" alt="' + escapeHtml(post.imageAlt) + '"></figure>' +
       '<div class="article-body">' + post.content.map(renderContentBlock).join('') +
-      '<div class="article-footer-links"><a href="' + siteUrl('blog.html') + '"><i class="fas fa-arrow-left" aria-hidden="true"></i> Back to all articles</a><a href="' + siteUrl('index.html#contact') + '">Discuss this article <i class="fas fa-arrow-right" aria-hidden="true"></i></a></div></div></article>';
+      '<div class="article-footer-links"><a href="' + siteUrl('blog/') + '"><i class="fas fa-arrow-left" aria-hidden="true"></i> Back to Blog</a><a href="' + siteUrl('index.html#contact') + '">Discuss this article <i class="fas fa-arrow-right" aria-hidden="true"></i></a></div></div></article>';
 
     initialiseCopyButtons();
   }

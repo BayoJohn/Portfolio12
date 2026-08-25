@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Practical DevOps, cloud, Kubernetes, Linux and homelab stories by Omobayonle Ogundele.">
+    <meta name="theme-color" content="#f8fafc">
+    <title>Blog &amp; Journal | Omobayonle Ogundele</title>
+    <script>
+        (function () {
+            try {
+                var savedTheme = localStorage.getItem('theme');
+                document.documentElement.setAttribute('data-theme', savedTheme === 'dark' ? 'dark' : 'light');
+            } catch (error) {}
+        }());
+    </script>
+    <link rel="shortcut icon" href="../assets/img/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&amp;family=Source+Code+Pro:wght@400;500;600&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="../assets/css/portfolio-home.css">
+    <link rel="stylesheet" href="../assets/css/blog.css">
+</head>
+<body class="blog-page">
+    <a class="skip-link" href="#blog-content">Skip to articles</a>
+    <header class="blog-navbar">
+        <div class="blog-navbar-inner">
+            <a class="blog-brand" href="../index.html"><strong>Omobayonle Ogundele</strong><span>DevOps &amp; Cloud Engineer</span></a>
+            <nav class="blog-nav-links" aria-label="Blog navigation">
+                <a class="active" href="./" aria-current="page">Blog</a>
+                <a href="../index.html">Portfolio</a>
+                <button class="theme-toggle" type="button" aria-label="Switch to dark mode" aria-pressed="false"><i class="far fa-moon" aria-hidden="true"></i><span>Dark</span></button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="site-content blog-main" id="blog-content">
+        <section class="blog-intro">
+            <div class="blog-container">
+                <header class="section-header blog-heading">
+                    <span>Blog &amp; Journal</span>
+                    <h1>Notes from the journey</h1>
+                    <p>Practical stories from building infrastructure, breaking things, fixing them, and learning DevOps along the way.</p>
+                    <p class="blog-topics">Stories about Kubernetes, cloud infrastructure, automation and the homelab.</p>
+                </header>
+                <div data-featured-post></div>
+            </div>
+        </section>
+
+        <section class="articles-section" aria-labelledby="latest-articles-title">
+            <div class="blog-container">
+                <div class="articles-heading"><div><span>Latest posts</span><h2 id="latest-articles-title">Recent articles</h2></div></div>
+                <div class="article-grid" id="article-grid"></div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="blog-footer"><div class="blog-container"><span>© 2026 StackedByBayo</span><a href="../index.html">Back to portfolio <i class="fas fa-arrow-right" aria-hidden="true"></i></a></div></footer>
+    <script src="../assets/js/portfolio-home.js"></script>
+    <script src="../assets/js/blog-data.js"></script>
+    <script src="../assets/js/blog.js"></script>
+</body>
+</html>
