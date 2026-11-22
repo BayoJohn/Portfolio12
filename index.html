@@ -4,120 +4,131 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Bayo is an IT Help Desk professional sharing practical technology guides, troubleshooting lessons, and hands-on projects.">
+    <meta name="description" content="Practical technology guides, IT troubleshooting lessons, hands-on projects, and reviews by Bayo Ogundele.">
     <meta name="theme-color" content="#f8fafc">
-    <title>StackedByBayo | Practical Technology &amp; IT Support</title>
+    <title>StackedByBayo | Technology, Explained Simply</title>
+    <link rel="canonical" href="https://stackedbybayo.site/">
+    <meta property="og:url" content="https://stackedbybayo.site/">
+    <meta property="og:title" content="Technology, Explained Simply">
+    <meta property="og:description" content="Practical technology guides, IT troubleshooting lessons, hands-on projects, and reviews by Bayo Ogundele.">
+    <meta property="og:site_name" content="StackedByBayo">
+    <meta property="og:type" content="website">
     <script>
         (function () {
             try {
                 var savedTheme = localStorage.getItem('theme');
-                document.documentElement.setAttribute('data-theme', savedTheme === 'dark' ? 'dark' : 'light');
+                document.documentElement.setAttribute('data-theme', savedTheme === 'light' || savedTheme === 'dark' ? savedTheme :
+                    (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
             } catch (error) {}
         }());
     </script>
-    <link rel="shortcut icon" href="assets/img/favicon.ico">
+    <link rel="shortcut icon" href="./assets/img/favicon.ico">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/fontawesome-all.min.css">
-    <link rel="stylesheet" href="assets/css/portfolio-home.css">
-    <link rel="stylesheet" href="assets/css/blog.css">
-    <link rel="stylesheet" href="assets/css/platform.css">
-    <link rel="canonical" href="https://stackedbybayo.site/">
-    <meta property="og:url" content="https://stackedbybayo.site/">
-    <meta property="og:title" content="StackedByBayo | Practical Technology &amp; IT Support">
-    <meta property="og:description" content="Bayo is an IT Help Desk professional sharing practical technology guides, troubleshooting lessons, and hands-on projects.">
-    <meta property="og:site_name" content="StackedByBayo">
-    <meta property="og:type" content="website">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="./assets/css/portfolio-home.css">
+    <link rel="stylesheet" href="./assets/css/blog.css">
+    <link rel="stylesheet" href="./assets/css/platform.css">
 </head>
-<body>
+<body class="blog-page publication-page">
     <a class="skip-link" href="#main-content">Skip to content</a>
-    <button class="sidebar-toggle" type="button" aria-label="Open navigation" aria-controls="profile-sidebar" aria-expanded="false">
-        <span></span><span></span><span></span>
-    </button>
-
-    <aside class="profile-sidebar" id="profile-sidebar">
-        <div class="sidebar-profile">
-            <img src="assets/img/omobayonle-ogundele.webp" alt="Portrait of Omobayonle Ogundele" width="1024" height="1536">
-            <p class="profile-name">Omobayonle Ogundele</p>
-            <p><strong>IT Help Desk Professional</strong><br>in Lagos, Nigeria</p>
-        </div>
-        <nav class="sidebar-nav" aria-label="Main navigation">
-            <a href="./" class="active" aria-current="page">Home</a>
-            <a href="./about/">About</a>
+    <header class="blog-navbar platform-navbar">
+        <div class="blog-navbar-inner">
+            <a class="blog-brand" href="./"><i class="fas fa-layer-group" aria-hidden="true"></i><strong>StackedByBayo</strong></a>
+            <nav id="site-navigation" class="blog-nav-links" aria-label="Main navigation"><a href="./" class="active" aria-current="page">Home</a>
             <a href="./academy/">Tech Academy</a>
             <a href="./blog/">Blog</a>
             <a href="./reviews/">Tech Reviews</a>
             <a href="./projects/">Projects</a>
-            <a href="./contact/">Contact</a>
-        </nav>
-        <div class="sidebar-footer">
-            <button class="theme-toggle" type="button" aria-label="Switch to dark mode" aria-pressed="false">
-                <i class="far fa-moon" aria-hidden="true"></i><span>Dark</span>
-            </button>
-            <p>© 2026 StackedByBayo</p>
-            <div class="sidebar-socials">
-                <a href="https://github.com/BayoJohn" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><i class="fab fa-github" aria-hidden="true"></i></a>
-                <a href="https://www.linkedin.com/in/bayo123/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i class="fab fa-linkedin-in" aria-hidden="true"></i></a>
-                <a href="mailto:ogundelebayo8@gmail.com" aria-label="Email"><i class="far fa-envelope"></i></a>
+            <a href="./about/">About</a>
+            <a href="./contact/">Contact</a></nav>
+            <button class="theme-toggle" type="button" aria-label="Switch to dark mode" aria-pressed="false"><i class="far fa-moon" aria-hidden="true"></i><span>Dark</span></button>
+            <button class="publication-menu" type="button" aria-controls="site-navigation" aria-expanded="false" hidden>Menu</button>
+        </div>
+    </header>
+    <main id="main-content" tabindex="-1" class="platform-main">
+        <section class="publication-hero" id="home" aria-labelledby="home-title">
+    <div class="blog-container publication-hero-inner">
+        <div>
+            <p class="publication-label">By Omobayonle Ogundele</p>
+            <h1 id="home-title">Technology,<br><span>Explained Simply.</span></h1>
+            <p class="publication-intro">Hey, I'm Bayo — an IT professional, tech enthusiast, and aspiring educator. I simplify everyday technology, share practical IT knowledge, and document what I'm learning.</p>
+            <div class="publication-actions">
+                <a class="publication-button primary" href="academy/">Explore Tech Academy</a>
+                <a class="publication-button" href="about/">Meet Bayo</a>
             </div>
         </div>
-    </aside>
+        <figure class="publication-portrait">
+            <img src="assets/img/bayo-portrait-640.webp" srcset="assets/img/bayo-portrait-640.webp 640w, assets/img/omobayonle-ogundele.webp 1024w" sizes="(max-width: 720px) min(86vw, 440px), 440px" width="1024" height="1536" alt="Omobayonle Ogundele at his workstation" fetchpriority="high">
+            <figcaption><strong>Bayo Ogundele</strong><span>IT Help Desk · Lagos, Nigeria</span></figcaption>
+        </figure>
+    </div>
+</section>
 
-    <main class="site-content" id="main-content" tabindex="-1">
-        <section class="portfolio-hero page-section" id="home">
-            <div class="hero-slide active">
-                <div class="hero-copy">
-                    <p class="hero-kicker">Hello, I’m Bayo</p>
-                    <h1>Making Technology Simple, Practical &amp; Accessible.</h1>
-                    <p class="hero-summary">I’m an IT Help Desk professional, tech enthusiast, and aspiring technology educator. I help people troubleshoot everyday IT problems, explore how technology works, and share what I learn along the way.</p>
-                    <div class="hero-actions">
-                        <a class="hero-button primary" href="blog/">Read the blog</a>
-                        <a class="hero-button" href="projects/">View projects</a>
-                        <a class="hero-button" href="about/">About me</a>
-                    </div>
-                </div>
-                <div class="hero-portrait"><div class="hero-carousel-track">
-                        <img class="hero-carousel-image portrait-slide active" src="assets/img/omobayonle-ogundele.webp" alt="Portrait of Omobayonle Ogundele at a workstation" width="1024" height="1536" fetchpriority="high">
-                    </div></div>
-            </div>
-        </section>
+<section class="blog-container publication-section" aria-labelledby="explore-title">
+    <h2 id="explore-title">Explore Technology</h2>
+    <div class="publication-topics">
+        <a class="publication-topic academy-topic" href="academy/">
+            <i class="fas fa-book-open" aria-hidden="true"></i>
+            <h3>Tech Academy</h3>
+            <p>Start with computer fundamentals, networking, operating systems, and IT troubleshooting.</p>
+        </a>
+        <a class="publication-topic reviews-topic" href="reviews/">
+            <i class="fas fa-laptop" aria-hidden="true"></i>
+            <h3>Tech Reviews</h3>
+            <p>A space for hands-on takes on hardware, software, and everyday tech.</p>
+        </a>
+        <a class="publication-topic journey-topic" href="blog/">
+            <i class="fas fa-terminal" aria-hidden="true"></i>
+            <h3>My Tech Journey</h3>
+            <p>Follow what I’m learning through IT support, cloud computing, and DevOps projects.</p>
+        </a>
+    </div>
+</section>
 
-        <section class="content-section section-tint" id="blog-preview">
-            <div class="section-inner">
-                <header class="section-header"><h2>From the blog</h2><p>Troubleshooting lessons and notes from my hands-on projects.</p></header>
-                <div class="home-blog-grid"><article class="article-card"><img class="platform-card-image" src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&amp;fit=crop&amp;w=1600&amp;q=84" alt="Computer equipment representing a self-hosted homelab" loading="lazy" decoding="async"><div class="article-content"><div class="post-meta"><span>Homelab</span> <time datetime="2026-08-10">Aug 10, 2026</time></div><h3><a class="card-link" href="./blog/when-my-homelab-started-feeling-like-a-platform/">When My Homelab Started Feeling Like a Platform</a></h3><p>A hands-on journey through Kubernetes, monitoring, automation and self-hosted infrastructure as my homelab evolved into something that started feeling like a real platform.</p></div></article><article class="article-card"><img class="platform-card-image" src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&amp;fit=crop&amp;w=1600&amp;q=84" alt="Server racks representing a Kubernetes homelab" loading="lazy" decoding="async"><div class="article-content"><div class="post-meta"><span>Kubernetes</span> <time datetime="2026-07-28">Jul 28, 2026</time></div><h3><a class="card-link" href="./blog/building-my-first-kubernetes-homelab/">Building My First Kubernetes Homelab</a></h3><p>What it took to turn a few Linux machines into a practical cluster for learning deployments, networking and operations.</p></div></article></div>
-                <a class="home-blog-all" href="blog/">Browse all articles</a>
-            </div>
-        </section>
-        <section class="content-section" id="about">
-            <div class="section-inner">
-                <header class="section-header"><h2>Work and learning</h2></header>
-                <p>I work in IT support. I’m also learning cloud and DevOps through hands-on projects and writing about what I discover.</p>
-                <p><a href="about/">More about me</a> · <a href="academy/">Tech Academy</a> · <a href="projects/">Explore projects</a></p>
-            </div>
-        </section>
-        <section class="content-section" id="projects">
-            <div class="section-inner">
-                <header class="section-header"><h2>Selected projects</h2></header>
-                <div class="projects-grid"><article class="project-card" data-category="kubernetes monitoring automation">
+<section class="publication-band" id="blog-preview" aria-labelledby="latest-title">
+    <div class="blog-container publication-section">
+        <div class="publication-heading"><h2 id="latest-title">Latest Articles</h2><a href="blog/">Browse the blog</a></div>
+        <div class="article-grid"><article class="article-card"><img class="platform-card-image" src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&amp;fit=crop&amp;w=1600&amp;q=84" srcset="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&amp;fit=crop&amp;w=480&amp;q=84 480w, https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&amp;fit=crop&amp;w=800&amp;q=84 800w" sizes="(max-width: 767px) 90vw, (max-width: 1050px) 45vw, 360px" alt="Computer equipment representing a self-hosted homelab" loading="lazy" decoding="async"><div class="article-content"><div class="post-meta"><span>Homelab</span> <time datetime="2026-08-10">Aug 10, 2026</time></div><h3><a class="card-link" href="./blog/when-my-homelab-started-feeling-like-a-platform/">When My Homelab Started Feeling Like a Platform</a></h3><p>A hands-on journey through Kubernetes, monitoring, automation and self-hosted infrastructure as my homelab evolved into something that started feeling like a real platform.</p></div></article><article class="article-card"><img class="platform-card-image" src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&amp;fit=crop&amp;w=1600&amp;q=84" srcset="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&amp;fit=crop&amp;w=480&amp;q=84 480w, https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&amp;fit=crop&amp;w=800&amp;q=84 800w" sizes="(max-width: 767px) 90vw, (max-width: 1050px) 45vw, 360px" alt="Server racks representing a Kubernetes homelab" loading="lazy" decoding="async"><div class="article-content"><div class="post-meta"><span>Kubernetes</span> <time datetime="2026-07-28">Jul 28, 2026</time></div><h3><a class="card-link" href="./blog/building-my-first-kubernetes-homelab/">Building My First Kubernetes Homelab</a></h3><p>What it took to turn a few Linux machines into a practical cluster for learning deployments, networking and operations.</p></div></article><article class="article-card"><img class="platform-card-image" src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&amp;fit=crop&amp;w=1600&amp;q=84" srcset="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&amp;fit=crop&amp;w=480&amp;q=84 480w, https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&amp;fit=crop&amp;w=800&amp;q=84 800w" sizes="(max-width: 767px) 90vw, (max-width: 1050px) 45vw, 360px" alt="Code editor representing a CI/CD workflow" loading="lazy" decoding="async"><div class="article-content"><div class="post-meta"><span>CI/CD</span> <time datetime="2026-07-14">Jul 14, 2026</time></div><h3><a class="card-link" href="./blog/what-i-learned-building-a-ci-cd-pipeline-from-scratch/">What I Learned Building a CI/CD Pipeline From Scratch</a></h3><p>Lessons from connecting source control, testing, image builds and deployment into one repeatable workflow.</p></div></article></div>
+    </div>
+</section>
+
+<section class="blog-container publication-section" id="projects" aria-labelledby="projects-title">
+    <div class="publication-heading"><h2 id="projects-title">Featured Projects</h2><a href="projects/">All projects</a></div>
+    <div class="projects-grid"><article class="project-card" data-category="kubernetes monitoring automation">
                         <div class="project-image"><img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&amp;fit=crop&amp;w=1200&amp;q=82" alt="Server infrastructure used as a temporary preview for the Kubernetes portfolio platform" loading="lazy"><a class="project-image-link" href="https://github.com/BayoJohn/Portfolio-website" target="_blank" rel="noopener noreferrer">View project <i class="fas fa-arrow-right"></i></a></div>
                         <div class="project-info"><span class="project-category">Kubernetes</span><h3>Production-Style Kubernetes Portfolio Platform</h3><p>A Kubernetes-based portfolio environment using k3s, ArgoCD, autoscaling, monitoring, TLS and GitOps deployment practices.</p><div class="project-tech"><span>Kubernetes</span><span>ArgoCD</span><span>Prometheus</span><span>Grafana</span><span>Docker</span></div><div class="project-links"><a href="https://github.com/BayoJohn/Portfolio-website" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i> GitHub</a><a href="https://github.com/BayoJohn/Portfolio-website" target="_blank" rel="noopener noreferrer">View Project <i class="fas fa-external-link-alt"></i></a></div></div>
                     </article><article class="project-card" data-category="cloud automation cicd">
                         <div class="project-image"><img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&amp;fit=crop&amp;w=1200&amp;q=82" alt="Cloud technology used as a temporary preview for the AWS serverless platform" loading="lazy"><a class="project-image-link" href="https://github.com/BayoJohn/aws-serverless-task-manager" target="_blank" rel="noopener noreferrer">View project <i class="fas fa-arrow-right"></i></a></div>
                         <div class="project-info"><span class="project-category">Cloud</span><h3>AWS Serverless Task Management Platform</h3><p>A serverless application architecture built with AWS services and managed through Terraform and automated deployment workflows.</p><div class="project-tech"><span>AWS Lambda</span><span>API Gateway</span><span>DynamoDB</span><span>Terraform</span><span>GitHub Actions</span></div><div class="project-links"><a href="https://github.com/BayoJohn/aws-serverless-task-manager" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i> GitHub</a><a href="https://github.com/BayoJohn/aws-serverless-task-manager" target="_blank" rel="noopener noreferrer">View Project <i class="fas fa-external-link-alt"></i></a></div></div>
                     </article></div>
-                <a class="home-blog-all" href="projects/">Browse all projects</a>
-            </div>
-        </section>
-        <section class="content-section section-tint" id="contact">
-            <div class="section-inner">
-                <header class="section-header"><h2>Get in touch</h2></header>
-                <p><a href="contact/">Contact me</a> or <a href="mailto:ogundelebayo8@gmail.com">email me directly</a>.</p>
-            </div>
-        </section>
+</section>
+
+<section class="publication-band" id="about" aria-labelledby="about-title">
+    <div class="blog-container publication-section publication-about">
+        <div>
+            <h2 id="about-title">About Bayo</h2>
+            <p>I work in IT Help Desk in Lagos, Nigeria. I’m interested in how everyday technology works, from the devices people use to the systems behind them. I’m learning cloud computing and DevOps through hands-on projects, and I share what I discover along the way.</p>
+        </div>
+        <a class="publication-button" href="about/">More about Bayo</a>
+    </div>
+</section>
+
+<section class="blog-container publication-section publication-contact" id="contact" aria-labelledby="contact-title">
+    <h2 id="contact-title">Get in touch</h2>
+    <p><a href="contact/">Contact me</a> or <a href="mailto:ogundelebayo8@gmail.com">email me directly</a>.</p>
+</section>
+
     </main>
-    <footer class="site-footer"><p>StackedByBayo</p><nav aria-label="Footer navigation"><a href="contact/">Contact</a></nav></footer>
-    <script src="assets/js/portfolio-home.js"></script>
+    <footer class="blog-footer publication-footer"><div class="blog-container"><p><strong>StackedByBayo</strong><br>© 2026 StackedByBayo</p><nav aria-label="Footer navigation"><a href="./">Home</a>
+            <a href="./academy/">Tech Academy</a>
+            <a href="./blog/">Blog</a>
+            <a href="./reviews/">Tech Reviews</a>
+            <a href="./projects/">Projects</a>
+            <a href="./about/">About</a>
+            <a href="./contact/">Contact</a></nav><nav aria-label="Social links"><a href="https://github.com/BayoJohn">GitHub</a><a href="https://www.linkedin.com/in/bayo123/">LinkedIn</a><a href="mailto:ogundelebayo8@gmail.com">Email</a></nav></div></footer>
+    <script src="./assets/js/portfolio-home.js"></script>
+    <script src="./assets/js/publication.js" defer></script>
 </body>
 </html>

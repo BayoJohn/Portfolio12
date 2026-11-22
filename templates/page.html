@@ -5,32 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="$description">
     <meta name="theme-color" content="#f8fafc">
-    <title>$title | StackedByBayo</title>
+    <title>$title</title>
     $metadata
     <script>
         (function () {
             try {
                 var savedTheme = localStorage.getItem('theme');
-                document.documentElement.setAttribute('data-theme', savedTheme === 'dark' ? 'dark' : 'light');
+                document.documentElement.setAttribute('data-theme', savedTheme === 'light' || savedTheme === 'dark' ? savedTheme :
+                    (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
             } catch (error) {}
         }());
     </script>
     <link rel="shortcut icon" href="${root}assets/img/favicon.ico">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&amp;family=Source+Code+Pro:wght@400;500;600&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
     <link rel="stylesheet" href="${root}assets/css/fontawesome-all.min.css">
     <link rel="stylesheet" href="${root}assets/css/portfolio-home.css">
     <link rel="stylesheet" href="${root}assets/css/blog.css">
     <link rel="stylesheet" href="${root}assets/css/platform.css">
 </head>
-<body class="blog-page">
+<body class="blog-page publication-page">
     <a class="skip-link" href="#main-content">Skip to content</a>
     <header class="blog-navbar platform-navbar">
         <div class="blog-navbar-inner">
-            <a class="blog-brand" href="${root}"><strong>StackedByBayo</strong></a>
-            <nav class="blog-nav-links" aria-label="Main navigation">$navigation</nav>
+            <a class="blog-brand" href="${root}"><i class="fas fa-layer-group" aria-hidden="true"></i><strong>StackedByBayo</strong></a>
+            <nav id="site-navigation" class="blog-nav-links" aria-label="Main navigation">$navigation</nav>
             <button class="theme-toggle" type="button" aria-label="Switch to dark mode" aria-pressed="false"><i class="far fa-moon" aria-hidden="true"></i><span>Dark</span></button>
+            <button class="publication-menu" type="button" aria-controls="site-navigation" aria-expanded="false" hidden>Menu</button>
         </div>
     </header>
     <main id="main-content" tabindex="-1" class="$main_class">
@@ -38,6 +40,6 @@
     </main>
     $footer
     <script src="${root}assets/js/portfolio-home.js"></script>
-    <script src="${root}assets/js/publication.js"></script>
+    <script src="${root}assets/js/publication.js" defer></script>
 </body>
 </html>

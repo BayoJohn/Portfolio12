@@ -11,7 +11,7 @@
     var isDark = theme === 'dark';
     document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
     var themeColor = document.querySelector('meta[name="theme-color"]');
-    if (themeColor) themeColor.setAttribute('content', isDark ? '#0f172a' : '#f8fafc');
+    if (themeColor) themeColor.setAttribute('content', isDark ? '#0b1120' : '#f8fafc');
     if (themeToggle) {
       themeToggle.setAttribute('aria-pressed', String(isDark));
       themeToggle.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');

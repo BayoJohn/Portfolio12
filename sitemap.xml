@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://stackedbybayo.site/</loc></url>
-  <url><loc>https://stackedbybayo.site/about/</loc></url>
   <url><loc>https://stackedbybayo.site/academy/</loc></url>
   <url><loc>https://stackedbybayo.site/blog/</loc></url>
   <url><loc>https://stackedbybayo.site/reviews/</loc></url>
   <url><loc>https://stackedbybayo.site/projects/</loc></url>
+  <url><loc>https://stackedbybayo.site/about/</loc></url>
   <url><loc>https://stackedbybayo.site/contact/</loc></url>
   <url><loc>https://stackedbybayo.site/blog/when-my-homelab-started-feeling-like-a-platform/</loc></url>
   <url><loc>https://stackedbybayo.site/blog/building-my-first-kubernetes-homelab/</loc></url>

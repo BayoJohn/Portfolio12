@@ -20,32 +20,34 @@
         (function () {
             try {
                 var savedTheme = localStorage.getItem('theme');
-                document.documentElement.setAttribute('data-theme', savedTheme === 'dark' ? 'dark' : 'light');
+                document.documentElement.setAttribute('data-theme', savedTheme === 'light' || savedTheme === 'dark' ? savedTheme :
+                    (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
             } catch (error) {}
         }());
     </script>
     <link rel="shortcut icon" href="../../assets/img/favicon.ico">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&amp;family=Source+Code+Pro:wght@400;500;600&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../../assets/css/fontawesome-all.min.css">
     <link rel="stylesheet" href="../../assets/css/portfolio-home.css">
     <link rel="stylesheet" href="../../assets/css/blog.css">
     <link rel="stylesheet" href="../../assets/css/platform.css">
 </head>
-<body class="blog-page">
+<body class="blog-page publication-page">
     <a class="skip-link" href="#main-content">Skip to content</a>
     <header class="blog-navbar platform-navbar">
         <div class="blog-navbar-inner">
-            <a class="blog-brand" href="../../"><strong>StackedByBayo</strong></a>
-            <nav class="blog-nav-links" aria-label="Main navigation"><a href="../../">Home</a>
-            <a href="../../about/">About</a>
+            <a class="blog-brand" href="../../"><i class="fas fa-layer-group" aria-hidden="true"></i><strong>StackedByBayo</strong></a>
+            <nav id="site-navigation" class="blog-nav-links" aria-label="Main navigation"><a href="../../">Home</a>
             <a href="../../academy/">Tech Academy</a>
-            <a href="../../blog/">Blog</a>
+            <a href="../../blog/" class="active" aria-current="location">Blog</a>
             <a href="../../reviews/">Tech Reviews</a>
             <a href="../../projects/">Projects</a>
+            <a href="../../about/">About</a>
             <a href="../../contact/">Contact</a></nav>
             <button class="theme-toggle" type="button" aria-label="Switch to dark mode" aria-pressed="false"><i class="far fa-moon" aria-hidden="true"></i><span>Dark</span></button>
+            <button class="publication-menu" type="button" aria-controls="site-navigation" aria-expanded="false" hidden>Menu</button>
         </div>
     </header>
     <main id="main-content" tabindex="-1" class="article-main">
@@ -71,8 +73,14 @@ curl -sfL https://get.k3s.io | sh -
 <h2>What I learned</h2>
 <p>The cluster was not impressive because of its size. It was useful because it gave me a repeatable place to practise deployments, failure recovery and the operational reasoning behind Kubernetes.</p><h2>Related reading</h2><ul><li><a href="../../blog/when-my-homelab-started-feeling-like-a-platform/">When My Homelab Started Feeling Like a Platform</a></li><li><a href="../../blog/setting-up-prometheus-and-grafana-in-my-homelab/">Setting Up Prometheus and Grafana in My Homelab</a></li><li><a href="../../blog/from-docker-containers-to-a-real-deployment-workflow/">From Docker Containers to a Real Deployment Workflow</a></li></ul></div></article>
     </main>
-    <footer class="blog-footer"><div class="blog-container"><span>StackedByBayo</span><a href="../../contact/">Contact</a></div></footer>
+    <footer class="blog-footer publication-footer"><div class="blog-container"><p><strong>StackedByBayo</strong><br>© 2026 StackedByBayo</p><nav aria-label="Footer navigation"><a href="../../">Home</a>
+            <a href="../../academy/">Tech Academy</a>
+            <a href="../../blog/">Blog</a>
+            <a href="../../reviews/">Tech Reviews</a>
+            <a href="../../projects/">Projects</a>
+            <a href="../../about/">About</a>
+            <a href="../../contact/">Contact</a></nav><nav aria-label="Social links"><a href="https://github.com/BayoJohn">GitHub</a><a href="https://www.linkedin.com/in/bayo123/">LinkedIn</a><a href="mailto:ogundelebayo8@gmail.com">Email</a></nav></div></footer>
     <script src="../../assets/js/portfolio-home.js"></script>
-    <script src="../../assets/js/publication.js"></script>
+    <script src="../../assets/js/publication.js" defer></script>
 </body>
 </html>
