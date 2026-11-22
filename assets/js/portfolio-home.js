@@ -32,24 +32,29 @@
     });
   }
 
-  function closeMenu() {
+  function closeMenu(restoreFocus) {
     if (!toggle || !sidebar) return;
     toggle.classList.remove('open');
     sidebar.classList.remove('open');
     toggle.setAttribute('aria-expanded', 'false');
+    toggle.setAttribute('aria-label', 'Open navigation');
     document.body.classList.remove('menu-open');
+    if (restoreFocus) toggle.focus();
   }
 
   if (toggle && sidebar) {
+    document.body.classList.add('menu-ready');
     toggle.addEventListener('click', function () {
       var isOpen = sidebar.classList.toggle('open');
       toggle.classList.toggle('open', isOpen);
       toggle.setAttribute('aria-expanded', String(isOpen));
       document.body.classList.toggle('menu-open', isOpen);
+      toggle.setAttribute('aria-label', isOpen ? 'Close navigation' : 'Open navigation');
+      if (isOpen) sidebar.querySelector('nav a').focus();
     });
 
     document.addEventListener('keydown', function (event) {
-      if (event.key === 'Escape') closeMenu();
+      if (event.key === 'Escape' && sidebar.classList.contains('open')) closeMenu(true);
     });
 
     document.addEventListener('click', function (event) {
@@ -67,7 +72,7 @@
     });
   });
 
-  document.querySelectorAll('a[href^="#"]:not(.sidebar-nav a)').forEach(function (link) {
+  document.querySelectorAll('a[href^="#"]:not(.sidebar-nav a, .skip-link)').forEach(function (link) {
     link.addEventListener('click', function (event) {
       var href = link.getAttribute('href');
       if (!href || href === '#') return;
@@ -186,8 +191,10 @@
   var projectCards = document.querySelectorAll('.project-card');
   filterButtons.forEach(function (button) {
     button.addEventListener('click', function () {
-      filterButtons.forEach(function (item) { item.classList.remove('active'); });
-      button.classList.add('active');
+      filterButtons.forEach(function (item) {
+        item.classList.toggle('active', item === button);
+        item.setAttribute('aria-pressed', String(item === button));
+      });
       var filter = button.dataset.filter;
       projectCards.forEach(function (card) {
         var categories = card.dataset.category.split(' ');

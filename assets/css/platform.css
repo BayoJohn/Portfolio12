@@ -1,0 +1,98 @@
+.profile-sidebar .profile-name {
+  margin: 18px 0 4px;
+  color: var(--text-primary);
+  font-size: 1.15rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.portfolio-hero h1 {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: clamp(2.25rem, 4vw, 3.5rem);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -.04em;
+}
+
+.portfolio-hero .hero-copy { animation: none; }
+.portfolio-hero .hero-summary { font-size: 1rem; }
+
+.platform-navbar {
+  height: auto;
+}
+
+.platform-navbar .blog-navbar-inner {
+  min-height: 72px;
+  flex-wrap: wrap;
+  gap: 10px 20px;
+  padding-block: 10px;
+}
+
+.platform-navbar .blog-nav-links {
+  flex-wrap: wrap;
+}
+
+.platform-navbar .blog-nav-links > a {
+  display: flex;
+  min-height: 44px;
+  align-items: center;
+  font-size: .875rem;
+}
+
+.platform-intro { padding-block: clamp(40px, 8vw, 88px); }
+
+.platform-intro h1 {
+  margin: 0 0 .45em;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  line-height: 1.15;
+  letter-spacing: -.035em;
+}
+
+.platform-intro p,
+.platform-content p {
+  max-width: 68ch;
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+.platform-main { min-height: 65vh; }
+.platform-content { padding-block: clamp(32px, 5vw, 72px); }
+
+.platform-content > section + section,
+.platform-feature { margin-bottom: 40px; }
+
+.platform-feature .article-card { max-width: 640px; }
+
+.platform-card-image {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+.platform-cover {
+  display: block;
+  width: 100%;
+  max-height: 500px;
+  object-fit: cover;
+}
+
+.article-body pre { overflow-x: auto; }
+.code-toolbar output { margin-left: .75rem; }
+
+#main-content { scroll-margin-top: 85px; }
+
+@media (max-width: 767px) {
+  .platform-navbar { position: static; }
+  .platform-navbar .blog-nav-links { order: 1; width: 100%; }
+  .platform-navbar .blog-nav-links > a { padding-inline: 8px; }
+  .sidebar-toggle { display: none; }
+  .menu-ready .sidebar-toggle { display: flex; }
+  .menu-ready .profile-sidebar:not(.open) { visibility: hidden; }
+  body:not(.menu-ready) .profile-sidebar {
+    position: static;
+    width: 100%;
+    transform: none;
+  }
+}

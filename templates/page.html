@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="$description">
+    <meta name="theme-color" content="#f8fafc">
+    <title>$title | StackedByBayo</title>
+    $metadata
+    <script>
+        (function () {
+            try {
+                var savedTheme = localStorage.getItem('theme');
+                document.documentElement.setAttribute('data-theme', savedTheme === 'dark' ? 'dark' : 'light');
+            } catch (error) {}
+        }());
+    </script>
+    <link rel="shortcut icon" href="${root}assets/img/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&amp;family=Source+Code+Pro:wght@400;500;600&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="${root}assets/css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="${root}assets/css/portfolio-home.css">
+    <link rel="stylesheet" href="${root}assets/css/blog.css">
+    <link rel="stylesheet" href="${root}assets/css/platform.css">
+</head>
+<body class="blog-page">
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <header class="blog-navbar platform-navbar">
+        <div class="blog-navbar-inner">
+            <a class="blog-brand" href="${root}"><strong>StackedByBayo</strong></a>
+            <nav class="blog-nav-links" aria-label="Main navigation">$navigation</nav>
+            <button class="theme-toggle" type="button" aria-label="Switch to dark mode" aria-pressed="false"><i class="far fa-moon" aria-hidden="true"></i><span>Dark</span></button>
+        </div>
+    </header>
+    <main id="main-content" tabindex="-1" class="$main_class">
+        $content
+    </main>
+    $footer
+    <script src="${root}assets/js/portfolio-home.js"></script>
+    <script src="${root}assets/js/publication.js"></script>
+</body>
+</html>
