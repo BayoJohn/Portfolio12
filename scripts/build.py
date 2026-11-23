@@ -92,7 +92,7 @@ def page(route, title, description, content, post=None):
     root = "/" if missing else "../" * route.count("/") or "./"
     seo = '<meta name="robots" content="noindex">' if missing else metadata(route, title, description, post)
     display_font = (
-        '    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@800&amp;display=swap">\n'
+        '    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif&amp;display=swap">\n'
         if not route else ""
     )
     write(route, template("page").substitute(
@@ -240,6 +240,7 @@ def main():
               if recent else '<p>There are no published articles yet.</p>')
     home = template("home").substitute(
         selected_projects="".join(project_cards[:2]), recent=latest,
+        ticker_topics="TECHNOLOGY • IT SUPPORT • COMPUTERS • NETWORKING • REVIEWS • DEVOPS",
     )
     page("", "Technology, Explained Simply",
          "Practical technology guides, IT troubleshooting lessons, hands-on projects, and reviews by Bayo Ogundele.",

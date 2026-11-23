@@ -27,6 +27,17 @@
     mobile.addEventListener('change', function () { setMenu(false); });
   }
 
+  var tickerToggle = document.querySelector('.editorial-ticker-toggle');
+  if (tickerToggle) {
+    var ticker = tickerToggle.closest('.editorial-ticker');
+    ticker.classList.add('ticker-ready');
+    tickerToggle.hidden = false;
+    tickerToggle.addEventListener('click', function () {
+      var paused = ticker.classList.toggle('ticker-paused');
+      tickerToggle.textContent = paused ? 'Play ticker' : 'Pause ticker';
+    });
+  }
+
   var carousel = document.querySelector('.publication-carousel');
   if (carousel) setupCarousel(carousel);
 
