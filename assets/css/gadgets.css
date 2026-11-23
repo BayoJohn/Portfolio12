@@ -1,0 +1,79 @@
+.gadgets-hub [tabindex="-1"] { scroll-margin-top: 90px; }
+.gadgets-hub a { text-underline-offset: .2em; }
+.gadgets-hub a:is(:hover, :focus-visible) {
+  color: var(--editorial-accent-ink);
+  text-decoration: underline;
+}
+.gadgets-lead, .gadgets-columns, .gadgets-review-grid, .gadgets-hardware {
+  display: grid;
+  gap: 0 clamp(20px, 4vw, 46px);
+}
+.gadgets-section {
+  min-width: 0;
+  margin-top: clamp(22px, 3.5vw, 40px);
+  padding-top: 14px;
+  border-top: 1px solid var(--editorial-line);
+}
+.gadgets-section > h2 {
+  margin: 0 0 10px;
+  font-size: clamp(1.35rem, 1.2rem + .75vw, 1.9rem);
+  line-height: 1.2;
+  letter-spacing: -.02em;
+}
+.gadgets-feature {
+  padding: clamp(16px, 2.5vw, 26px);
+  border-top: 2px solid var(--editorial-accent);
+  background: var(--editorial-white);
+}
+.gadgets-feature > h2 {
+  font: 600 .8125rem/1.5 var(--news-mono);
+  letter-spacing: .05em;
+  text-transform: uppercase;
+}
+.gadgets-feature .newsroom-image { aspect-ratio: 2 / 1; margin-bottom: 14px; }
+.gadgets-feature h3 { font-size: clamp(1.45rem, 1.1rem + 1.3vw, 2.1rem); }
+.gadgets-devices {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px clamp(10px, 2vw, 24px);
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+.gadgets-devices a {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding-inline: 10px;
+  border-bottom: 1px solid var(--editorial-line);
+  color: inherit;
+}
+.gadgets-review {
+  min-width: 0;
+  padding-block: 14px;
+  border-top: 1px solid var(--editorial-line);
+}
+.gadgets-review .newsroom-image { margin-bottom: 10px; }
+.gadgets-notes { margin: 0; }
+.gadgets-notes > div { min-width: 0; padding-block: 10px; border-top: 1px solid var(--editorial-line); }
+.gadgets-notes dt { font-weight: 700; }
+.gadgets-notes dd { margin: 3px 0 0; color: var(--editorial-muted); line-height: 1.55; }
+.gadgets-hub :target { border-top-color: var(--editorial-accent-ink); }
+@media (min-width: 640px) {
+  .gadgets-review-grid, .gadgets-hardware { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (min-width: 840px) {
+  .gadgets-lead, .gadgets-columns { grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); }
+  .gadgets-review-grid, .gadgets-hardware { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+.gadgets-table { max-width: 100%; overflow-x: auto; margin-top: 12px; }
+.gadgets-table table { width: 100%; border-collapse: collapse; font-size: .9375rem; }
+.gadgets-table caption { padding-block: 8px; text-align: start; font-weight: 700; }
+.gadgets-table :is(th, td) {
+  padding: 8px clamp(5px, 1.25vw, 14px);
+  border-top: 1px solid var(--editorial-line);
+  text-align: start;
+  vertical-align: top;
+}
+.gadgets-table thead { background: var(--editorial-white); }
+.gadgets-table tbody td { color: var(--editorial-muted); }

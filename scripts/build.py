@@ -188,6 +188,8 @@ def render_page(route, title, description, content, post=None):
     stylesheet = page_asset or ("academy" if route == "academy/" else None)
     if route in {"cybersecurity/", "ai/"}:
         styles = ("newsroom", route.rstrip("/"))
+    elif route == "reviews/":
+        styles = ("newsroom", "gadgets")
     else:
         styles = (stylesheet,) if stylesheet else ()
     return template("page").substitute(
@@ -877,6 +879,42 @@ def ai_hub(posts):
     ).rstrip()
 
 
+def gadgets_hub(reviews, archive, academy):
+    gadget_tags = {"gadgets", "hardware", "smartphones", "phones", "laptops", "audio",
+                   "wearables", "accessories", "gadget releases"}
+    coverage = matching_topics(archive, gadget_tags)
+    review_posts = [post for post in reviews if post.get("articleType") in {None, "", "review"}]
+    coverage = sorted([*coverage, *(post for post in reviews if post not in review_posts)],
+                      key=lambda post: post["date"], reverse=True)
+    releases = matching_topics(coverage, {"gadget releases", "product launch", "product releases"})
+    candidates = sorted([*review_posts, *coverage], key=lambda post: post["date"], reverse=True)
+    featured = next((post for post in candidates if post.get("featured")), candidates[0] if candidates else None)
+    fundamentals = next((post for post in academy if post["url"] == "academy/understanding-your-computer/"), None)
+    feature = featured or fundamentals
+    if featured in releases and len(releases) > 1:
+        releases = [post for post in releases if post is not featured]
+
+    def stories(posts, *, variant, css_class, empty):
+        if not posts:
+            return f'<p class="newsroom-summary">{escape(empty)}</p>'
+        rows = "".join(f'<article class="{css_class}">' + newsroom_story(post, variant=variant, heading="h3")
+                       + '</article>' for post in posts)
+        return f'<div class="gadgets-review-grid">{rows}</div>' if variant == "feature" else rows
+
+    return template("gadgets").substitute(
+        feature_title="Featured Gadget" if featured else "Featured Reading",
+        feature=newsroom_story(feature, variant="lead", heading="h3") if feature else (
+            '<p class="newsroom-summary">Start with the buying guides and hardware explainers below.</p>'
+        ),
+        releases=stories(releases[:3], variant="row", css_class="newsroom-row",
+                         empty="No gadget releases have been covered yet."),
+        reviews=stories(review_posts, variant="feature", css_class="gadgets-review",
+                        empty="No gadget reviews have been published yet."),
+        news=stories(coverage, variant="row", css_class="newsroom-row",
+                     empty="No gadget news has been published yet."),
+    ).rstrip()
+
+
 def render_site(collections, page=page, target=None):
     routes = [f"{route}/" if route else "" for route in NAV]
     published = sorted((post for items in collections.values() for post in items),
@@ -894,19 +932,9 @@ def render_site(collections, page=page, target=None):
             academy_intro = "Learn the basics of computers, networks and online security, then put them to work in Linux, IT support, cloud computing and DevOps."
             page("academy/", NAV[name], academy_intro,
                  academy_library(posts, collections.get("blog", []), academy_intro, empty))
-        else:
-            listing = "".join(
-                f'<section><h2>{escape(category)}</h2><div class="article-grid">'
-                + "".join(card(post, "../") for post in posts if post["category"] == category)
-                + '</div></section>'
-                for category in dict.fromkeys(post["category"] for post in posts)
-            )
-            if not listing:
-                listing = (
-                    f'<div class="publication-empty"><p>{escape(empty)}</p>'
-                    '<p><a href="../blog/">Browse tech articles</a></p></div>'
-                )
-            page(name + "/", NAV[name], intro, section(NAV[name], intro, listing))
+        elif name == "reviews":
+            page("reviews/", NAV[name], intro,
+                 gadgets_hub(posts, collections.get("blog", []), collections.get("academy", [])))
         for post in posts:
             if target is None or target == post["url"]:
                 article(post, name, posts, page, published=published, featured=sidebar_features)
