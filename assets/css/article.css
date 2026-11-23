@@ -1,5 +1,5 @@
 .reading-article {
-  --reading-width: 43rem;
+  --reading-width: 45rem;
   --reading-offset: 6rem;
   --reading-code-bg: #16191f;
   --reading-code-text: #f2f3f5;
@@ -81,9 +81,11 @@
 .reading-layout { width: min(100%, var(--reading-width)); margin-inline: auto; }
 .reading-column { min-width: 0; max-width: var(--reading-width); width: 100%; margin-inline: auto; }
 .reading-toc { margin-bottom: 24px; min-width: 0; }
+.reading-toc summary:hover { color: var(--editorial-accent-ink); }
 .reading-toc details {
   background: var(--editorial-white);
   border: 1px solid var(--editorial-line);
+  border-radius: 6px;
 }
 .reading-toc summary {
   min-height: 44px;
@@ -175,6 +177,11 @@
 .reading-article pre code { background: transparent; color: inherit; font: .875rem/1.65 var(--news-mono); }
 .reading-article .code-block { overflow: visible; margin: 1.4em 0; border-color: #343741; }
 .reading-article .code-block pre { margin: 0; border: 0; }
+.reading-article .syntax-keyword { color: #a9caff; }
+.reading-article .syntax-string { color: #bcdda6; }
+.reading-article .syntax-value { color: #fac291; }
+.reading-article .syntax-comment { color: #a9b1bf; }
+.reading-article .code-language { margin-inline-end: auto; text-transform: uppercase; }
 .reading-article .code-toolbar { border-color: #343741; color: #ced1d7; font-family: var(--news-mono); }
 .reading-article .code-toolbar button {
   min-height: 36px;
@@ -245,18 +252,6 @@
 }
 .reading-article .reading-adjacent a:hover { border-color: var(--editorial-accent-ink); }
 
-@media (min-width: 1060px) {
-  .reading-layout-with-toc {
-    display: grid;
-    align-items: start;
-    width: 100%;
-    grid-template-columns: minmax(180px, 230px) minmax(0, var(--reading-width));
-    gap: clamp(30px, 5vw, 64px);
-    justify-content: center;
-  }
-  .reading-toc { position: sticky; top: var(--reading-offset); }
-  .reading-toc details { max-height: calc(100vh - var(--reading-offset) - 16px); overflow-y: auto; }
-}
 @media (max-width: 650px) {
   .reading-cover img { aspect-ratio: 16 / 10; }
   .reading-article .article-byline { column-gap: 12px; }

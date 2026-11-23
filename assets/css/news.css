@@ -102,7 +102,6 @@
   color: var(--editorial-muted);
   font: 500 .8125rem/1.55 var(--news-mono);
 }
-.news-edition p { margin: 0 0 0 auto; text-transform: uppercase; }
 .news-edition-date { color: var(--editorial-ink); }
 .news-section { padding-block: clamp(28px, 3.5vw, 48px); scroll-margin-top: 84px; }
 .news-front { padding-block: clamp(14px, 1.7vw, 22px) 0; }
@@ -269,8 +268,6 @@
   .news-support .news-card + .news-card { padding-top: 0; border: 0; }
 }
 @media (max-width: 650px) {
-  .news-edition { flex-direction: column; }
-  .news-edition p { margin-inline-start: 0; }
   .news-card-lead .news-photo { aspect-ratio: 16 / 10; }
   .news-support, .news-latest, .news-topics, .news-gadgets, .news-academy, .news-about { grid-template-columns: minmax(0, 1fr); }
   .news-support .news-card:has(.news-image) { grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); }
@@ -287,14 +284,6 @@
   .news-photo { transition: transform .3s ease; }
   .news-card:is(:hover, :focus-within) .news-photo { transform: scale(1.035); }
   .news-search-link, .news-card a, .news-heading a, .news-link, .news-search-form button { transition: color .16s ease, border-color .16s ease, text-decoration-color .18s ease; }
-  @supports (animation-timeline: view()) {
-    .news-home .news-section:not(.news-front) {
-      animation: news-reveal linear both;
-      animation-timeline: view();
-      animation-range: entry 0% entry 24%;
-    }
-    @keyframes news-reveal { from { opacity: .85; transform: translateY(6px); } }
-  }
 }
 
 .news-shop {
@@ -321,3 +310,13 @@
 .publication-page .platform-content .article-content p { line-height: 1.55; }
 .publication-page .publication-about { max-width: 43rem; line-height: 1.7; }
 .publication-about a { color: var(--editorial-accent-ink); text-decoration: underline; text-underline-offset: .2em; }
+
+@media (max-width: 400px) {
+  .news-support .news-card:has(.news-image) { grid-template-columns: minmax(0, .7fr) minmax(0, 1.3fr); gap: 10px; }
+}
+
+.publication-page .article-card .article-content :is(h2, h3) {
+  margin: 0;
+  font-size: clamp(1.125rem, 1.5vw, 1.35rem);
+  line-height: 1.25;
+}

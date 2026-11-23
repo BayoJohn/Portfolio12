@@ -4,19 +4,19 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="A service that refused to start, a confusing disk-space reading and other problems that taught me how to troubleshoot Linux.">
+    <meta name="description" content="A restart loop, an unreachable service and a disk with free space all had clues. Here’s where I found them.">
     <meta name="theme-color" content="#F7F7F2">
-    <title>Troubleshooting the Problems That Actually Taught Me Linux | StackedByBayo</title>
+    <title>The Linux Failures That Taught Me to Troubleshoot | StackedByBayo</title>
     <link rel="canonical" href="https://stackedbybayo.site/blog/troubleshooting-the-problems-that-actually-taught-me-linux/">
     <meta property="og:url" content="https://stackedbybayo.site/blog/troubleshooting-the-problems-that-actually-taught-me-linux/">
-    <meta property="og:title" content="Troubleshooting the Problems That Actually Taught Me Linux">
-    <meta property="og:description" content="A service that refused to start, a confusing disk-space reading and other problems that taught me how to troubleshoot Linux.">
+    <meta property="og:title" content="The Linux Failures That Taught Me to Troubleshoot">
+    <meta property="og:description" content="A restart loop, an unreachable service and a disk with free space all had clues. Here’s where I found them.">
     <meta property="og:site_name" content="StackedByBayo">
     <meta property="og:type" content="article">
     <meta property="article:published_time" content="2026-06-16">
     <meta property="og:image" content="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&amp;fit=crop&amp;w=1600&amp;q=84">
     <meta property="og:image:alt" content="Computer hardware representing Linux systems troubleshooting">
-    <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "Troubleshooting the Problems That Actually Taught Me Linux", "description": "A service that refused to start, a confusing disk-space reading and other problems that taught me how to troubleshoot Linux.", "mainEntityOfPage": "https://stackedbybayo.site/blog/troubleshooting-the-problems-that-actually-taught-me-linux/", "datePublished": "2026-06-16", "articleSection": "Linux", "author": {"@type": "Person", "name": "Omobayonle Ogundele", "url": "https://stackedbybayo.site/about/"}, "keywords": ["linux"], "image": "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1600&q=84"}</script>
+    <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "The Linux Failures That Taught Me to Troubleshoot", "description": "A restart loop, an unreachable service and a disk with free space all had clues. Here\u2019s where I found them.", "mainEntityOfPage": "https://stackedbybayo.site/blog/troubleshooting-the-problems-that-actually-taught-me-linux/", "articleSection": "Linux", "author": {"@type": "Person", "name": "Omobayonle Ogundele", "url": "https://stackedbybayo.site/about/"}, "datePublished": "2026-06-16", "keywords": ["linux"], "image": "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1600&q=84"}</script>
     <script>
         (function () {
             try {
@@ -49,10 +49,10 @@
             <button class="theme-toggle" type="button" aria-label="Switch to dark mode" aria-pressed="false"><i class="far fa-moon" aria-hidden="true"></i><span>Dark</span></button>
             <button class="publication-menu" type="button" aria-controls="site-navigation" aria-expanded="false" hidden><span>Menu</span><i class="fas fa-bars" aria-hidden="true"></i></button>
             <nav id="site-navigation" class="blog-nav-links" aria-label="Main navigation"><a href="../../">Home</a>
-            <a href="../../blog/" class="active" aria-current="location">Tech Articles</a>
+            <a href="../../blog/" class="active" aria-current="location">Tech News</a>
             <a href="../../#cybersecurity">Cybersecurity</a>
-            <a href="../../#ai">AI</a>
-            <a href="../../reviews/">Reviews</a>
+            <a href="../../#ai">Artificial Intelligence</a>
+            <a href="../../reviews/">Gadgets</a>
             <a href="../../software/">Software</a>
             <a href="../../academy/">Tech Academy</a>
             <a href="../../shop/">Shop <small class="shop-nav-status">Soon</small></a>
@@ -62,49 +62,50 @@
     <main id="main-content" tabindex="-1" class="article-main">
         <article class="article-shell reading-article">
     <header class="article-header">
-        <a class="back-to-blog" href="../">Back to Tech Articles</a>
+        <a class="back-to-blog" href="../">Back to Tech News</a>
         <p class="article-eyebrow">Linux <span class="reading-type">Commentary</span></p>
-        <h1>Troubleshooting the Problems That Actually Taught Me Linux</h1>
-        <p class="article-deck">The Linux lessons that stayed with me came from broken services, confusing permissions and networks that did not behave as expected.</p>
+        <h1>The Linux Failures That Taught Me to Troubleshoot</h1>
+        <p class="article-deck">Four Linux failures taught me to check the journal, process identity, network path and filesystem before changing settings.</p>
         <div class="article-byline">
             <span>By <a href="../../about/">Omobayonle Ogundele</a></span>
-            <span>Published <time datetime="2026-06-16">Jun 16, 2026</time></span>
+<span>Published <time datetime="2026-06-16">Jun 16, 2026</time></span>
 
-            <span>7 min read</span>
+            <span>2 min read</span>
         </div>
     </header>
-    <figure class="reading-cover"><img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&amp;fit=crop&amp;w=1600&amp;q=84" alt="Computer hardware representing Linux systems troubleshooting" srcset="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&amp;fit=crop&amp;w=480&amp;q=84 480w, https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&amp;fit=crop&amp;w=800&amp;q=84 800w, https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&amp;fit=crop&amp;w=1200&amp;q=84 1200w, https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&amp;fit=crop&amp;w=1600&amp;q=84 1600w" sizes="(max-width: 1230px) 94vw, 1160px" fetchpriority="high" decoding="async"></figure>
-    <div class="reading-layout reading-layout-with-toc">
-<aside class="reading-toc"><details><summary>On this page</summary><nav aria-label="Table of contents"><ol><li><a href="#the-service-that-would-not-start">The service that would not start</a></li><li><a href="#permissions-beyond-chmod">Permissions beyond chmod</a></li><li><a href="#following-a-network-request">Following a network request</a></li><li><a href="#disk-space-that-looked-available">Disk space that looked available</a></li><li><a href="#the-habit-that-mattered-most">The habit that mattered most</a></li></ol></nav></details></aside>
+    <figure class="reading-cover"><img class="reading-cover-image" src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&amp;fit=crop&amp;w=1600&amp;q=84" srcset="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&amp;fit=crop&amp;w=480&amp;q=84 480w, https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&amp;fit=crop&amp;w=800&amp;q=84 800w, https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&amp;fit=crop&amp;w=1200&amp;q=84 1200w, https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&amp;fit=crop&amp;w=1600&amp;q=84 1600w" sizes="(max-width: 1230px) 94vw, 1160px" alt="Computer hardware representing Linux systems troubleshooting" fetchpriority="high" decoding="async"><figcaption><a href="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&amp;fit=crop&amp;w=1600&amp;q=84">Illustrative photo via Unsplash</a></figcaption></figure>
+    <div class="reading-layout">
+<aside class="reading-toc"><details><summary>On this page</summary><nav aria-label="Table of contents"><ol><li><a href="#the-service-that-would-not-start">A restart loop and a clue in the journal</a></li><li><a href="#permissions-beyond-chmod">Checking every directory in the path</a></li><li><a href="#following-a-network-request">Following the request from DNS to the service</a></li><li><a href="#disk-space-that-looked-available">When a disk has free space but no free inodes</a></li><li><a href="#the-habit-that-mattered-most">Test one explanation at a time</a></li></ol></nav></details></aside>
         <div class="reading-column">
             <div class="article-body">
 
                 <p>Reading Linux documentation gave me vocabulary. Troubleshooting real failures taught me how the pieces connect and how to gather evidence before making a change.</p>
-<h2 id="the-service-that-would-not-start">The service that would not start</h2>
+<h2 id="the-service-that-would-not-start">A restart loop and a clue in the journal</h2>
 <p>A systemd unit kept restarting with a generic failure. The useful clue was not in the application output but in the journal, where a working-directory permission error showed exactly which user was being denied.</p>
 <pre><code class="language-shell">systemctl status my-service
 journalctl -u my-service --since &quot;10 minutes ago&quot;
 namei -l /srv/my-service/config.yml
 </code></pre>
-<h2 id="permissions-beyond-chmod">Permissions beyond chmod</h2>
-<p>Changing a file to 777 would have hidden the underlying mistake. Checking ownership, parent-directory traversal and the service account led to a narrow fix that preserved the intended access model.</p>
-<h2 id="following-a-network-request">Following a network request</h2>
+<h2 id="permissions-beyond-chmod">Checking every directory in the path</h2>
+<p>Changing a file to mode <code>777</code> would have hidden the underlying mistake. Checking ownership, parent-directory traversal and the service account led to a narrow fix that preserved the intended access model.</p>
+<h2 id="following-a-network-request">Following the request from DNS to the service</h2>
 <p>When a host could resolve a name but not reach the service, I learned to test DNS, routing, listening sockets and firewall rules independently. That sequence made network debugging far less mysterious.</p>
 <pre><code class="language-shell">dig service.internal
 ip route
 ss -lntp
 curl -v http://service.internal:8080/health
 </code></pre>
-<h2 id="disk-space-that-looked-available">Disk space that looked available</h2>
-<p>One node reported free disk space but could not create files. The filesystem had exhausted its inodes because a failed job had created millions of tiny files.</p>
+<p><code>my-service</code> and <code>service.internal</code> stand for the unit and host being investigated. Use the corresponding names for your own system.</p>
+<h2 id="disk-space-that-looked-available">When a disk has free space but no free inodes</h2>
+<p>One node reported free disk space but could not create files. The filesystem had exhausted its inodes because a failed job had created millions of tiny files. On filesystems that report inode totals, <code>df -i</code> shows inode usage, while <code>df -h</code> reports space in readable units.</p>
 <ul>
 <li>Read logs before restarting.</li>
 <li>Check the identity a process actually uses.</li>
 <li>Test one network layer at a time.</li>
 <li>Measure both disk blocks and inodes.</li>
 </ul>
-<h2 id="the-habit-that-mattered-most">The habit that mattered most</h2>
-<p>The biggest improvement was forming a hypothesis, running a command that could disprove it and recording the result. Linux became easier when troubleshooting became an investigation instead of a sequence of guesses.</p>
+<h2 id="the-habit-that-mattered-most">Test one explanation at a time</h2>
+<p>The biggest improvement was forming a hypothesis, running a command that could disprove it and recording the result. That habit gave me a repeatable way to investigate each failure. If commands and paths still feel unfamiliar, start with the <a href="../../academy/linux-terminal-essentials/">Linux terminal guide</a>.</p>
             </div>
             <footer class="reading-footer">
                 <section class="reading-author" aria-label="Author">
@@ -115,12 +116,12 @@ curl -v http://service.internal:8080/health
 <section class="reading-topics"><h2>Topics</h2><ul><li>linux</li></ul></section>
 
                 <div class="reading-share" aria-label="Sharing options">
-                    <a class="reading-action" href="mailto:?subject=Troubleshooting%20the%20Problems%20That%20Actually%20Taught%20Me%20Linux&amp;body=https%3A%2F%2Fstackedbybayo.site%2Fblog%2Ftroubleshooting-the-problems-that-actually-taught-me-linux%2F">Share by email</a>
+                    <a class="reading-action" href="mailto:?subject=The%20Linux%20Failures%20That%20Taught%20Me%20to%20Troubleshoot&amp;body=https%3A%2F%2Fstackedbybayo.site%2Fblog%2Ftroubleshooting-the-problems-that-actually-taught-me-linux%2F">Share by email</a>
                     <button class="reading-action" type="button" data-copy-article="https://stackedbybayo.site/blog/troubleshooting-the-problems-that-actually-taught-me-linux/" hidden>Copy article link</button>
                     <span role="status" data-share-status></span>
                 </div>
-<section class="reading-related"><h2>Related articles</h2><ul><li><a href="../../blog/when-my-homelab-started-feeling-like-a-platform/">When My Homelab Started Feeling Like a Platform</a></li><li><a href="../../blog/building-my-first-kubernetes-homelab/">Building My First Kubernetes Homelab</a></li><li><a href="../../blog/what-i-learned-building-a-ci-cd-pipeline-from-scratch/">What I Learned Building a CI/CD Pipeline From Scratch</a></li></ul></section>
-<nav class="reading-adjacent" aria-label="Adjacent articles"><a rel="prev" href="../../blog/setting-up-prometheus-and-grafana-in-my-homelab/"><span class="reading-label">Newer article</span><strong>Setting Up Prometheus and Grafana in My Homelab</strong></a><a rel="next" href="../../blog/from-docker-containers-to-a-real-deployment-workflow/"><span class="reading-label">Older article</span><strong>From Docker Containers to a Real Deployment Workflow</strong></a></nav>
+<section class="reading-related"><h2>Related articles</h2><ul><li><a href="../../blog/when-my-homelab-started-feeling-like-a-platform/">How My Homelab Grew From Docker Compose to GitOps</a></li><li><a href="../../blog/building-my-first-kubernetes-homelab/">What It Took to Build My First Kubernetes Homelab</a></li><li><a href="../../blog/what-i-learned-building-a-ci-cd-pipeline-from-scratch/">What My First CI/CD Pipeline Taught Me About Safer Releases</a></li></ul></section>
+<nav class="reading-adjacent" aria-label="Adjacent articles"><a rel="prev" href="../../blog/setting-up-prometheus-and-grafana-in-my-homelab/"><span class="reading-label">Newer article</span><strong>What Prometheus and Grafana Showed Me About My Homelab</strong></a><a rel="next" href="../../blog/from-docker-containers-to-a-real-deployment-workflow/"><span class="reading-label">Older article</span><strong>From Docker Run to a Repeatable Deployment</strong></a></nav>
             </footer>
         </div>
     </div>
@@ -128,7 +129,7 @@ curl -v http://service.internal:8080/health
     </main>
     <footer class="blog-footer publication-footer"><div class="blog-container"><p><strong>StackedByBayo</strong><br>© 2026 StackedByBayo</p><nav aria-label="Footer navigation"><a href="../../">Home</a>
             <a href="../../academy/">Tech Academy</a>
-            <a href="../../blog/">Tech Articles</a>
+            <a href="../../blog/">Tech News</a>
             <a href="../../reviews/">Gadgets &amp; Reviews</a>
             <a href="../../software/">Software</a>
             <a href="../../shop/">Shop <small class="shop-nav-status">Soon</small></a>

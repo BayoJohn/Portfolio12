@@ -4,19 +4,19 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="How I used Terraform to make a small AWS application reproducible, and what an IAM mistake taught me about permissions.">
+    <meta name="description" content="A small AWS application gave me a reason to learn how Terraform plans, state and least-privilege permissions fit together.">
     <meta name="theme-color" content="#F7F7F2">
-    <title>Building My First AWS Automation Project | StackedByBayo</title>
+    <title>Automating My First AWS Project With Terraform | StackedByBayo</title>
     <link rel="canonical" href="https://stackedbybayo.site/blog/building-my-first-aws-automation-project/">
     <meta property="og:url" content="https://stackedbybayo.site/blog/building-my-first-aws-automation-project/">
-    <meta property="og:title" content="Building My First AWS Automation Project">
-    <meta property="og:description" content="How I used Terraform to make a small AWS application reproducible, and what an IAM mistake taught me about permissions.">
+    <meta property="og:title" content="Automating My First AWS Project With Terraform">
+    <meta property="og:description" content="A small AWS application gave me a reason to learn how Terraform plans, state and least-privilege permissions fit together.">
     <meta property="og:site_name" content="StackedByBayo">
     <meta property="og:type" content="article">
     <meta property="article:published_time" content="2026-05-19">
     <meta property="og:image" content="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&amp;fit=crop&amp;w=1600&amp;q=84">
     <meta property="og:image:alt" content="Cloud technology representing an AWS automation project">
-    <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "Building My First AWS Automation Project", "description": "How I used Terraform to make a small AWS application reproducible, and what an IAM mistake taught me about permissions.", "mainEntityOfPage": "https://stackedbybayo.site/blog/building-my-first-aws-automation-project/", "datePublished": "2026-05-19", "articleSection": "Cloud", "author": {"@type": "Person", "name": "Omobayonle Ogundele", "url": "https://stackedbybayo.site/about/"}, "keywords": ["cloud"], "image": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1600&q=84"}</script>
+    <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "Automating My First AWS Project With Terraform", "description": "A small AWS application gave me a reason to learn how Terraform plans, state and least-privilege permissions fit together.", "mainEntityOfPage": "https://stackedbybayo.site/blog/building-my-first-aws-automation-project/", "articleSection": "Cloud", "author": {"@type": "Person", "name": "Omobayonle Ogundele", "url": "https://stackedbybayo.site/about/"}, "datePublished": "2026-05-19", "keywords": ["cloud"], "image": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1600&q=84"}</script>
     <script>
         (function () {
             try {
@@ -49,10 +49,10 @@
             <button class="theme-toggle" type="button" aria-label="Switch to dark mode" aria-pressed="false"><i class="far fa-moon" aria-hidden="true"></i><span>Dark</span></button>
             <button class="publication-menu" type="button" aria-controls="site-navigation" aria-expanded="false" hidden><span>Menu</span><i class="fas fa-bars" aria-hidden="true"></i></button>
             <nav id="site-navigation" class="blog-nav-links" aria-label="Main navigation"><a href="../../">Home</a>
-            <a href="../../blog/" class="active" aria-current="location">Tech Articles</a>
+            <a href="../../blog/" class="active" aria-current="location">Tech News</a>
             <a href="../../#cybersecurity">Cybersecurity</a>
-            <a href="../../#ai">AI</a>
-            <a href="../../reviews/">Reviews</a>
+            <a href="../../#ai">Artificial Intelligence</a>
+            <a href="../../reviews/">Gadgets</a>
             <a href="../../software/">Software</a>
             <a href="../../academy/">Tech Academy</a>
             <a href="../../shop/">Shop <small class="shop-nav-status">Soon</small></a>
@@ -62,27 +62,27 @@
     <main id="main-content" tabindex="-1" class="article-main">
         <article class="article-shell reading-article">
     <header class="article-header">
-        <a class="back-to-blog" href="../">Back to Tech Articles</a>
+        <a class="back-to-blog" href="../">Back to Tech News</a>
         <p class="article-eyebrow">Cloud <span class="reading-type">Commentary</span></p>
-        <h1>Building My First AWS Automation Project</h1>
-        <p class="article-deck">My first AWS automation project turned a manually assembled cloud experiment into infrastructure I could review, recreate and safely remove.</p>
+        <h1>Automating My First AWS Project With Terraform</h1>
+        <p class="article-deck">I used Terraform to turn a small AWS application into infrastructure I could review, recreate and remove.</p>
         <div class="article-byline">
             <span>By <a href="../../about/">Omobayonle Ogundele</a></span>
-            <span>Published <time datetime="2026-05-19">May 19, 2026</time></span>
+<span>Published <time datetime="2026-05-19">May 19, 2026</time></span>
 
-            <span>7 min read</span>
+            <span>2 min read</span>
         </div>
     </header>
-    <figure class="reading-cover"><img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&amp;fit=crop&amp;w=1600&amp;q=84" alt="Cloud technology representing an AWS automation project" srcset="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&amp;fit=crop&amp;w=480&amp;q=84 480w, https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&amp;fit=crop&amp;w=800&amp;q=84 800w, https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&amp;fit=crop&amp;w=1200&amp;q=84 1200w, https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&amp;fit=crop&amp;w=1600&amp;q=84 1600w" sizes="(max-width: 1230px) 94vw, 1160px" fetchpriority="high" decoding="async"></figure>
-    <div class="reading-layout reading-layout-with-toc">
-<aside class="reading-toc"><details><summary>On this page</summary><nav aria-label="Table of contents"><ol><li><a href="#choosing-a-deliberately-small-project">Choosing a deliberately small project</a></li><li><a href="#describing-infrastructure-with-terraform">Describing infrastructure with Terraform</a></li><li><a href="#the-iam-mistake">The IAM mistake</a></li><li><a href="#automating-validation-and-deployment">Automating validation and deployment</a></li><li><a href="#what-i-would-do-differently">What I would do differently</a></li></ol></nav></details></aside>
+    <figure class="reading-cover"><img class="reading-cover-image" src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&amp;fit=crop&amp;w=1600&amp;q=84" srcset="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&amp;fit=crop&amp;w=480&amp;q=84 480w, https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&amp;fit=crop&amp;w=800&amp;q=84 800w, https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&amp;fit=crop&amp;w=1200&amp;q=84 1200w, https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&amp;fit=crop&amp;w=1600&amp;q=84 1600w" sizes="(max-width: 1230px) 94vw, 1160px" alt="Cloud technology representing an AWS automation project" fetchpriority="high" decoding="async"><figcaption><a href="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&amp;fit=crop&amp;w=1600&amp;q=84">Illustrative photo via Unsplash</a></figcaption></figure>
+    <div class="reading-layout">
+<aside class="reading-toc"><details><summary>On this page</summary><nav aria-label="Table of contents"><ol><li><a href="#choosing-a-deliberately-small-project">A small application with three AWS services</a></li><li><a href="#describing-infrastructure-with-terraform">Splitting the Terraform module from environment settings</a></li><li><a href="#the-iam-mistake">Narrowing the Lambda role</a></li><li><a href="#automating-validation-and-deployment">Reviewing a plan before applying it</a></li><li><a href="#what-i-would-do-differently">What I would add from day one</a></li></ol></nav></details></aside>
         <div class="reading-column">
             <div class="article-body">
 
                 <p>I had created AWS resources through the console before, but I wanted to understand how to describe an entire small application as code and reproduce it in a clean account.</p>
-<h2 id="choosing-a-deliberately-small-project">Choosing a deliberately small project</h2>
+<h2 id="choosing-a-deliberately-small-project">A small application with three AWS services</h2>
 <p>The application stored static files in S3, delivered them through CloudFront and used a Lambda function for a small API task. A limited scope let me focus on identity, state and repeatability.</p>
-<h2 id="describing-infrastructure-with-terraform">Describing infrastructure with Terraform</h2>
+<h2 id="describing-infrastructure-with-terraform">Splitting the Terraform module from environment settings</h2>
 <p>I separated reusable resources into a module and kept environment values in a small root configuration. Remote state and locking were added before anyone else needed to run the project.</p>
 <pre><code class="language-hcl">module &quot;web&quot; {
   source      = &quot;./modules/web&quot;
@@ -90,9 +90,10 @@
   domain_name = var.domain_name
 }
 </code></pre>
-<h2 id="the-iam-mistake">The IAM mistake</h2>
+<p>This example depends on the project’s local <code>./modules/web</code> directory and its inputs. It shows what the root configuration passes to the module.</p>
+<h2 id="the-iam-mistake">Narrowing the Lambda role</h2>
 <p>My first role was far too broad because it was convenient. Replacing it with actions tied to specific resources forced me to understand what the function actually needed and reduced the impact of a compromised credential.</p>
-<h2 id="automating-validation-and-deployment">Automating validation and deployment</h2>
+<h2 id="automating-validation-and-deployment">Reviewing a plan before applying it</h2>
 <p>The pipeline now runs formatting and validation, creates a plan for review and applies only after approval. The plan artifact makes infrastructure changes visible before they reach AWS.</p>
 <ul>
 <li>Tag resources for cost and ownership.</li>
@@ -100,8 +101,8 @@
 <li>Keep state remote and protected.</li>
 <li>Include destroy and recovery procedures in the project notes.</li>
 </ul>
-<h2 id="what-i-would-do-differently">What I would do differently</h2>
-<p>I would add budget alerts and policy checks on day one. Infrastructure automation makes creation easy, so guardrails for cost and security need to be equally easy to use.</p>
+<h2 id="what-i-would-do-differently">What I would add from day one</h2>
+<p>I would add budget alerts and policy checks on day one. Infrastructure automation makes creation easy, so guardrails for cost and security need to be equally easy to use. I took a similar approach to review and recovery in my <a href="../what-i-learned-building-a-ci-cd-pipeline-from-scratch/">CI/CD pipeline</a>.</p>
             </div>
             <footer class="reading-footer">
                 <section class="reading-author" aria-label="Author">
@@ -112,12 +113,12 @@
 <section class="reading-topics"><h2>Topics</h2><ul><li>cloud</li></ul></section>
 
                 <div class="reading-share" aria-label="Sharing options">
-                    <a class="reading-action" href="mailto:?subject=Building%20My%20First%20AWS%20Automation%20Project&amp;body=https%3A%2F%2Fstackedbybayo.site%2Fblog%2Fbuilding-my-first-aws-automation-project%2F">Share by email</a>
+                    <a class="reading-action" href="mailto:?subject=Automating%20My%20First%20AWS%20Project%20With%20Terraform&amp;body=https%3A%2F%2Fstackedbybayo.site%2Fblog%2Fbuilding-my-first-aws-automation-project%2F">Share by email</a>
                     <button class="reading-action" type="button" data-copy-article="https://stackedbybayo.site/blog/building-my-first-aws-automation-project/" hidden>Copy article link</button>
                     <span role="status" data-share-status></span>
                 </div>
-<section class="reading-related"><h2>Related articles</h2><ul><li><a href="../../blog/when-my-homelab-started-feeling-like-a-platform/">When My Homelab Started Feeling Like a Platform</a></li><li><a href="../../blog/building-my-first-kubernetes-homelab/">Building My First Kubernetes Homelab</a></li><li><a href="../../blog/what-i-learned-building-a-ci-cd-pipeline-from-scratch/">What I Learned Building a CI/CD Pipeline From Scratch</a></li></ul></section>
-<nav class="reading-adjacent" aria-label="Adjacent articles"><a rel="prev" href="../../blog/from-docker-containers-to-a-real-deployment-workflow/"><span class="reading-label">Newer article</span><strong>From Docker Containers to a Real Deployment Workflow</strong></a></nav>
+<section class="reading-related"><h2>Related articles</h2><ul><li><a href="../../blog/when-my-homelab-started-feeling-like-a-platform/">How My Homelab Grew From Docker Compose to GitOps</a></li><li><a href="../../blog/building-my-first-kubernetes-homelab/">What It Took to Build My First Kubernetes Homelab</a></li><li><a href="../../blog/what-i-learned-building-a-ci-cd-pipeline-from-scratch/">What My First CI/CD Pipeline Taught Me About Safer Releases</a></li></ul></section>
+<nav class="reading-adjacent" aria-label="Adjacent articles"><a rel="prev" href="../../blog/from-docker-containers-to-a-real-deployment-workflow/"><span class="reading-label">Newer article</span><strong>From Docker Run to a Repeatable Deployment</strong></a></nav>
             </footer>
         </div>
     </div>
@@ -125,7 +126,7 @@
     </main>
     <footer class="blog-footer publication-footer"><div class="blog-container"><p><strong>StackedByBayo</strong><br>© 2026 StackedByBayo</p><nav aria-label="Footer navigation"><a href="../../">Home</a>
             <a href="../../academy/">Tech Academy</a>
-            <a href="../../blog/">Tech Articles</a>
+            <a href="../../blog/">Tech News</a>
             <a href="../../reviews/">Gadgets &amp; Reviews</a>
             <a href="../../software/">Software</a>
             <a href="../../shop/">Shop <small class="shop-nav-status">Soon</small></a>

@@ -4,19 +4,19 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="A Docker project grows from a local container into a release workflow with versioned images, a registry and health checks.">
+    <meta name="description" content="What changed when I added versioned images, a registry and health checks to a Docker project that previously ran only locally.">
     <meta name="theme-color" content="#F7F7F2">
-    <title>From Docker Containers to a Real Deployment Workflow | StackedByBayo</title>
+    <title>From Docker Run to a Repeatable Deployment | StackedByBayo</title>
     <link rel="canonical" href="https://stackedbybayo.site/blog/from-docker-containers-to-a-real-deployment-workflow/">
     <meta property="og:url" content="https://stackedbybayo.site/blog/from-docker-containers-to-a-real-deployment-workflow/">
-    <meta property="og:title" content="From Docker Containers to a Real Deployment Workflow">
-    <meta property="og:description" content="A Docker project grows from a local container into a release workflow with versioned images, a registry and health checks.">
+    <meta property="og:title" content="From Docker Run to a Repeatable Deployment">
+    <meta property="og:description" content="What changed when I added versioned images, a registry and health checks to a Docker project that previously ran only locally.">
     <meta property="og:site_name" content="StackedByBayo">
     <meta property="og:type" content="article">
     <meta property="article:published_time" content="2026-06-02">
     <meta property="og:image" content="https://images.unsplash.com/photo-1587620962725-abab7fe55159?auto=format&amp;fit=crop&amp;w=1600&amp;q=84">
     <meta property="og:image:alt" content="Developer workstation representing a Docker deployment workflow">
-    <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "From Docker Containers to a Real Deployment Workflow", "description": "A Docker project grows from a local container into a release workflow with versioned images, a registry and health checks.", "mainEntityOfPage": "https://stackedbybayo.site/blog/from-docker-containers-to-a-real-deployment-workflow/", "datePublished": "2026-06-02", "articleSection": "Docker", "author": {"@type": "Person", "name": "Omobayonle Ogundele", "url": "https://stackedbybayo.site/about/"}, "keywords": ["cicd", "homelab"], "image": "https://images.unsplash.com/photo-1587620962725-abab7fe55159?auto=format&fit=crop&w=1600&q=84"}</script>
+    <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "From Docker Run to a Repeatable Deployment", "description": "What changed when I added versioned images, a registry and health checks to a Docker project that previously ran only locally.", "mainEntityOfPage": "https://stackedbybayo.site/blog/from-docker-containers-to-a-real-deployment-workflow/", "articleSection": "Docker", "author": {"@type": "Person", "name": "Omobayonle Ogundele", "url": "https://stackedbybayo.site/about/"}, "datePublished": "2026-06-02", "keywords": ["cicd", "homelab"], "image": "https://images.unsplash.com/photo-1587620962725-abab7fe55159?auto=format&fit=crop&w=1600&q=84"}</script>
     <script>
         (function () {
             try {
@@ -49,10 +49,10 @@
             <button class="theme-toggle" type="button" aria-label="Switch to dark mode" aria-pressed="false"><i class="far fa-moon" aria-hidden="true"></i><span>Dark</span></button>
             <button class="publication-menu" type="button" aria-controls="site-navigation" aria-expanded="false" hidden><span>Menu</span><i class="fas fa-bars" aria-hidden="true"></i></button>
             <nav id="site-navigation" class="blog-nav-links" aria-label="Main navigation"><a href="../../">Home</a>
-            <a href="../../blog/" class="active" aria-current="location">Tech Articles</a>
+            <a href="../../blog/" class="active" aria-current="location">Tech News</a>
             <a href="../../#cybersecurity">Cybersecurity</a>
-            <a href="../../#ai">AI</a>
-            <a href="../../reviews/">Reviews</a>
+            <a href="../../#ai">Artificial Intelligence</a>
+            <a href="../../reviews/">Gadgets</a>
             <a href="../../software/">Software</a>
             <a href="../../academy/">Tech Academy</a>
             <a href="../../shop/">Shop <small class="shop-nav-status">Soon</small></a>
@@ -62,28 +62,28 @@
     <main id="main-content" tabindex="-1" class="article-main">
         <article class="article-shell reading-article">
     <header class="article-header">
-        <a class="back-to-blog" href="../">Back to Tech Articles</a>
+        <a class="back-to-blog" href="../">Back to Tech News</a>
         <p class="article-eyebrow">Docker <span class="reading-type">Commentary</span></p>
-        <h1>From Docker Containers to a Real Deployment Workflow</h1>
-        <p class="article-deck">Running a container was the easy part; building a deployment workflow meant making releases repeatable, observable and recoverable.</p>
+        <h1>From Docker Run to a Repeatable Deployment</h1>
+        <p class="article-deck">My Docker workflow changed when I had to answer three release questions. Which image is running? Is it ready? How can I roll back?</p>
         <div class="article-byline">
             <span>By <a href="../../about/">Omobayonle Ogundele</a></span>
-            <span>Published <time datetime="2026-06-02">Jun 2, 2026</time></span>
+<span>Published <time datetime="2026-06-02">Jun 2, 2026</time></span>
 
-            <span>6 min read</span>
+            <span>2 min read</span>
         </div>
     </header>
-    <figure class="reading-cover"><img src="https://images.unsplash.com/photo-1587620962725-abab7fe55159?auto=format&amp;fit=crop&amp;w=1600&amp;q=84" alt="Developer workstation representing a Docker deployment workflow" srcset="https://images.unsplash.com/photo-1587620962725-abab7fe55159?auto=format&amp;fit=crop&amp;w=480&amp;q=84 480w, https://images.unsplash.com/photo-1587620962725-abab7fe55159?auto=format&amp;fit=crop&amp;w=800&amp;q=84 800w, https://images.unsplash.com/photo-1587620962725-abab7fe55159?auto=format&amp;fit=crop&amp;w=1200&amp;q=84 1200w, https://images.unsplash.com/photo-1587620962725-abab7fe55159?auto=format&amp;fit=crop&amp;w=1600&amp;q=84 1600w" sizes="(max-width: 1230px) 94vw, 1160px" fetchpriority="high" decoding="async"></figure>
-    <div class="reading-layout reading-layout-with-toc">
-<aside class="reading-toc"><details><summary>On this page</summary><nav aria-label="Table of contents"><ol><li><a href="#what-i-was-trying-to-improve">What I was trying to improve</a></li><li><a href="#building-smaller-predictable-images">Building smaller, predictable images</a></li><li><a href="#using-the-registry-as-a-boundary">Using the registry as a boundary</a></li><li><a href="#health-checks-changed-releases">Health checks changed releases</a></li><li><a href="#what-i-learned">What I learned</a></li></ol></nav></details></aside>
+    <figure class="reading-cover"><img class="reading-cover-image" src="https://images.unsplash.com/photo-1587620962725-abab7fe55159?auto=format&amp;fit=crop&amp;w=1600&amp;q=84" srcset="https://images.unsplash.com/photo-1587620962725-abab7fe55159?auto=format&amp;fit=crop&amp;w=480&amp;q=84 480w, https://images.unsplash.com/photo-1587620962725-abab7fe55159?auto=format&amp;fit=crop&amp;w=800&amp;q=84 800w, https://images.unsplash.com/photo-1587620962725-abab7fe55159?auto=format&amp;fit=crop&amp;w=1200&amp;q=84 1200w, https://images.unsplash.com/photo-1587620962725-abab7fe55159?auto=format&amp;fit=crop&amp;w=1600&amp;q=84 1600w" sizes="(max-width: 1230px) 94vw, 1160px" alt="Developer workstation representing a Docker deployment workflow" fetchpriority="high" decoding="async"><figcaption><a href="https://images.unsplash.com/photo-1587620962725-abab7fe55159?auto=format&amp;fit=crop&amp;w=1600&amp;q=84">Illustrative photo via Unsplash</a></figcaption></figure>
+    <div class="reading-layout">
+<aside class="reading-toc"><details><summary>On this page</summary><nav aria-label="Table of contents"><ol><li><a href="#what-i-was-trying-to-improve">Deciding what each release needed</a></li><li><a href="#building-smaller-predictable-images">Separating build tools from the runtime</a></li><li><a href="#using-the-registry-as-a-boundary">Shipping the image built by CI</a></li><li><a href="#health-checks-changed-releases">Checking readiness before calling a release successful</a></li><li><a href="#what-i-learned">The release starts with a traceable image</a></li></ol></nav></details></aside>
         <div class="reading-column">
             <div class="article-body">
 
-                <p>My early Docker projects ended at docker run. That was enough for development, but it did not answer how an image should be versioned, configured, checked or replaced safely.</p>
-<h2 id="what-i-was-trying-to-improve">What I was trying to improve</h2>
+                <p>My early Docker projects ended at <code>docker run</code>. That was enough for development, but it did not answer how an image should be versioned, configured, checked or replaced safely.</p>
+<h2 id="what-i-was-trying-to-improve">Deciding what each release needed</h2>
 <p>I wanted every commit to produce a traceable image and every deployment to use the same documented configuration. The running container needed a health signal, persistent data needed an explicit home and secrets could not live in the image.</p>
-<h2 id="building-smaller-predictable-images">Building smaller, predictable images</h2>
-<p>A multi-stage Dockerfile separated build tools from the runtime. Pinning dependencies and running as a non-root user made the artifact both smaller and less surprising.</p>
+<h2 id="building-smaller-predictable-images">Separating build tools from the runtime</h2>
+<p>A multi-stage Dockerfile separated build tools from the runtime. I pinned dependencies for more predictable builds and ran the application as a non-root user. The example shows the build stage. The final runtime stage is omitted.</p>
 <pre><code class="language-dockerfile">FROM node:22-alpine AS build
 WORKDIR /app
 COPY package*.json ./
@@ -91,9 +91,9 @@ RUN npm ci
 COPY . .
 RUN npm run build
 </code></pre>
-<h2 id="using-the-registry-as-a-boundary">Using the registry as a boundary</h2>
+<h2 id="using-the-registry-as-a-boundary">Shipping the image built by CI</h2>
 <p>The pipeline tagged images with the Git commit and pushed them to a registry. Deployment machines pulled that exact tag, which removed local build differences and made rollback straightforward.</p>
-<h2 id="health-checks-changed-releases">Health checks changed releases</h2>
+<h2 id="health-checks-changed-releases">Checking readiness before calling a release successful</h2>
 <p>A running process did not always mean a ready application. Adding a health endpoint allowed the deployment workflow to wait for a real response before considering a release successful.</p>
 <ul>
 <li>Use immutable image tags.</li>
@@ -101,8 +101,8 @@ RUN npm run build
 <li>Run containers with the least privilege possible.</li>
 <li>Test recovery of persistent volumes.</li>
 </ul>
-<h2 id="what-i-learned">What I learned</h2>
-<p>Containers became operationally useful when I treated the image as one artifact in a larger release system. The workflow around the container mattered as much as the Dockerfile.</p>
+<h2 id="what-i-learned">The release starts with a traceable image</h2>
+<p>Containers became operationally useful when I treated the image as one artifact in a larger release system. The workflow around the container mattered as much as the Dockerfile. My <a href="../what-i-learned-building-a-ci-cd-pipeline-from-scratch/">CI/CD pipeline notes</a> cover how I wired checks into a release.</p>
             </div>
             <footer class="reading-footer">
                 <section class="reading-author" aria-label="Author">
@@ -111,14 +111,14 @@ RUN npm run build
 <p>IT Help Desk professional based in Lagos, Nigeria.</p>
                 </section>
 <section class="reading-topics"><h2>Topics</h2><ul><li>cicd</li><li>homelab</li></ul></section>
-
+<section class="reading-references"><h2>Sources</h2><ul><li><a href="https://docs.docker.com/build/building/multi-stage/">Docker documentation on multi-stage builds</a></li></ul></section>
                 <div class="reading-share" aria-label="Sharing options">
-                    <a class="reading-action" href="mailto:?subject=From%20Docker%20Containers%20to%20a%20Real%20Deployment%20Workflow&amp;body=https%3A%2F%2Fstackedbybayo.site%2Fblog%2Ffrom-docker-containers-to-a-real-deployment-workflow%2F">Share by email</a>
+                    <a class="reading-action" href="mailto:?subject=From%20Docker%20Run%20to%20a%20Repeatable%20Deployment&amp;body=https%3A%2F%2Fstackedbybayo.site%2Fblog%2Ffrom-docker-containers-to-a-real-deployment-workflow%2F">Share by email</a>
                     <button class="reading-action" type="button" data-copy-article="https://stackedbybayo.site/blog/from-docker-containers-to-a-real-deployment-workflow/" hidden>Copy article link</button>
                     <span role="status" data-share-status></span>
                 </div>
-<section class="reading-related"><h2>Related articles</h2><ul><li><a href="../../blog/when-my-homelab-started-feeling-like-a-platform/">When My Homelab Started Feeling Like a Platform</a></li><li><a href="../../blog/building-my-first-kubernetes-homelab/">Building My First Kubernetes Homelab</a></li><li><a href="../../blog/what-i-learned-building-a-ci-cd-pipeline-from-scratch/">What I Learned Building a CI/CD Pipeline From Scratch</a></li></ul></section>
-<nav class="reading-adjacent" aria-label="Adjacent articles"><a rel="prev" href="../../blog/troubleshooting-the-problems-that-actually-taught-me-linux/"><span class="reading-label">Newer article</span><strong>Troubleshooting the Problems That Actually Taught Me Linux</strong></a><a rel="next" href="../../blog/building-my-first-aws-automation-project/"><span class="reading-label">Older article</span><strong>Building My First AWS Automation Project</strong></a></nav>
+<section class="reading-related"><h2>Related articles</h2><ul><li><a href="../../blog/when-my-homelab-started-feeling-like-a-platform/">How My Homelab Grew From Docker Compose to GitOps</a></li><li><a href="../../blog/building-my-first-kubernetes-homelab/">What It Took to Build My First Kubernetes Homelab</a></li><li><a href="../../blog/what-i-learned-building-a-ci-cd-pipeline-from-scratch/">What My First CI/CD Pipeline Taught Me About Safer Releases</a></li></ul></section>
+<nav class="reading-adjacent" aria-label="Adjacent articles"><a rel="prev" href="../../blog/troubleshooting-the-problems-that-actually-taught-me-linux/"><span class="reading-label">Newer article</span><strong>The Linux Failures That Taught Me to Troubleshoot</strong></a><a rel="next" href="../../blog/building-my-first-aws-automation-project/"><span class="reading-label">Older article</span><strong>Automating My First AWS Project With Terraform</strong></a></nav>
             </footer>
         </div>
     </div>
@@ -126,7 +126,7 @@ RUN npm run build
     </main>
     <footer class="blog-footer publication-footer"><div class="blog-container"><p><strong>StackedByBayo</strong><br>© 2026 StackedByBayo</p><nav aria-label="Footer navigation"><a href="../../">Home</a>
             <a href="../../academy/">Tech Academy</a>
-            <a href="../../blog/">Tech Articles</a>
+            <a href="../../blog/">Tech News</a>
             <a href="../../reviews/">Gadgets &amp; Reviews</a>
             <a href="../../software/">Software</a>
             <a href="../../shop/">Shop <small class="shop-nav-status">Soon</small></a>

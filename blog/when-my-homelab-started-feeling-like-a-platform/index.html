@@ -4,19 +4,19 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="What changed when I brought Kubernetes, GitOps and monitoring into a homelab that grew one service at a time.">
+    <meta name="description" content="I started with a few containers and scattered notes. Kubernetes, GitOps and monitoring made the setup easier to rebuild and troubleshoot.">
     <meta name="theme-color" content="#F7F7F2">
-    <title>When My Homelab Started Feeling Like a Platform | StackedByBayo</title>
+    <title>How My Homelab Grew From Docker Compose to GitOps | StackedByBayo</title>
     <link rel="canonical" href="https://stackedbybayo.site/blog/when-my-homelab-started-feeling-like-a-platform/">
     <meta property="og:url" content="https://stackedbybayo.site/blog/when-my-homelab-started-feeling-like-a-platform/">
-    <meta property="og:title" content="When My Homelab Started Feeling Like a Platform">
-    <meta property="og:description" content="What changed when I brought Kubernetes, GitOps and monitoring into a homelab that grew one service at a time.">
+    <meta property="og:title" content="How My Homelab Grew From Docker Compose to GitOps">
+    <meta property="og:description" content="I started with a few containers and scattered notes. Kubernetes, GitOps and monitoring made the setup easier to rebuild and troubleshoot.">
     <meta property="og:site_name" content="StackedByBayo">
     <meta property="og:type" content="article">
     <meta property="article:published_time" content="2026-08-10">
     <meta property="og:image" content="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&amp;fit=crop&amp;w=1600&amp;q=84">
     <meta property="og:image:alt" content="Computer equipment representing a self-hosted homelab">
-    <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "When My Homelab Started Feeling Like a Platform", "description": "What changed when I brought Kubernetes, GitOps and monitoring into a homelab that grew one service at a time.", "mainEntityOfPage": "https://stackedbybayo.site/blog/when-my-homelab-started-feeling-like-a-platform/", "datePublished": "2026-08-10", "articleSection": "Homelab", "author": {"@type": "Person", "name": "Omobayonle Ogundele", "url": "https://stackedbybayo.site/about/"}, "keywords": ["homelab", "kubernetes"], "image": "https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=1600&q=84"}</script>
+    <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "How My Homelab Grew From Docker Compose to GitOps", "description": "I started with a few containers and scattered notes. Kubernetes, GitOps and monitoring made the setup easier to rebuild and troubleshoot.", "mainEntityOfPage": "https://stackedbybayo.site/blog/when-my-homelab-started-feeling-like-a-platform/", "articleSection": "Homelab", "author": {"@type": "Person", "name": "Omobayonle Ogundele", "url": "https://stackedbybayo.site/about/"}, "datePublished": "2026-08-10", "keywords": ["homelab", "kubernetes"], "image": "https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=1600&q=84"}</script>
     <script>
         (function () {
             try {
@@ -49,10 +49,10 @@
             <button class="theme-toggle" type="button" aria-label="Switch to dark mode" aria-pressed="false"><i class="far fa-moon" aria-hidden="true"></i><span>Dark</span></button>
             <button class="publication-menu" type="button" aria-controls="site-navigation" aria-expanded="false" hidden><span>Menu</span><i class="fas fa-bars" aria-hidden="true"></i></button>
             <nav id="site-navigation" class="blog-nav-links" aria-label="Main navigation"><a href="../../">Home</a>
-            <a href="../../blog/" class="active" aria-current="location">Tech Articles</a>
+            <a href="../../blog/" class="active" aria-current="location">Tech News</a>
             <a href="../../#cybersecurity">Cybersecurity</a>
-            <a href="../../#ai">AI</a>
-            <a href="../../reviews/">Reviews</a>
+            <a href="../../#ai">Artificial Intelligence</a>
+            <a href="../../reviews/">Gadgets</a>
             <a href="../../software/">Software</a>
             <a href="../../academy/">Tech Academy</a>
             <a href="../../shop/">Shop <small class="shop-nav-status">Soon</small></a>
@@ -62,31 +62,31 @@
     <main id="main-content" tabindex="-1" class="article-main">
         <article class="article-shell reading-article">
     <header class="article-header">
-        <a class="back-to-blog" href="../">Back to Tech Articles</a>
+        <a class="back-to-blog" href="../">Back to Tech News</a>
         <p class="article-eyebrow">Homelab <span class="reading-type">Commentary</span></p>
-        <h1>When My Homelab Started Feeling Like a Platform</h1>
-        <p class="article-deck">A hands-on journey through Kubernetes, monitoring, automation and self-hosted infrastructure.</p>
+        <h1>How My Homelab Grew From Docker Compose to GitOps</h1>
+        <p class="article-deck">My homelab became a better place to learn when changes moved into Git, workloads had an explicit deployment path, and failures left useful evidence.</p>
         <div class="article-byline">
             <span>By <a href="../../about/">Omobayonle Ogundele</a></span>
-            <span>Published <time datetime="2026-08-10">Aug 10, 2026</time></span>
+<span>Published <time datetime="2026-08-10">Aug 10, 2026</time></span>
 
-            <span>8 min read</span>
+            <span>2 min read</span>
         </div>
     </header>
-    <figure class="reading-cover"><img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&amp;fit=crop&amp;w=1600&amp;q=84" alt="Computer equipment representing a self-hosted homelab" srcset="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&amp;fit=crop&amp;w=480&amp;q=84 480w, https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&amp;fit=crop&amp;w=800&amp;q=84 800w, https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&amp;fit=crop&amp;w=1200&amp;q=84 1200w, https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&amp;fit=crop&amp;w=1600&amp;q=84 1600w" sizes="(max-width: 1230px) 94vw, 1160px" fetchpriority="high" decoding="async"></figure>
-    <div class="reading-layout reading-layout-with-toc">
-<aside class="reading-toc"><details><summary>On this page</summary><nav aria-label="Table of contents"><ol><li><a href="#from-individual-services-to-a-system">From individual services to a system</a></li><li><a href="#adding-kubernetes-and-gitops">Adding Kubernetes and GitOps</a></li><li><a href="#observability-changed-how-i-debugged">Observability changed how I debugged</a><ol><li><a href="#what-i-would-improve-next">What I would improve next</a></li></ol></li><li><a href="#the-useful-lesson">The useful lesson</a></li></ol></nav></details></aside>
+    <figure class="reading-cover"><img class="reading-cover-image" src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&amp;fit=crop&amp;w=1600&amp;q=84" srcset="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&amp;fit=crop&amp;w=480&amp;q=84 480w, https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&amp;fit=crop&amp;w=800&amp;q=84 800w, https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&amp;fit=crop&amp;w=1200&amp;q=84 1200w, https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&amp;fit=crop&amp;w=1600&amp;q=84 1600w" sizes="(max-width: 1230px) 94vw, 1160px" alt="Computer equipment representing a self-hosted homelab" fetchpriority="high" decoding="async"><figcaption><a href="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&amp;fit=crop&amp;w=1600&amp;q=84">Illustrative photo via Unsplash</a></figcaption></figure>
+    <div class="reading-layout">
+<aside class="reading-toc"><details><summary>On this page</summary><nav aria-label="Table of contents"><ol><li><a href="#from-individual-services-to-a-system">Putting configuration in Git</a></li><li><a href="#adding-kubernetes-and-gitops">Making deployments repeatable with GitOps</a></li><li><a href="#observability-changed-how-i-debugged">Using metrics to ask better questions</a><ol><li><a href="#what-i-would-improve-next">What I would improve next</a></li></ol></li><li><a href="#the-useful-lesson">What made the lab worth keeping</a></li></ol></nav></details></aside>
         <div class="reading-column">
             <div class="article-body">
 
                 <p>My homelab began as a place to run containers and learn Linux. It became much more useful when I stopped treating each service as an isolated experiment and started treating the whole environment as a platform.</p>
-<h2 id="from-individual-services-to-a-system">From individual services to a system</h2>
+<h2 id="from-individual-services-to-a-system">Putting configuration in Git</h2>
 <p>The first version was simple: a few Docker Compose files, manually configured ports and notes scattered across different folders. It worked, but rebuilding anything required remembering decisions that were never captured in code.</p>
 <p>I started standardising configuration, keeping infrastructure changes in Git and defining a repeatable path from a commit to a running workload. That shift made the lab easier to recover and far more useful for learning operational habits.</p>
 <blockquote>
 <p>Reliability started improving when rebuilding the environment became a normal workflow instead of an emergency procedure.</p>
 </blockquote>
-<h2 id="adding-kubernetes-and-gitops">Adding Kubernetes and GitOps</h2>
+<h2 id="adding-kubernetes-and-gitops">Making deployments repeatable with GitOps</h2>
 <p>Kubernetes gave me a consistent way to describe applications, health checks, storage and networking. GitOps then made Git the source of truth for what the cluster should be running.</p>
 <pre><code class="language-terminal">kubectl get pods -A
 kubectl get nodes -o wide
@@ -99,8 +99,9 @@ kubectl describe deployment portfolio -n production
 <li>Allow the GitOps controller to reconcile the cluster.</li>
 <li>Confirm health through metrics, logs and workload status.</li>
 </ol>
-<h2 id="observability-changed-how-i-debugged">Observability changed how I debugged</h2>
+<h2 id="observability-changed-how-i-debugged">Using metrics to ask better questions</h2>
 <p>Prometheus and Grafana did more than add dashboards. They helped me move from guessing about failures to asking specific questions about CPU pressure, memory, latency and availability.</p>
+<p>The commands below illustrate separate operations in the lab workflow. Commands such as <code>terraform apply</code> and <code>git push</code> can change infrastructure or repository state.</p>
 <pre><code class="language-shell">docker compose up -d
 terraform apply
 
@@ -115,8 +116,8 @@ git push origin main
 <li>Network policies and stronger secrets management.</li>
 <li>Better runbooks for common failure scenarios.</li>
 </ul>
-<h2 id="the-useful-lesson">The useful lesson</h2>
-<p>The hardware was never the most important part. The real value came from building repeatable workflows, observing the results and recovering from mistakes. That is when the homelab stopped feeling like a collection of machines and started feeling like a platform.</p>
+<h2 id="the-useful-lesson">What made the lab worth keeping</h2>
+<p>The hardware was never the most important part. The real value came from building repeatable workflows, observing the results and recovering from mistakes. That is when the lab started to feel like a platform. The <a href="../building-my-first-kubernetes-homelab/">Kubernetes build notes</a> cover the cluster setup, and the <a href="../setting-up-prometheus-and-grafana-in-my-homelab/">Prometheus and Grafana article</a> follows the monitoring work.</p>
             </div>
             <footer class="reading-footer">
                 <section class="reading-author" aria-label="Author">
@@ -127,12 +128,12 @@ git push origin main
 <section class="reading-topics"><h2>Topics</h2><ul><li>homelab</li><li>kubernetes</li></ul></section>
 
                 <div class="reading-share" aria-label="Sharing options">
-                    <a class="reading-action" href="mailto:?subject=When%20My%20Homelab%20Started%20Feeling%20Like%20a%20Platform&amp;body=https%3A%2F%2Fstackedbybayo.site%2Fblog%2Fwhen-my-homelab-started-feeling-like-a-platform%2F">Share by email</a>
+                    <a class="reading-action" href="mailto:?subject=How%20My%20Homelab%20Grew%20From%20Docker%20Compose%20to%20GitOps&amp;body=https%3A%2F%2Fstackedbybayo.site%2Fblog%2Fwhen-my-homelab-started-feeling-like-a-platform%2F">Share by email</a>
                     <button class="reading-action" type="button" data-copy-article="https://stackedbybayo.site/blog/when-my-homelab-started-feeling-like-a-platform/" hidden>Copy article link</button>
                     <span role="status" data-share-status></span>
                 </div>
-<section class="reading-related"><h2>Related articles</h2><ul><li><a href="../../blog/building-my-first-kubernetes-homelab/">Building My First Kubernetes Homelab</a></li><li><a href="../../blog/setting-up-prometheus-and-grafana-in-my-homelab/">Setting Up Prometheus and Grafana in My Homelab</a></li><li><a href="../../blog/from-docker-containers-to-a-real-deployment-workflow/">From Docker Containers to a Real Deployment Workflow</a></li></ul></section>
-<nav class="reading-adjacent" aria-label="Adjacent articles"><a rel="next" href="../../blog/building-my-first-kubernetes-homelab/"><span class="reading-label">Older article</span><strong>Building My First Kubernetes Homelab</strong></a></nav>
+<section class="reading-related"><h2>Related articles</h2><ul><li><a href="../../blog/building-my-first-kubernetes-homelab/">What It Took to Build My First Kubernetes Homelab</a></li><li><a href="../../blog/setting-up-prometheus-and-grafana-in-my-homelab/">What Prometheus and Grafana Showed Me About My Homelab</a></li><li><a href="../../blog/from-docker-containers-to-a-real-deployment-workflow/">From Docker Run to a Repeatable Deployment</a></li></ul></section>
+<nav class="reading-adjacent" aria-label="Adjacent articles"><a rel="next" href="../../blog/building-my-first-kubernetes-homelab/"><span class="reading-label">Older article</span><strong>What It Took to Build My First Kubernetes Homelab</strong></a></nav>
             </footer>
         </div>
     </div>
@@ -140,7 +141,7 @@ git push origin main
     </main>
     <footer class="blog-footer publication-footer"><div class="blog-container"><p><strong>StackedByBayo</strong><br>© 2026 StackedByBayo</p><nav aria-label="Footer navigation"><a href="../../">Home</a>
             <a href="../../academy/">Tech Academy</a>
-            <a href="../../blog/">Tech Articles</a>
+            <a href="../../blog/">Tech News</a>
             <a href="../../reviews/">Gadgets &amp; Reviews</a>
             <a href="../../software/">Software</a>
             <a href="../../shop/">Shop <small class="shop-nav-status">Soon</small></a>

@@ -5,7 +5,7 @@ The site serves static HTML. The checked-in HTML is ready for static hosting. Th
 ## Publish an article
 
 1. Create a Markdown file in `content/blog/`, `content/academy/`, or `content/reviews/`. Its lowercase, hyphen-separated filename becomes the URL slug.
-2. Add a JSON front matter block between two lines containing `---`. Copy an existing file for the format. Required fields are `title`, `category`, `dateTime` (YYYY-MM-DD), and `excerpt`. Optional fields include `introduction`, `categories` (related-reading tags), `image` (absolute URL), `imageAlt`, `readTime`, and `draft` (boolean).
+2. Add a JSON front matter block between two lines containing `---`. Copy an existing file for the format. Required fields are `title`, `category`, and `excerpt`. Include `dateTime` (YYYY-MM-DD) for dated articles. Optional fields include `introduction`, `categories` (related-reading tags), `image` (absolute URL), `imageAlt`, `readTime`, and `draft` (boolean).
 3. Write the body in Markdown. Use level-two headings for main sections since the template supplies the page heading. Fenced code blocks and tables are supported. Only use trusted content in this Git repository.
 4. Run the build, review the generated pages and sitemap, and commit the Markdown and generated output together. Keep published filenames stable to preserve their URLs.
 
@@ -47,7 +47,7 @@ Use the section sequence below as a Markdown outline. Write specific headings wh
 | Gadget Reviews | Overview → Features → Strengths → Limitations → Verdict | Disclose whether the evaluation was hands-on or research-based. Tie conclusions to the evidence and to the people the product suits. |
 | Tech Academy | What you’ll learn → Prerequisites → Explanation → Practical examples → Key takeaways | State the starting knowledge, tools and environment. Use fenced code with a language identifier, and explain the result readers should expect. |
 
-Provide the actual author, publication date and supporting links when preparing an article. Add references through the existing `sources` field. Use the existing security advisory and tutorial resource fields where appropriate. Use blockquotes for attributed quotations and Markdown admonitions for tips or cautions.
+Provide the actual author, publication date and supporting links when preparing an article. For an undated evergreen Markdown guide, set `"evergreen": true` and omit `dateTime`. The guide appears in its collection, and dated articles take priority in chronological listings. Add references through the existing `sources` field. Use the existing security advisory and tutorial resource fields where appropriate. Use blockquotes for attributed quotations and Markdown admonitions for tips or cautions.
 
 ## Site sources
 
