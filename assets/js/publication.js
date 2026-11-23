@@ -3,7 +3,7 @@
 
   var menu = document.querySelector('.publication-menu');
   var navigation = document.getElementById('site-navigation');
-  var mobile = window.matchMedia('(max-width: 900px)');
+  var mobile = window.matchMedia('(max-width: 1080px)');
 
   function setMenu(open) {
     menu.setAttribute('aria-expanded', String(open));
@@ -24,7 +24,39 @@
         menu.focus();
       }
     });
+    navigation.addEventListener('click', function (event) {
+      var link = event.target.closest('a');
+      if (!mobile.matches || !link || !link.hash || link.pathname !== window.location.pathname) return;
+      setMenu(false);
+      var target = document.getElementById(link.hash.slice(1));
+      if (target) {
+        target.tabIndex = -1;
+        target.focus({ preventScroll: true });
+      }
+    });
     mobile.addEventListener('change', function () { setMenu(false); });
+  }
+
+  var search = document.querySelector('.news-search-form');
+  if (search) {
+    var input = search.elements.q;
+    var results = Array.from(document.querySelectorAll('#search-results .news-card'));
+    var status = document.getElementById('search-status');
+
+    function showResults() {
+      var query = new URLSearchParams(window.location.search).get('q') || '';
+      input.value = query;
+      var terms = query.toLowerCase().trim().split(/\s+/);
+      var count = 0;
+      results.forEach(function (article) {
+        var text = article.textContent.toLowerCase();
+        article.hidden = !terms.every(function (term) { return text.includes(term); });
+        if (!article.hidden) count++;
+      });
+      status.textContent = count === 1 ? '1 article found' : count + ' articles found';
+    }
+
+    showResults();
   }
 
   var tickerToggle = document.querySelector('.editorial-ticker-toggle');

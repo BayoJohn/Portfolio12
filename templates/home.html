@@ -1,83 +1,55 @@
-<section class="editorial-hero" id="home" aria-labelledby="hero-title">
-    <div class="editorial-hero-inner">
-        <div class="editorial-intro">
-            <h1 id="hero-title">
-                <span>Curious About Technology?</span>
-                <span>You're in the Right Place.</span>
-            </h1>
-            <p class="editorial-summary">I'm Bayo. I work in IT support, explore technology, and make complicated concepts easier to understand.</p>
-            <div class="editorial-actions">
-                <a class="editorial-cta" href="#explore">Start Exploring <span class="editorial-scroll-cue" aria-hidden="true"></span></a>
-                <a class="editorial-about-link" href="about/">About Me</a>
-            </div>
-        </div>
-        <figure class="editorial-portrait">
-            <img src="assets/img/bayo-portrait-640.webp" srcset="assets/img/bayo-portrait-640.webp 640w, assets/img/omobayonle-ogundele.webp 1024w" sizes="(max-width: 700px) 90vw, (max-width: 1440px) 38vw, 540px" width="640" height="960" alt="Black-and-white portrait of Bayo Ogundele" fetchpriority="high" decoding="async">
-            <figcaption>Bayo Ogundele</figcaption>
-        </figure>
-    </div>
-</section>
-
-<div class="editorial-ticker">
-    <div class="editorial-ticker-window">
-        <div class="editorial-ticker-track">
-            <div class="editorial-ticker-set">
-                <span>$ticker_topics</span>
-                <span aria-hidden="true">$ticker_topics</span>
-            </div>
-            <div class="editorial-ticker-set" aria-hidden="true">
-                <span>$ticker_topics</span>
-                <span>$ticker_topics</span>
-            </div>
-        </div>
-    </div>
-    <button class="editorial-ticker-toggle" type="button" hidden>Pause ticker</button>
+<div class="news-masthead news-wrap">
+    <h1>Stacked<span>By</span>Bayo<span class="masthead-period">.</span></h1>
+    <p>Technology news, reviews &amp; practical guides</p>
 </div>
 
-<section class="blog-container publication-section" id="explore" aria-labelledby="explore-title">
-    <h2 id="explore-title">Explore Technology</h2>
-    <div class="publication-topics">
-        <a class="publication-topic academy-topic" href="academy/">
-            <i class="fas fa-book-open" aria-hidden="true"></i>
-            <h3>Tech Academy</h3>
-            <p>Start with computer fundamentals, networking, operating systems, and IT troubleshooting.</p>
-        </a>
-        <a class="publication-topic reviews-topic" href="reviews/">
-            <i class="fas fa-laptop" aria-hidden="true"></i>
-            <h3>Tech Reviews</h3>
-            <p>A space for hands-on takes on hardware, software, and everyday tech.</p>
-        </a>
-        <a class="publication-topic journey-topic" href="blog/">
-            <i class="fas fa-terminal" aria-hidden="true"></i>
-            <h3>My Tech Journey</h3>
-            <p>Follow what I’m learning through IT support, cloud computing, and DevOps projects.</p>
-        </a>
+<section class="news-wrap news-section news-front" aria-labelledby="featured-title">
+    <div class="news-heading"><h2 id="featured-title">Featured Stories</h2><a href="blog/">Browse all articles</a></div>
+    $featured
+</section>
+
+<section class="news-wrap news-section" id="latest" aria-labelledby="latest-title">
+    <div class="news-heading"><h2 id="latest-title">Latest News &amp; Articles</h2><a href="blog/">View the archive</a></div>
+    $latest
+</section>
+
+<div class="news-dark">
+    <div class="news-wrap news-topics">
+        <section id="cybersecurity" class="news-section news-security" aria-labelledby="cybersecurity-title">
+            <h2 id="cybersecurity-title">Cybersecurity</h2>
+            <p>Security updates, online privacy, and practical ways to protect your devices and data.</p>
+            $security
+        </section>
+        <section id="ai" class="news-section news-ai" aria-labelledby="ai-title">
+            <h2 id="ai-title">Artificial Intelligence</h2>
+            <p>AI news, tools, and explainers for everyday use.</p>
+            $ai
+        </section>
     </div>
-</section>
+</div>
 
-<section class="publication-band" id="blog-preview" aria-labelledby="latest-title">
-    <div class="blog-container publication-section">
-        <div class="publication-heading"><h2 id="latest-title">Latest Articles</h2><a href="blog/">Browse the blog</a></div>
-        $recent
-    </div>
-</section>
-
-<section class="blog-container publication-section" id="projects" aria-labelledby="projects-title">
-    <div class="publication-heading"><h2 id="projects-title">Featured Projects</h2><a href="projects/">All projects</a></div>
-    <div class="projects-grid">$selected_projects</div>
-</section>
-
-<section class="publication-band" id="about" aria-labelledby="about-title">
-    <div class="blog-container publication-section publication-about">
+<div class="news-wrap">
+    <section class="news-section news-gadgets" aria-labelledby="gadgets-title">
+        <img src="assets/img/carousel/reviews-720.webp" alt="" width="720" height="480" loading="lazy" decoding="async">
         <div>
-            <h2 id="about-title">About Bayo</h2>
-            <p>I work in IT Help Desk in Lagos, Nigeria. I’m interested in how everyday technology works, from the devices people use to the systems behind them. I’m learning cloud computing and DevOps through hands-on projects, and I share what I discover along the way.</p>
+            <h2 id="gadgets-title">Gadgets &amp; Reviews</h2>
+            <p>Hands-on coverage of hardware and everyday electronics.</p>
+            $reviews
+            <a class="news-link" href="reviews/">Explore Gadgets &amp; Reviews</a>
         </div>
-        <a class="publication-button" href="about/">More about Bayo</a>
-    </div>
-</section>
+    </section>
 
-<section class="blog-container publication-section publication-contact" id="contact" aria-labelledby="contact-title">
-    <h2 id="contact-title">Get in touch</h2>
-    <p><a href="contact/">Contact me</a> or <a href="mailto:ogundelebayo8@gmail.com">email me directly</a>.</p>
-</section>
+    <section class="news-section news-academy" aria-labelledby="academy-title">
+        <div class="news-heading"><h2 id="academy-title">Tech Academy</h2><a href="academy/">Visit Tech Academy</a></div>
+        <p>Build confidence with computers, networking, operating systems, and troubleshooting.</p>
+        $academy
+    </section>
+
+    <section class="news-section news-about" aria-labelledby="about-title">
+        <h2 id="about-title">About StackedByBayo</h2>
+        <div>
+            <p>StackedByBayo makes technology easier to understand through news, educational articles, practical guides, and reviews. It was founded by Bayo Ogundele, an IT Help Desk professional in Lagos, Nigeria.</p>
+            <a class="news-link" href="about/">About the publication and its founder</a>
+        </div>
+    </section>
+</div>

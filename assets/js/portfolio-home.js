@@ -11,7 +11,11 @@
     var isDark = theme === 'dark';
     document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
     var themeColor = document.querySelector('meta[name="theme-color"]');
-    if (themeColor) themeColor.setAttribute('content', isDark ? '#090d14' : '#f8fafc');
+    if (themeColor) {
+      var publication = document.body.classList.contains('publication-page');
+      var color = publication ? (isDark ? '#0b0b0b' : '#f5f3ed') : (isDark ? '#090d14' : '#f8fafc');
+      themeColor.setAttribute('content', color);
+    }
     if (themeToggle) {
       themeToggle.setAttribute('aria-pressed', String(isDark));
       themeToggle.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
