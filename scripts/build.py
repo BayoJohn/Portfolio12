@@ -186,10 +186,14 @@ def render_page(route, title, description, content, post=None):
         seo += '\n    <meta name="robots" content="noindex">'
     page_asset = "article" if post else "newsroom" if route == "blog/" else None
     stylesheet = page_asset or ("academy" if route == "academy/" else None)
+    if route == "cybersecurity/":
+        styles = ("newsroom", "cybersecurity")
+    else:
+        styles = (stylesheet,) if stylesheet else ()
     return template("page").substitute(
         root=root, title=escape(f"{title} | StackedByBayo" if route else f"StackedByBayo | {title}"),
         description=escape(description),
-        article_styles=f'    <link rel="stylesheet" href="{root}assets/css/{stylesheet}.css">\n' if stylesheet else "",
+        article_styles="".join(f'    <link rel="stylesheet" href="{root}assets/css/{name}.css">\n' for name in styles),
         article_script=f'    <script src="{root}assets/js/{page_asset}.js" defer></script>\n' if page_asset else "",
         metadata=seo, navigation=navigation(root, active, bool(post), header=True),
         footer=footer(root, show_wordmark=bool(route)), content=content, body_class=" news-home" if not route else "", main_class="article-main" if post else "platform-main",
@@ -510,7 +514,7 @@ def newsroom_filter_links(topics):
     return "<ul>" + "".join(links) + "</ul>"
 
 
-def newsroom_story(post, *, variant):
+def newsroom_story(post, *, variant, heading=None, summary=None):
     compact = variant in {"top", "sidebar"}
     sizes = {
         "lead": "(min-width: 1350px) 800px, (min-width: 780px) 60vw, 92vw",
@@ -523,11 +527,11 @@ def newsroom_story(post, *, variant):
     title = escape(post["title"])
     url = "../" + escape(post["url"])
     summary = "" if compact else (
-        f'<p class="newsroom-summary">{escape(post.get("newsroomExcerpt") or post["excerpt"])}</p>'
+        f'<p class="newsroom-summary">{escape(summary or post.get("newsroomExcerpt") or post["excerpt"])}</p>'
     )
     byline = f'<span>{escape(post["author"])}</span>' if variant == "lead" else ""
     meta = post_date(post) + byline
-    heading = "h4" if variant == "row" or compact else "h3"
+    heading = heading or ("h4" if variant == "row" or compact else "h3")
     return (
         photo + '<div class="newsroom-story-copy">'
         f'<p class="newsroom-category">{escape(post["category"])}</p>'
@@ -702,6 +706,82 @@ def academy_library(posts, archive, intro, empty):
     ).rstrip()
 
 
+SECURITY_TOPICS = (
+    ("Threats & Attacks", {"threats", "attacks", "phishing", "malware"}, "phishing"),
+    ("Vulnerabilities", {"vulnerabilities", "vulnerability"}, None),
+    ("Privacy", {"privacy", "digital privacy"}, None),
+    ("Account Security", {"account security", "password security", "multi-factor authentication"}, "passwords"),
+    ("Security Guides", {"security guides", "security guide", "cybersecurity basics"}, "guide"),
+)
+
+
+def security_hub(posts):
+    intro = "Understand emerging threats, protect your digital life, and explore the technologies shaping modern security."
+    tags = {"cybersecurity", "security", *(tag for _, group, _ in SECURITY_TOPICS for tag in group)}
+    stories = matching_topics(posts, tags)
+    lead = next((post for post in stories if post.get("featured")), stories[0] if stories else None)
+    remaining = [post for post in stories if post is not lead]
+    urls = {post["url"]: post for post in posts}
+    account_guide = "academy/protect-your-accounts-and-devices/"
+    web_guide = "academy/how-the-web-works/"
+    passwords = "../" + account_guide + "#give-each-account-its-own-password"
+    phishing = "../" + account_guide + "#rehearse-what-youll-do-with-a-suspicious-message"
+    guide_links = {"passwords": passwords, "phishing": phishing, "guide": "../" + account_guide}
+    topic_links = []
+    for label, terms, fallback in SECURITY_TOPICS:
+        match = matching_topics(stories, terms)
+        href = "../" + match[0]["url"] if match else guide_links.get(fallback) if account_guide in urls else None
+        if href:
+            topic_links.append(f'<li><a href="{escape(href)}">{escape(label)}</a></li>')
+    navigation = (
+        '<nav class="newsroom-filters" aria-label="Security topics"><ul>'
+        + "".join(topic_links) + '</ul></nav>'
+    ) if topic_links else ""
+
+    # The web primer’s HTTPS section is supporting reading, not a security news report.
+    related = urls.get(web_guide)
+    briefing = remaining[:3]
+    if len(briefing) < 3 and related and related not in stories:
+        briefing.append(related)
+    brief = (
+        '<section class="newsroom-top"><h2>Security Briefing</h2><ul>'
+        + "".join('<li>' + newsroom_story(post, variant="top", heading="h3") + '</li>' for post in briefing)
+        + '</ul></section>'
+    ) if briefing else ""
+    featured = (
+        '<div class="newsroom-lead"><article class="newsroom-lead-story">'
+        + newsroom_story(lead, variant="lead", heading="h2",
+                         summary="Start with the email account you use for password resets, then strengthen sign-ins, check for updates and verify suspicious messages."
+                         if lead["url"] == account_guide else None)
+        + '</article>' + brief + '</div>'
+    ) if lead else ""
+
+    # The newest published stories remain visible in the feed, including the featured story.
+    feed = "".join(
+        '<article class="newsroom-row">' + newsroom_story(post, variant="row", heading="h3") + '</article>'
+        for post in stories
+    ) or '<p class="newsroom-summary">No security stories have been published yet.</p>'
+    essentials = []
+    if account_guide in urls:
+        essentials.extend([
+            ("Password security", passwords),
+            ("Multi-factor authentication", "../" + account_guide + "#add-a-stronger-sign-in-method"),
+            ("Phishing awareness", phishing),
+            ("Device security and software updates", "../" + account_guide + "#make-updates-routine"),
+        ])
+    if related:
+        essentials.append(("Safe browsing and HTTPS", "../" + web_guide + "#https-protects-the-request-and-response"))
+    sidebar = (
+        '<aside class="newsroom-sidebar" aria-labelledby="security-essentials">'
+        '<section class="newsroom-side-section"><h2 id="security-essentials">Security Essentials</h2><ul>'
+        + "".join(f'<li><a href="{escape(href)}">{escape(label)}</a></li>' for label, href in essentials)
+        + '</ul></section></aside>'
+    ) if essentials else ""
+    return intro, template("cybersecurity").substitute(
+        intro=escape(intro), topics=navigation, featured=featured, feed=feed, essentials=sidebar
+    ).rstrip()
+
+
 def render_site(collections, page=page, target=None):
     routes = [f"{route}/" if route else "" for route in NAV]
     published = sorted((post for items in collections.values() for post in items),
@@ -757,6 +837,9 @@ def render_site(collections, page=page, target=None):
         page(route + "/", title, intro, section(title, intro, body))
 
     posts = published
+    security_intro, security_body = security_hub(posts)
+    page("cybersecurity/", "Cybersecurity", security_intro, security_body)
+    routes.append("cybersecurity/")
     featured = '<p class="news-empty">There are no featured stories yet.</p>'
     if lead:
         featured = (
