@@ -4,6 +4,7 @@
   "articleType": "tutorial",
   "author": "StackedByBayo",
   "evergreen": true,
+  "learningLevel": "beginner",
   "category": "Linux",
   "categories": ["linux"],
   "excerpt": "Learn to navigate directories, read files and combine commands in a practice folder you can safely make yourself.",
@@ -17,7 +18,11 @@ The terminal is a way to give your computer instructions in text. You only need 
 
 ## What you’ll learn
 
-You’ll find your current directory, work with absolute and relative paths, and send one command’s output into another. You’ll need a Linux shell, such as the one in Ubuntu’s Terminal app. Use an ordinary user account. The examples create a temporary practice directory and files inside it.
+You’ll find your current directory, work with absolute and relative paths, and send one command’s output into another.
+
+## Prerequisites
+
+You’ll need a Linux shell, such as the one in Ubuntu’s Terminal app. Use an ordinary user account. The examples create a temporary practice directory and files inside it.
 
 ## Understand the prompt and your location
 
@@ -65,4 +70,8 @@ Try searching for `'notes'` instead, then use `ls -l "notes copy.txt"` to practi
 
 ## Key takeaways
 
-Use `pwd` to establish where you are. Quote filenames with spaces. Read the destination before running a command that writes or overwrites a file. As a next step, see [how these habits apply to Linux troubleshooting](../../blog/troubleshooting-the-problems-that-actually-taught-me-linux/).
+Use `pwd` to establish where you are. Quote filenames with spaces. Read the destination before running a command that writes or overwrites a file.
+
+## Suggested next reading
+
+See [how these habits apply to Linux troubleshooting](../../blog/troubleshooting-the-problems-that-actually-taught-me-linux/).

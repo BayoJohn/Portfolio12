@@ -185,10 +185,11 @@ def render_page(route, title, description, content, post=None):
     if route == "search/":
         seo += '\n    <meta name="robots" content="noindex">'
     page_asset = "article" if post else "newsroom" if route == "blog/" else None
+    stylesheet = page_asset or ("academy" if route == "academy/" else None)
     return template("page").substitute(
         root=root, title=escape(f"{title} | StackedByBayo" if route else f"StackedByBayo | {title}"),
         description=escape(description),
-        article_styles=f'    <link rel="stylesheet" href="{root}assets/css/{page_asset}.css">\n' if page_asset else "",
+        article_styles=f'    <link rel="stylesheet" href="{root}assets/css/{stylesheet}.css">\n' if stylesheet else "",
         article_script=f'    <script src="{root}assets/js/{page_asset}.js" defer></script>\n' if page_asset else "",
         metadata=seo, navigation=navigation(root, active, bool(post), header=True),
         footer=footer(root, show_wordmark=bool(route)), content=content, body_class=" news-home" if not route else "", main_class="article-main" if post else "platform-main",
@@ -451,7 +452,7 @@ def article(post, collection, posts, page=page, *, published=None, featured=()):
     body = md.convert(post["body"])
     show_toc = len(md.toc_tokens) >= 3 or post.get("articleType") == "tutorial"
     toc = article_toc(md.toc_tokens) if show_toc and md.toc_tokens else ""
-    reading_time = post.get("readTime") or f'{max(1, ceil(len(post["body"].split()) / 220))} min read'
+    reading_time = reading_duration(post)
     author = escape(post["author"])
     if url := author_url(post):
         href = "../../about/" if url == ORIGIN + "about/" else url
@@ -608,6 +609,99 @@ def newsroom(posts, academy, intro, empty):
     ).rstrip()
 
 
+# Cross-collection reading is curated from published articles at their existing URLs.
+ACADEMY_TOPICS = (
+    ("computer-fundamentals", "Computer Fundamentals", "Get to know the parts, programs and files you work with every day.", ()),
+    ("networking", "Networking", "Follow a request from your device to the web and back.", ()),
+    ("linux", "Linux", "Get comfortable with the terminal, files and everyday commands.", ()),
+    ("cybersecurity-basics", "Cybersecurity Basics", "Build safer habits for signing in, updating devices and checking messages.", ()),
+    ("it-support", "IT Support & Troubleshooting", "Trace symptoms back to logs, permissions, networks and storage.", (
+        "troubleshooting-the-problems-that-actually-taught-me-linux",
+    )),
+    ("cloud-computing", "Cloud Computing", "See how cloud resources, permissions and infrastructure as code fit together.", (
+        "building-my-first-aws-automation-project",
+    )),
+    ("devops", "DevOps", "Explore how software is built, deployed and monitored.", (
+        "from-docker-containers-to-a-real-deployment-workflow",
+        "what-i-learned-building-a-ci-cd-pipeline-from-scratch",
+        "building-my-first-kubernetes-homelab",
+        "setting-up-prometheus-and-grafana-in-my-homelab",
+        "when-my-homelab-started-feeling-like-a-platform",
+    )),
+)
+ACADEMY_LEVELS = {"beginner": "Beginner", "intermediate": "Intermediate", "advanced": "Advanced"}
+
+
+def reading_duration(post):
+    return post.get("readTime") or f'{max(1, ceil(len(post["body"].split()) / 220))} min read'
+
+
+def academy_entry(post, heading="h3"):
+    level = ACADEMY_LEVELS.get(post.get("learningLevel"), "")
+    if not level and post["url"].startswith("blog/"):
+        level = "Intermediate"
+    badge = f'<span class="academy-level">{level}</span>' if level else ""
+    return (
+        f'<article class="academy-entry"><p class="academy-meta">{badge}<span>{escape(reading_duration(post))}</span></p>'
+        f'<{heading}><a href="../{escape(post["url"])}">{escape(post["title"])}</a></{heading}>'
+        f'<p class="academy-summary">{escape(post["excerpt"])}</p></article>'
+    )
+
+
+def academy_library(posts, archive, intro, empty):
+    by_url = {post["url"]: post for post in [*posts, *archive]}
+    groups = []
+    assigned = set()
+    for key, title, description, slugs in ACADEMY_TOPICS:
+        categories = {title.casefold()}
+        if key == "cybersecurity-basics":
+            categories.add("cybersecurity")
+        entries = [post for post in posts if post["category"].casefold() in categories]
+        entries += [by_url[url] for slug in slugs if (url := f"blog/{slug}/") in by_url]
+        if entries:
+            groups.append((key, title, description, entries))
+            assigned.update(post["url"] for post in entries)
+    others = [post for post in posts if post["url"] not in assigned]
+    if others:
+        groups.append(("more-guides", "More Guides", "", others))
+
+    links = "".join(f'<li><a href="./#{key}">{escape(title)}</a></li>' for key, title, _, _ in groups)
+    navigation = (
+        '<nav class="academy-topics" aria-label="Learning topics"><ul>' + links + '</ul></nav>'
+    ) if links else ""
+    featured_post = next((post for post in posts if post["url"] == "academy/understanding-your-computer/"), None)
+    featured_post = featured_post or next((post for post in posts if post.get("learningLevel") == "beginner"), None)
+    recommendations = [post for post in posts if post is not featured_post and post.get("learningLevel") == "beginner"][:2]
+    featured = ""
+    if featured_post:
+        featured = (
+            '<section class="academy-start" aria-labelledby="academy-start"><h2 id="academy-start">Start here</h2>'
+            '<div class="academy-start-grid"><div class="academy-featured">' + academy_entry(featured_post) + '</div>'
+            + ('<div class="academy-recommendations">' + "".join(academy_entry(post) for post in recommendations) + '</div>'
+               if recommendations else '') + '</div></section>'
+        )
+    collections = "".join(
+        f'<section class="academy-collection" id="{key}" tabindex="-1"><div><h3>{escape(title)}</h3>'
+        + (f'<p>{escape(description)}</p>' if description else '')
+        + '</div><div class="academy-entries">' + "".join(academy_entry(post, "h4") for post in entries) + '</div></section>'
+        for key, title, description, entries in groups
+    )
+    collections = (
+        '<section class="academy-collections" aria-labelledby="academy-collections"><h2 id="academy-collections">Learning Collections</h2>'
+        '<p class="academy-level-guide"><strong>Beginner</strong> introduces the basics. '
+        '<strong>Intermediate</strong> builds on them. <strong>Advanced</strong> assumes experience with the topic.</p>'
+        + collections + '</section>'
+    ) if collections else f'<p class="academy-summary">{escape(empty)}</p>'
+    tutorials = [post for post in posts if post.get("articleType") == "tutorial"][:3]
+    practice = (
+        '<section class="academy-practice" aria-labelledby="academy-practice"><h2 id="academy-practice">Practical Tutorials</h2>'
+        '<div class="academy-practice-grid">' + "".join(academy_entry(post) for post in tutorials) + '</div></section>'
+    ) if tutorials else ""
+    return template("academy").substitute(
+        intro=escape(intro), navigation=navigation, featured=featured, collections=collections, practice=practice
+    ).rstrip()
+
+
 def render_site(collections, page=page, target=None):
     routes = [f"{route}/" if route else "" for route in NAV]
     published = sorted((post for items in collections.values() for post in items),
@@ -621,10 +715,10 @@ def render_site(collections, page=page, target=None):
         intro, empty = COLLECTIONS[name]
         if name == "blog":
             page("blog/", NAV[name], intro, newsroom(posts, collections.get("academy", []), intro, empty))
-        elif name == "academy" and posts:
-            listing = '<div class="article-grid">' + "".join(
-                card(post, "../", heading="h2") for post in posts
-            ) + '</div>'
+        elif name == "academy":
+            academy_intro = "Learn the basics of computers, networks and online security, then put them to work in Linux, IT support, cloud computing and DevOps."
+            page("academy/", NAV[name], academy_intro,
+                 academy_library(posts, collections.get("blog", []), academy_intro, empty))
         else:
             listing = "".join(
                 f'<section><h2>{escape(category)}</h2><div class="article-grid">'
@@ -632,7 +726,6 @@ def render_site(collections, page=page, target=None):
                 + '</div></section>'
                 for category in dict.fromkeys(post["category"] for post in posts)
             )
-        if name != "blog":
             if not listing:
                 listing = (
                     f'<div class="publication-empty"><p>{escape(empty)}</p>'

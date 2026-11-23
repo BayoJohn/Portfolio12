@@ -4,6 +4,7 @@
   "articleType": "tutorial",
   "author": "StackedByBayo",
   "evergreen": true,
+  "learningLevel": "beginner",
   "category": "Cybersecurity",
   "categories": ["cybersecurity", "account security"],
   "excerpt": "Start with the accounts that matter most, then set up stronger sign-ins, software updates and a safer way to handle suspicious messages.",
@@ -16,7 +17,11 @@
 
 Start with the inbox you use to reset passwords. If someone gains access to that inbox, they may be able to reset passwords elsewhere. Securing email first gives you a practical way to prioritise when a long list of accounts feels overwhelming.
 
-## What you’ll need
+## What you’ll learn
+
+You’ll prioritise accounts, choose safer sign-in methods, keep devices updated and practise checking a suspicious message.
+
+## Prerequisites {#what-youll-need}
 
 Use a device you control and access to the account’s security settings. Set aside a few minutes to check your recovery details before changing how you sign in. If an account belongs to work or school, follow the organisation’s guidance for passwords, sign-in methods and reporting.
 
@@ -47,4 +52,8 @@ If you entered your password into a suspicious page, go directly to the real ser
 
 ## Key takeaways
 
-Secure the email you use for password resets first. Give each account a different password, add a stronger sign-in method and keep devices updated. If a message tells you to sign in, reach the service independently. The [guide to how the web works](../how-the-web-works/) explains what HTTPS checks and why you still need to check which site you’re visiting.
+Secure the email you use for password resets first. Give each account a different password, add a stronger sign-in method and keep devices updated. If a message tells you to sign in, reach the service independently.
+
+## Suggested next reading
+
+The [guide to how the web works](../how-the-web-works/) explains what HTTPS checks and why you still need to check which site you’re visiting.

@@ -4,6 +4,7 @@
   "articleType": "tutorial",
   "author": "StackedByBayo",
   "evergreen": true,
+  "learningLevel": "beginner",
   "category": "Networking",
   "categories": ["networking", "web"],
   "excerpt": "Follow one web request to see what DNS, IP addresses, routers, HTTPS and servers each do.",
@@ -20,7 +21,11 @@ You enter `https://example.com/` and a page appears. Between those two moments, 
 
 ## What you’ll learn
 
-You’ll trace a first visit to a website and see where DNS, IP, routers and HTTP fit. To try the exercise, use a desktop browser with developer tools. You can follow the explanation on a phone, too.
+You’ll trace a first visit to a website and learn where DNS, IP addresses, routers and HTTP fit.
+
+## Prerequisites
+
+Use a desktop browser with developer tools for the exercise. You can follow the explanation on a phone, too.
 
 ## DNS finds an address for the name
 
@@ -54,4 +59,8 @@ HTML gives the browser a document to render. As it reads the HTML, it may reques
 
 ## Key takeaways
 
-When a site fails, start with the earliest layer you can confirm. If the hostname cannot be resolved, look at the name and DNS. If you receive an HTTP status, the browser reached something that could answer the request. If text loads but images do not, inspect those individual requests. Continue with the [Linux troubleshooting article](../../blog/troubleshooting-the-problems-that-actually-taught-me-linux/) to see how the same approach applies to a local service.
+When a site fails, start with the earliest layer you can confirm. If the hostname cannot be resolved, look at the name and DNS. If you receive an HTTP status, the browser reached something that could answer the request. If text loads but images do not, inspect those individual requests.
+
+## Suggested next reading
+
+Continue with the [Linux troubleshooting article](../../blog/troubleshooting-the-problems-that-actually-taught-me-linux/) to see how the same approach applies to a local service.

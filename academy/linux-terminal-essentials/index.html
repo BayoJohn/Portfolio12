@@ -74,13 +74,15 @@
     <div class="reading-layout reading-layout-with-sidebar">
         <div class="reading-main-column">
 
-<aside class="reading-toc"><details><summary>On this page</summary><nav aria-label="Table of contents"><ol><li><a href="#what-youll-learn">What you’ll learn</a></li><li><a href="#understand-the-prompt-and-your-location">Understand the prompt and your location</a></li><li><a href="#make-a-practice-directory">Make a practice directory</a></li><li><a href="#filter-command-output-with-a-pipe">Filter command output with a pipe</a></li><li><a href="#key-takeaways">Key takeaways</a></li></ol></nav></details></aside>
+<aside class="reading-toc"><details><summary>On this page</summary><nav aria-label="Table of contents"><ol><li><a href="#what-youll-learn">What you’ll learn</a></li><li><a href="#prerequisites">Prerequisites</a></li><li><a href="#understand-the-prompt-and-your-location">Understand the prompt and your location</a></li><li><a href="#make-a-practice-directory">Make a practice directory</a></li><li><a href="#filter-command-output-with-a-pipe">Filter command output with a pipe</a></li><li><a href="#key-takeaways">Key takeaways</a></li><li><a href="#suggested-next-reading">Suggested next reading</a></li></ol></nav></details></aside>
             <div class="reading-column">
                 <div class="article-body">
 
                     <p>The terminal is a way to give your computer instructions in text. You only need a few commands to get oriented, read a file and find a line of interest. Practise those first and unfamiliar examples become easier to read.</p>
 <h2 id="what-youll-learn">What you’ll learn</h2>
-<p>You’ll find your current directory, work with absolute and relative paths, and send one command’s output into another. You’ll need a Linux shell, such as the one in Ubuntu’s Terminal app. Use an ordinary user account. The examples create a temporary practice directory and files inside it.</p>
+<p>You’ll find your current directory, work with absolute and relative paths, and send one command’s output into another.</p>
+<h2 id="prerequisites">Prerequisites</h2>
+<p>You’ll need a Linux shell, such as the one in Ubuntu’s Terminal app. Use an ordinary user account. The examples create a temporary practice directory and files inside it.</p>
 <h2 id="understand-the-prompt-and-your-location">Understand the prompt and your location</h2>
 <p>The terminal displays a prompt from a program called a shell. The shell reads your input and decides which command to run. A command can take options and arguments. In <code>ls -l notes.txt</code>, <code>ls</code> is the command, <code>-l</code> requests a detailed listing, and <code>notes.txt</code> is the file to list.</p>
 <p>Start with these commands:</p>
@@ -107,7 +109,9 @@ grep 'logs' notes.txt | wc -l
 <p>The first command shows the matching line and its line number. The second uses <code>|</code> to make the output of <code>grep</code> the input of <code>wc</code>. In this example <code>wc -l</code> prints <code>1</code> because it receives one matching line. You can run each part on its own while learning what is being passed between commands.</p>
 <p>Try searching for <code>'notes'</code> instead, then use <code>ls -l "notes copy.txt"</code> to practise quoting a filename. If a command reports that a file cannot be found, run <code>pwd</code> and <code>ls</code> before changing anything. The filename might be spelled correctly but in a different directory.</p>
 <h2 id="key-takeaways">Key takeaways</h2>
-<p>Use <code>pwd</code> to establish where you are. Quote filenames with spaces. Read the destination before running a command that writes or overwrites a file. As a next step, see <a href="../../blog/troubleshooting-the-problems-that-actually-taught-me-linux/">how these habits apply to Linux troubleshooting</a>.</p>
+<p>Use <code>pwd</code> to establish where you are. Quote filenames with spaces. Read the destination before running a command that writes or overwrites a file.</p>
+<h2 id="suggested-next-reading">Suggested next reading</h2>
+<p>See <a href="../../blog/troubleshooting-the-problems-that-actually-taught-me-linux/">how these habits apply to Linux troubleshooting</a>.</p>
                 </div>
                 <footer class="reading-footer">
                     <section class="reading-author" aria-label="Author">
