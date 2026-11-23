@@ -246,7 +246,7 @@ def post_date(post):
     return date_markup(post["date"]) if post.get("dateTime") else ""
 
 
-def image(post, css_class, *, priority=False):
+def image(post, css_class, *, priority=False, sizes=None, decorative=False):
     if not post.get("image"):
         return ""
     responsive = ""
@@ -254,18 +254,18 @@ def image(post, css_class, *, priority=False):
         widths = (480, 800, 1200, 1600) if priority else (320, 480, 800)
         variants = [escape(re.sub(r"([?&]w=)\d+", rf"\g<1>{width}", post["image"])) + f" {width}w"
                     for width in widths]
-        if css_class == "reading-cover-image":
-            sizes = "(max-width: 1230px) 94vw, 1160px"
-        elif priority:
-            sizes = "(max-width: 900px) 92vw, (max-width: 1340px) 60vw, 840px"
-        elif css_class == "news-photo":
-            sizes = "(max-width: 650px) 39vw, (max-width: 900px) 20vw, 140px"
-        else:
-            sizes = "(max-width: 767px) 90vw, (max-width: 1050px) 45vw, 360px"
+        if sizes is None:
+            if priority:
+                sizes = "(max-width: 900px) 92vw, (max-width: 1340px) 60vw, 840px"
+            elif css_class == "news-photo":
+                sizes = "(max-width: 650px) 39vw, (max-width: 900px) 20vw, 140px"
+            else:
+                sizes = "(max-width: 767px) 90vw, (max-width: 1050px) 45vw, 360px"
         responsive = f' srcset="{", ".join(variants)}" sizes="{sizes}"'
     loading = 'fetchpriority="high"' if priority else 'loading="lazy"'
+    alt = "" if decorative else escape(post.get("imageAlt", ""))
     return (f'<img class="{css_class}" src="{escape(post["image"])}"{responsive} '
-            f'alt="{escape(post.get("imageAlt", ""))}" {loading} decoding="async">')
+            f'alt="{alt}" {loading} decoding="async">')
 
 
 def card(post, root, *, heading="h3"):
@@ -319,7 +319,7 @@ def author_url(post):
     return web_url(post.get("authorURL", "")) or (ORIGIN + "about/" if post["author"] in {AUTHOR, PUBLICATION} else "")
 
 
-def article_cover(post):
+def article_cover(post, *, editorial):
     if not post.get("image"):
         return ""
     url = post["image"]
@@ -331,9 +331,11 @@ def article_cover(post):
     if credit and (link := web_url(credit_url)):
         credit = f'<a href="{escape(link)}">{credit}</a>'
     caption = " · ".join(filter(None, (escape(post.get("imageCaption", "")), credit)))
+    sizes = ("(min-width: 1440px) 890px, (min-width: 1060px) 64vw, (min-width: 780px) 720px, 94vw"
+             if editorial else "(max-width: 1230px) 94vw, 1160px")
     return (
         '    <figure class="reading-cover">'
-        + image(post, "reading-cover-image", priority=True)
+        + image(post, "reading-cover-image", priority=True, sizes=sizes)
         + (f'<figcaption>{caption}</figcaption>' if caption else "") + '</figure>'
     )
 
@@ -382,12 +384,52 @@ def article_facts(post):
     return "".join(sections)
 
 
-def article(post, collection, posts, page=page):
+def sidebar_stories(title, posts, *, thumbnails=False):
+    if not posts:
+        return ""
+    items = []
+    for post in posts:
+        photo = image(post, "sidebar-thumbnail", sizes="72px", decorative=True) if thumbnails else ""
+        items.append(
+            f'<li><a class="sidebar-story" href="../../{escape(post["url"])}">{photo}'
+            f'<span class="sidebar-story-copy"><span class="sidebar-category">{escape(post["category"])}</span>'
+            f'<span class="sidebar-story-title">{escape(post["title"])}</span></span></a></li>'
+        )
+    return f'<section class="sidebar-section"><h2>{escape(title)}</h2><ul>{"".join(items)}</ul></section>'
+
+
+def article_sidebar(post, published, featured):
+    current = post["url"]
+    candidates = {item["url"]: item for item in published if item["url"] != current and not item.get("draft")}
+    # Leave room for related reading when the catalogue is small.
+    pick_limit = min(2, max(1, len(candidates) - 3))
+    pick_urls = dict.fromkeys(item["url"] for item in featured if item["url"] in candidates)
+    picks = [candidates.pop(url) for url in list(pick_urls)[:pick_limit]]
+    tags = {tag.casefold() for tag in post.get("categories", [])}
+    category = post["category"].casefold()
+    collection = current.split("/", 1)[0]
+
+    def relevance(item):
+        shared = tags.intersection(tag.casefold() for tag in item.get("categories", []))
+        return len(shared), item["category"].casefold() == category, item["url"].startswith(collection + "/")
+
+    related = sorted(candidates.values(), key=relevance, reverse=True)[:3]
+    topic_links = []
+    for route in ("blog", "#cybersecurity", "#ai", "reviews", "software", "academy"):
+        href = "../../" + (route if route.startswith("#") else route + "/")
+        topic_links.append(f'<li><a href="{href}">{escape(HEADER_NAV[route])}</a></li>')
+    return template("article-sidebar").substitute(
+        picks=sidebar_stories("Editor’s Picks", picks, thumbnails=True),
+        related=sidebar_stories("Related Stories", related),
+        topics="".join(topic_links),
+    ).rstrip()
+
+
+def article(post, collection, posts, page=page, *, published=None, featured=()):
     intro = post.get("introduction", post["excerpt"])
     tags = post.get("categories", [])
-    related = [item for item in posts if item is not post and
-               (item["category"] == post["category"] or set(tags).intersection(item.get("categories", [])))]
-    related.extend(item for item in posts if item is not post and item not in related)
+    editorial = published is not None
+    cover = article_cover(post, editorial=editorial)
     sources = (
         reading_links("Sources", cited_links(post.get("sources", [])),
                         css_class="reading-references")
@@ -436,12 +478,12 @@ def article(post, collection, posts, page=page):
         publication=f'<span>Published {post_date(post)}</span>' if post.get("dateTime") else "",
         reading_time=escape(reading_time),
         updated=f'<span>Updated {date_markup(date.fromisoformat(post["updatedTime"]))}</span>' if post.get("updatedTime") else "",
-        cover=article_cover(post), toc=toc,
+        layout_class=" reading-layout-with-sidebar" if editorial else "",
+        standalone_cover=cover if not editorial else "", cover=cover if editorial else "", toc=toc,
+        sidebar=article_sidebar(post, published, featured) if editorial else "",
         body=body, facts=article_facts(post),
         topics=topics,
         sources=sources,
-        related=reading_links("Related articles", [(item["title"], "../../" + item["url"]) for item in related[:3]],
-                              css_class="reading-related"),
         adjacent='<nav class="reading-adjacent" aria-label="Adjacent articles">' + "".join(adjacent) + '</nav>' if adjacent else "",
         canonical=escape(canonical), email_link=escape(email),
     ).rstrip()
@@ -450,6 +492,13 @@ def article(post, collection, posts, page=page):
 
 def render_site(collections, page=page, target=None):
     routes = [f"{route}/" if route else "" for route in NAV]
+    published = sorted((post for items in collections.values() for post in items),
+                       key=lambda post: post["date"], reverse=True)
+    lead = next((post for post in published if post.get("featured")), published[0] if published else None)
+    supporting = [post for post in published if post is not lead][:2]
+    sidebar_features = [post for post in published if post.get("featured")] + supporting
+    if lead and not lead.get("featured"):
+        sidebar_features.insert(0, lead)
     for name, posts in collections.items():
         intro, empty = COLLECTIONS[name]
         if name == "blog":
@@ -480,7 +529,7 @@ def render_site(collections, page=page, target=None):
         page(name + "/", NAV[name], intro, section(NAV[name], intro, listing))
         for post in posts:
             if target is None or target == post["url"]:
-                article(post, name, posts, page)
+                article(post, name, posts, page, published=published, featured=sidebar_features)
             routes.append(post["url"])
 
     about = (
@@ -502,12 +551,9 @@ def render_site(collections, page=page, target=None):
     ]:
         page(route + "/", title, intro, section(title, intro, body))
 
-    posts = sorted((post for items in collections.values() for post in items),
-                   key=lambda post: post["date"], reverse=True)
-    lead = next((post for post in posts if post.get("featured")), posts[0] if posts else None)
+    posts = published
     featured = '<p class="news-empty">There are no featured stories yet.</p>'
     if lead:
-        supporting = [post for post in posts if post is not lead][:2]
         featured = (
             '<div class="news-features">' + news_card(lead, lead=True, heading="h2")
             + '<div class="news-support">' + "".join(news_card(post, heading="h2") for post in supporting)

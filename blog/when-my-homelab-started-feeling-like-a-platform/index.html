@@ -73,13 +73,15 @@
             <span>2 min read</span>
         </div>
     </header>
-    <figure class="reading-cover"><img class="reading-cover-image" src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&amp;fit=crop&amp;w=1600&amp;q=84" srcset="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&amp;fit=crop&amp;w=480&amp;q=84 480w, https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&amp;fit=crop&amp;w=800&amp;q=84 800w, https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&amp;fit=crop&amp;w=1200&amp;q=84 1200w, https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&amp;fit=crop&amp;w=1600&amp;q=84 1600w" sizes="(max-width: 1230px) 94vw, 1160px" alt="Computer equipment representing a self-hosted homelab" fetchpriority="high" decoding="async"><figcaption><a href="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&amp;fit=crop&amp;w=1600&amp;q=84">Illustrative photo via Unsplash</a></figcaption></figure>
-    <div class="reading-layout">
-<aside class="reading-toc"><details><summary>On this page</summary><nav aria-label="Table of contents"><ol><li><a href="#from-individual-services-to-a-system">Putting configuration in Git</a></li><li><a href="#adding-kubernetes-and-gitops">Making deployments repeatable with GitOps</a></li><li><a href="#observability-changed-how-i-debugged">Using metrics to ask better questions</a><ol><li><a href="#what-i-would-improve-next">What I would improve next</a></li></ol></li><li><a href="#the-useful-lesson">What made the lab worth keeping</a></li></ol></nav></details></aside>
-        <div class="reading-column">
-            <div class="article-body">
 
-                <p>My homelab began as a place to run containers and learn Linux. It became much more useful when I stopped treating each service as an isolated experiment and started treating the whole environment as a platform.</p>
+    <div class="reading-layout reading-layout-with-sidebar">
+        <div class="reading-main-column">
+    <figure class="reading-cover"><img class="reading-cover-image" src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&amp;fit=crop&amp;w=1600&amp;q=84" srcset="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&amp;fit=crop&amp;w=480&amp;q=84 480w, https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&amp;fit=crop&amp;w=800&amp;q=84 800w, https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&amp;fit=crop&amp;w=1200&amp;q=84 1200w, https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&amp;fit=crop&amp;w=1600&amp;q=84 1600w" sizes="(min-width: 1440px) 890px, (min-width: 1060px) 64vw, (min-width: 780px) 720px, 94vw" alt="Computer equipment representing a self-hosted homelab" fetchpriority="high" decoding="async"><figcaption><a href="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&amp;fit=crop&amp;w=1600&amp;q=84">Illustrative photo via Unsplash</a></figcaption></figure>
+<aside class="reading-toc"><details><summary>On this page</summary><nav aria-label="Table of contents"><ol><li><a href="#from-individual-services-to-a-system">Putting configuration in Git</a></li><li><a href="#adding-kubernetes-and-gitops">Making deployments repeatable with GitOps</a></li><li><a href="#observability-changed-how-i-debugged">Using metrics to ask better questions</a><ol><li><a href="#what-i-would-improve-next">What I would improve next</a></li></ol></li><li><a href="#the-useful-lesson">What made the lab worth keeping</a></li></ol></nav></details></aside>
+            <div class="reading-column">
+                <div class="article-body">
+
+                    <p>My homelab began as a place to run containers and learn Linux. It became much more useful when I stopped treating each service as an isolated experiment and started treating the whole environment as a platform.</p>
 <h2 id="from-individual-services-to-a-system">Putting configuration in Git</h2>
 <p>The first version was simple: a few Docker Compose files, manually configured ports and notes scattered across different folders. It worked, but rebuilding anything required remembering decisions that were never captured in code.</p>
 <p>I started standardising configuration, keeping infrastructure changes in Git and defining a repeatable path from a commit to a running workload. That shift made the lab easier to recover and far more useful for learning operational habits.</p>
@@ -118,24 +120,32 @@ git push origin main
 </ul>
 <h2 id="the-useful-lesson">What made the lab worth keeping</h2>
 <p>The hardware was never the most important part. The real value came from building repeatable workflows, observing the results and recovering from mistakes. That is when the lab started to feel like a platform. The <a href="../building-my-first-kubernetes-homelab/">Kubernetes build notes</a> cover the cluster setup, and the <a href="../setting-up-prometheus-and-grafana-in-my-homelab/">Prometheus and Grafana article</a> follows the monitoring work.</p>
-            </div>
-            <footer class="reading-footer">
-                <section class="reading-author" aria-label="Author">
-                    <p class="reading-label">About the author</p>
-                    <p><strong><a href="../../about/">Omobayonle Ogundele</a></strong></p>
+                </div>
+                <footer class="reading-footer">
+                    <section class="reading-author" aria-label="Author">
+                        <p class="reading-label">About the author</p>
+                        <p><strong><a href="../../about/">Omobayonle Ogundele</a></strong></p>
 <p>IT Help Desk professional based in Lagos, Nigeria.</p>
-                </section>
+                    </section>
 <section class="reading-topics"><h2>Topics</h2><ul><li>homelab</li><li>kubernetes</li></ul></section>
 
-                <div class="reading-share" aria-label="Sharing options">
-                    <a class="reading-action" href="mailto:?subject=How%20My%20Homelab%20Grew%20From%20Docker%20Compose%20to%20GitOps&amp;body=https%3A%2F%2Fstackedbybayo.site%2Fblog%2Fwhen-my-homelab-started-feeling-like-a-platform%2F">Share by email</a>
-                    <button class="reading-action" type="button" data-copy-article="https://stackedbybayo.site/blog/when-my-homelab-started-feeling-like-a-platform/" hidden>Copy article link</button>
-                    <span role="status" data-share-status></span>
-                </div>
-<section class="reading-related"><h2>Related articles</h2><ul><li><a href="../../blog/building-my-first-kubernetes-homelab/">What It Took to Build My First Kubernetes Homelab</a></li><li><a href="../../blog/setting-up-prometheus-and-grafana-in-my-homelab/">What Prometheus and Grafana Showed Me About My Homelab</a></li><li><a href="../../blog/from-docker-containers-to-a-real-deployment-workflow/">From Docker Run to a Repeatable Deployment</a></li></ul></section>
+                    <div class="reading-share" aria-label="Sharing options">
+                        <a class="reading-action" href="mailto:?subject=How%20My%20Homelab%20Grew%20From%20Docker%20Compose%20to%20GitOps&amp;body=https%3A%2F%2Fstackedbybayo.site%2Fblog%2Fwhen-my-homelab-started-feeling-like-a-platform%2F">Share by email</a>
+                        <button class="reading-action" type="button" data-copy-article="https://stackedbybayo.site/blog/when-my-homelab-started-feeling-like-a-platform/" hidden>Copy article link</button>
+                        <span role="status" data-share-status></span>
+                    </div>
 <nav class="reading-adjacent" aria-label="Adjacent articles"><a rel="next" href="../../blog/building-my-first-kubernetes-homelab/"><span class="reading-label">Older article</span><strong>What It Took to Build My First Kubernetes Homelab</strong></a></nav>
-            </footer>
+                </footer>
+            </div>
         </div>
+        <aside class="reading-sidebar" role="complementary" aria-label="Discover more on StackedByBayo">
+<section class="sidebar-section"><h2>Editor’s Picks</h2><ul><li><a class="sidebar-story" href="../../blog/building-my-first-kubernetes-homelab/"><img class="sidebar-thumbnail" src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&amp;fit=crop&amp;w=1600&amp;q=84" srcset="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&amp;fit=crop&amp;w=320&amp;q=84 320w, https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&amp;fit=crop&amp;w=480&amp;q=84 480w, https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&amp;fit=crop&amp;w=800&amp;q=84 800w" sizes="72px" alt="" loading="lazy" decoding="async"><span class="sidebar-story-copy"><span class="sidebar-category">Kubernetes</span><span class="sidebar-story-title">What It Took to Build My First Kubernetes Homelab</span></span></a></li><li><a class="sidebar-story" href="../../blog/what-i-learned-building-a-ci-cd-pipeline-from-scratch/"><img class="sidebar-thumbnail" src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&amp;fit=crop&amp;w=1600&amp;q=84" srcset="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&amp;fit=crop&amp;w=320&amp;q=84 320w, https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&amp;fit=crop&amp;w=480&amp;q=84 480w, https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&amp;fit=crop&amp;w=800&amp;q=84 800w" sizes="72px" alt="" loading="lazy" decoding="async"><span class="sidebar-story-copy"><span class="sidebar-category">CI/CD</span><span class="sidebar-story-title">What My First CI/CD Pipeline Taught Me About Safer Releases</span></span></a></li></ul></section>
+<section class="sidebar-section"><h2>Related Stories</h2><ul><li><a class="sidebar-story" href="../../blog/setting-up-prometheus-and-grafana-in-my-homelab/"><span class="sidebar-story-copy"><span class="sidebar-category">Monitoring</span><span class="sidebar-story-title">What Prometheus and Grafana Showed Me About My Homelab</span></span></a></li><li><a class="sidebar-story" href="../../blog/from-docker-containers-to-a-real-deployment-workflow/"><span class="sidebar-story-copy"><span class="sidebar-category">Docker</span><span class="sidebar-story-title">From Docker Run to a Repeatable Deployment</span></span></a></li><li><a class="sidebar-story" href="../../blog/troubleshooting-the-problems-that-actually-taught-me-linux/"><span class="sidebar-story-copy"><span class="sidebar-category">Linux</span><span class="sidebar-story-title">The Linux Failures That Taught Me to Troubleshoot</span></span></a></li></ul></section>
+            <section class="sidebar-section">
+                <h2>Explore Topics</h2>
+                <ul class="sidebar-topics"><li><a href="../../blog/">Tech News</a></li><li><a href="../../#cybersecurity">Cybersecurity</a></li><li><a href="../../#ai">Artificial Intelligence</a></li><li><a href="../../reviews/">Gadgets</a></li><li><a href="../../software/">Software</a></li><li><a href="../../academy/">Tech Academy</a></li></ul>
+            </section>
+        </aside>
     </div>
 </article>
     </main>

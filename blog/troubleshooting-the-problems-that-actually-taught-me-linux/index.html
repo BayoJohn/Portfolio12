@@ -73,13 +73,15 @@
             <span>2 min read</span>
         </div>
     </header>
-    <figure class="reading-cover"><img class="reading-cover-image" src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&amp;fit=crop&amp;w=1600&amp;q=84" srcset="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&amp;fit=crop&amp;w=480&amp;q=84 480w, https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&amp;fit=crop&amp;w=800&amp;q=84 800w, https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&amp;fit=crop&amp;w=1200&amp;q=84 1200w, https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&amp;fit=crop&amp;w=1600&amp;q=84 1600w" sizes="(max-width: 1230px) 94vw, 1160px" alt="Computer hardware representing Linux systems troubleshooting" fetchpriority="high" decoding="async"><figcaption><a href="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&amp;fit=crop&amp;w=1600&amp;q=84">Illustrative photo via Unsplash</a></figcaption></figure>
-    <div class="reading-layout">
-<aside class="reading-toc"><details><summary>On this page</summary><nav aria-label="Table of contents"><ol><li><a href="#the-service-that-would-not-start">A restart loop and a clue in the journal</a></li><li><a href="#permissions-beyond-chmod">Checking every directory in the path</a></li><li><a href="#following-a-network-request">Following the request from DNS to the service</a></li><li><a href="#disk-space-that-looked-available">When a disk has free space but no free inodes</a></li><li><a href="#the-habit-that-mattered-most">Test one explanation at a time</a></li></ol></nav></details></aside>
-        <div class="reading-column">
-            <div class="article-body">
 
-                <p>Reading Linux documentation gave me vocabulary. Troubleshooting real failures taught me how the pieces connect and how to gather evidence before making a change.</p>
+    <div class="reading-layout reading-layout-with-sidebar">
+        <div class="reading-main-column">
+    <figure class="reading-cover"><img class="reading-cover-image" src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&amp;fit=crop&amp;w=1600&amp;q=84" srcset="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&amp;fit=crop&amp;w=480&amp;q=84 480w, https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&amp;fit=crop&amp;w=800&amp;q=84 800w, https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&amp;fit=crop&amp;w=1200&amp;q=84 1200w, https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&amp;fit=crop&amp;w=1600&amp;q=84 1600w" sizes="(min-width: 1440px) 890px, (min-width: 1060px) 64vw, (min-width: 780px) 720px, 94vw" alt="Computer hardware representing Linux systems troubleshooting" fetchpriority="high" decoding="async"><figcaption><a href="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&amp;fit=crop&amp;w=1600&amp;q=84">Illustrative photo via Unsplash</a></figcaption></figure>
+<aside class="reading-toc"><details><summary>On this page</summary><nav aria-label="Table of contents"><ol><li><a href="#the-service-that-would-not-start">A restart loop and a clue in the journal</a></li><li><a href="#permissions-beyond-chmod">Checking every directory in the path</a></li><li><a href="#following-a-network-request">Following the request from DNS to the service</a></li><li><a href="#disk-space-that-looked-available">When a disk has free space but no free inodes</a></li><li><a href="#the-habit-that-mattered-most">Test one explanation at a time</a></li></ol></nav></details></aside>
+            <div class="reading-column">
+                <div class="article-body">
+
+                    <p>Reading Linux documentation gave me vocabulary. Troubleshooting real failures taught me how the pieces connect and how to gather evidence before making a change.</p>
 <h2 id="the-service-that-would-not-start">A restart loop and a clue in the journal</h2>
 <p>A systemd unit kept restarting with a generic failure. The useful clue was not in the application output but in the journal, where a working-directory permission error showed exactly which user was being denied.</p>
 <pre><code class="language-shell">systemctl status my-service
@@ -106,24 +108,32 @@ curl -v http://service.internal:8080/health
 </ul>
 <h2 id="the-habit-that-mattered-most">Test one explanation at a time</h2>
 <p>The biggest improvement was forming a hypothesis, running a command that could disprove it and recording the result. That habit gave me a repeatable way to investigate each failure. If commands and paths still feel unfamiliar, start with the <a href="../../academy/linux-terminal-essentials/">Linux terminal guide</a>.</p>
-            </div>
-            <footer class="reading-footer">
-                <section class="reading-author" aria-label="Author">
-                    <p class="reading-label">About the author</p>
-                    <p><strong><a href="../../about/">Omobayonle Ogundele</a></strong></p>
+                </div>
+                <footer class="reading-footer">
+                    <section class="reading-author" aria-label="Author">
+                        <p class="reading-label">About the author</p>
+                        <p><strong><a href="../../about/">Omobayonle Ogundele</a></strong></p>
 <p>IT Help Desk professional based in Lagos, Nigeria.</p>
-                </section>
+                    </section>
 <section class="reading-topics"><h2>Topics</h2><ul><li>linux</li></ul></section>
 
-                <div class="reading-share" aria-label="Sharing options">
-                    <a class="reading-action" href="mailto:?subject=The%20Linux%20Failures%20That%20Taught%20Me%20to%20Troubleshoot&amp;body=https%3A%2F%2Fstackedbybayo.site%2Fblog%2Ftroubleshooting-the-problems-that-actually-taught-me-linux%2F">Share by email</a>
-                    <button class="reading-action" type="button" data-copy-article="https://stackedbybayo.site/blog/troubleshooting-the-problems-that-actually-taught-me-linux/" hidden>Copy article link</button>
-                    <span role="status" data-share-status></span>
-                </div>
-<section class="reading-related"><h2>Related articles</h2><ul><li><a href="../../blog/when-my-homelab-started-feeling-like-a-platform/">How My Homelab Grew From Docker Compose to GitOps</a></li><li><a href="../../blog/building-my-first-kubernetes-homelab/">What It Took to Build My First Kubernetes Homelab</a></li><li><a href="../../blog/what-i-learned-building-a-ci-cd-pipeline-from-scratch/">What My First CI/CD Pipeline Taught Me About Safer Releases</a></li></ul></section>
+                    <div class="reading-share" aria-label="Sharing options">
+                        <a class="reading-action" href="mailto:?subject=The%20Linux%20Failures%20That%20Taught%20Me%20to%20Troubleshoot&amp;body=https%3A%2F%2Fstackedbybayo.site%2Fblog%2Ftroubleshooting-the-problems-that-actually-taught-me-linux%2F">Share by email</a>
+                        <button class="reading-action" type="button" data-copy-article="https://stackedbybayo.site/blog/troubleshooting-the-problems-that-actually-taught-me-linux/" hidden>Copy article link</button>
+                        <span role="status" data-share-status></span>
+                    </div>
 <nav class="reading-adjacent" aria-label="Adjacent articles"><a rel="prev" href="../../blog/setting-up-prometheus-and-grafana-in-my-homelab/"><span class="reading-label">Newer article</span><strong>What Prometheus and Grafana Showed Me About My Homelab</strong></a><a rel="next" href="../../blog/from-docker-containers-to-a-real-deployment-workflow/"><span class="reading-label">Older article</span><strong>From Docker Run to a Repeatable Deployment</strong></a></nav>
-            </footer>
+                </footer>
+            </div>
         </div>
+        <aside class="reading-sidebar" role="complementary" aria-label="Discover more on StackedByBayo">
+<section class="sidebar-section"><h2>Editor’s Picks</h2><ul><li><a class="sidebar-story" href="../../blog/when-my-homelab-started-feeling-like-a-platform/"><img class="sidebar-thumbnail" src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&amp;fit=crop&amp;w=1600&amp;q=84" srcset="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&amp;fit=crop&amp;w=320&amp;q=84 320w, https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&amp;fit=crop&amp;w=480&amp;q=84 480w, https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&amp;fit=crop&amp;w=800&amp;q=84 800w" sizes="72px" alt="" loading="lazy" decoding="async"><span class="sidebar-story-copy"><span class="sidebar-category">Homelab</span><span class="sidebar-story-title">How My Homelab Grew From Docker Compose to GitOps</span></span></a></li><li><a class="sidebar-story" href="../../blog/building-my-first-kubernetes-homelab/"><img class="sidebar-thumbnail" src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&amp;fit=crop&amp;w=1600&amp;q=84" srcset="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&amp;fit=crop&amp;w=320&amp;q=84 320w, https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&amp;fit=crop&amp;w=480&amp;q=84 480w, https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&amp;fit=crop&amp;w=800&amp;q=84 800w" sizes="72px" alt="" loading="lazy" decoding="async"><span class="sidebar-story-copy"><span class="sidebar-category">Kubernetes</span><span class="sidebar-story-title">What It Took to Build My First Kubernetes Homelab</span></span></a></li></ul></section>
+<section class="sidebar-section"><h2>Related Stories</h2><ul><li><a class="sidebar-story" href="../../academy/linux-terminal-essentials/"><span class="sidebar-story-copy"><span class="sidebar-category">Linux</span><span class="sidebar-story-title">Linux Terminal Essentials for Beginners</span></span></a></li><li><a class="sidebar-story" href="../../blog/what-i-learned-building-a-ci-cd-pipeline-from-scratch/"><span class="sidebar-story-copy"><span class="sidebar-category">CI/CD</span><span class="sidebar-story-title">What My First CI/CD Pipeline Taught Me About Safer Releases</span></span></a></li><li><a class="sidebar-story" href="../../blog/setting-up-prometheus-and-grafana-in-my-homelab/"><span class="sidebar-story-copy"><span class="sidebar-category">Monitoring</span><span class="sidebar-story-title">What Prometheus and Grafana Showed Me About My Homelab</span></span></a></li></ul></section>
+            <section class="sidebar-section">
+                <h2>Explore Topics</h2>
+                <ul class="sidebar-topics"><li><a href="../../blog/">Tech News</a></li><li><a href="../../#cybersecurity">Cybersecurity</a></li><li><a href="../../#ai">Artificial Intelligence</a></li><li><a href="../../reviews/">Gadgets</a></li><li><a href="../../software/">Software</a></li><li><a href="../../academy/">Tech Academy</a></li></ul>
+            </section>
+        </aside>
     </div>
 </article>
     </main>

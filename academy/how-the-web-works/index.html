@@ -71,12 +71,14 @@
         </div>
     </header>
 
-    <div class="reading-layout">
-<aside class="reading-toc"><details><summary>On this page</summary><nav aria-label="Table of contents"><ol><li><a href="#what-youll-learn">What you’ll learn</a></li><li><a href="#dns-finds-an-address-for-the-name">DNS finds an address for the name</a></li><li><a href="#routers-move-packets-between-networks">Routers move packets between networks</a></li><li><a href="#https-protects-the-request-and-response">HTTPS protects the request and response</a></li><li><a href="#try-it-in-your-browser">Try it in your browser</a></li><li><a href="#key-takeaways">Key takeaways</a></li></ol></nav></details></aside>
-        <div class="reading-column">
-            <div class="article-body">
+    <div class="reading-layout reading-layout-with-sidebar">
+        <div class="reading-main-column">
 
-                <p>You enter <code>https://example.com/</code> and a page appears. Between those two moments, your device finds an address, sends data across several networks, and asks a server for a resource. Following one request gives you a way to make sense of the error messages you see when a page fails to load.</p>
+<aside class="reading-toc"><details><summary>On this page</summary><nav aria-label="Table of contents"><ol><li><a href="#what-youll-learn">What you’ll learn</a></li><li><a href="#dns-finds-an-address-for-the-name">DNS finds an address for the name</a></li><li><a href="#routers-move-packets-between-networks">Routers move packets between networks</a></li><li><a href="#https-protects-the-request-and-response">HTTPS protects the request and response</a></li><li><a href="#try-it-in-your-browser">Try it in your browser</a></li><li><a href="#key-takeaways">Key takeaways</a></li></ol></nav></details></aside>
+            <div class="reading-column">
+                <div class="article-body">
+
+                    <p>You enter <code>https://example.com/</code> and a page appears. Between those two moments, your device finds an address, sends data across several networks, and asks a server for a resource. Following one request gives you a way to make sense of the error messages you see when a page fails to load.</p>
 <h2 id="what-youll-learn">What you’ll learn</h2>
 <p>You’ll trace a first visit to a website and see where DNS, IP, routers and HTTP fit. To try the exercise, use a desktop browser with developer tools. You can follow the explanation on a phone, too.</p>
 <h2 id="dns-finds-an-address-for-the-name">DNS finds an address for the name</h2>
@@ -102,24 +104,32 @@
 </div>
 <h2 id="key-takeaways">Key takeaways</h2>
 <p>When a site fails, start with the earliest layer you can confirm. If the hostname cannot be resolved, look at the name and DNS. If you receive an HTTP status, the browser reached something that could answer the request. If text loads but images do not, inspect those individual requests. Continue with the <a href="../../blog/troubleshooting-the-problems-that-actually-taught-me-linux/">Linux troubleshooting article</a> to see how the same approach applies to a local service.</p>
-            </div>
-            <footer class="reading-footer">
-                <section class="reading-author" aria-label="Author">
-                    <p class="reading-label">About the author</p>
-                    <p><strong><a href="../../about/">StackedByBayo</a></strong></p>
+                </div>
+                <footer class="reading-footer">
+                    <section class="reading-author" aria-label="Author">
+                        <p class="reading-label">About the author</p>
+                        <p><strong><a href="../../about/">StackedByBayo</a></strong></p>
 
-                </section>
+                    </section>
 <section class="reading-topics"><h2>Topics</h2><ul><li>networking</li><li>web</li></ul></section>
 <section class="reading-references"><h2>Sources</h2><ul><li><a href="https://www.icann.org/resources/pages/dns-2022-09-13-en">ICANN on the Domain Name System</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Howto/Web_mechanics/How_does_the_Internet_work">MDN on how the Internet works</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Getting_started/Web_standards/How_the_web_works">MDN on how the web works</a></li><li><a href="https://www.rfc-editor.org/rfc/rfc2606.html">RFC 2606 on reserved example domains</a></li></ul></section>
-                <div class="reading-share" aria-label="Sharing options">
-                    <a class="reading-action" href="mailto:?subject=How%20the%20Web%20Works%2C%20From%20the%20Address%20Bar%20to%20the%20Page&amp;body=https%3A%2F%2Fstackedbybayo.site%2Facademy%2Fhow-the-web-works%2F">Share by email</a>
-                    <button class="reading-action" type="button" data-copy-article="https://stackedbybayo.site/academy/how-the-web-works/" hidden>Copy article link</button>
-                    <span role="status" data-share-status></span>
-                </div>
-<section class="reading-related"><h2>Related articles</h2><ul><li><a href="../../academy/linux-terminal-essentials/">Linux Terminal Essentials for Beginners</a></li><li><a href="../../academy/protect-your-accounts-and-devices/">Cybersecurity Basics: Protect Your Accounts and Devices</a></li></ul></section>
+                    <div class="reading-share" aria-label="Sharing options">
+                        <a class="reading-action" href="mailto:?subject=How%20the%20Web%20Works%2C%20From%20the%20Address%20Bar%20to%20the%20Page&amp;body=https%3A%2F%2Fstackedbybayo.site%2Facademy%2Fhow-the-web-works%2F">Share by email</a>
+                        <button class="reading-action" type="button" data-copy-article="https://stackedbybayo.site/academy/how-the-web-works/" hidden>Copy article link</button>
+                        <span role="status" data-share-status></span>
+                    </div>
 <nav class="reading-adjacent" aria-label="Adjacent articles"><a rel="next" href="../../academy/linux-terminal-essentials/"><span class="reading-label">Older article</span><strong>Linux Terminal Essentials for Beginners</strong></a></nav>
-            </footer>
+                </footer>
+            </div>
         </div>
+        <aside class="reading-sidebar" role="complementary" aria-label="Discover more on StackedByBayo">
+<section class="sidebar-section"><h2>Editor’s Picks</h2><ul><li><a class="sidebar-story" href="../../blog/when-my-homelab-started-feeling-like-a-platform/"><img class="sidebar-thumbnail" src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&amp;fit=crop&amp;w=1600&amp;q=84" srcset="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&amp;fit=crop&amp;w=320&amp;q=84 320w, https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&amp;fit=crop&amp;w=480&amp;q=84 480w, https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&amp;fit=crop&amp;w=800&amp;q=84 800w" sizes="72px" alt="" loading="lazy" decoding="async"><span class="sidebar-story-copy"><span class="sidebar-category">Homelab</span><span class="sidebar-story-title">How My Homelab Grew From Docker Compose to GitOps</span></span></a></li><li><a class="sidebar-story" href="../../blog/building-my-first-kubernetes-homelab/"><img class="sidebar-thumbnail" src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&amp;fit=crop&amp;w=1600&amp;q=84" srcset="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&amp;fit=crop&amp;w=320&amp;q=84 320w, https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&amp;fit=crop&amp;w=480&amp;q=84 480w, https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&amp;fit=crop&amp;w=800&amp;q=84 800w" sizes="72px" alt="" loading="lazy" decoding="async"><span class="sidebar-story-copy"><span class="sidebar-category">Kubernetes</span><span class="sidebar-story-title">What It Took to Build My First Kubernetes Homelab</span></span></a></li></ul></section>
+<section class="sidebar-section"><h2>Related Stories</h2><ul><li><a class="sidebar-story" href="../../academy/linux-terminal-essentials/"><span class="sidebar-story-copy"><span class="sidebar-category">Linux</span><span class="sidebar-story-title">Linux Terminal Essentials for Beginners</span></span></a></li><li><a class="sidebar-story" href="../../academy/protect-your-accounts-and-devices/"><span class="sidebar-story-copy"><span class="sidebar-category">Cybersecurity</span><span class="sidebar-story-title">Cybersecurity Basics: Protect Your Accounts and Devices</span></span></a></li><li><a class="sidebar-story" href="../../blog/what-i-learned-building-a-ci-cd-pipeline-from-scratch/"><span class="sidebar-story-copy"><span class="sidebar-category">CI/CD</span><span class="sidebar-story-title">What My First CI/CD Pipeline Taught Me About Safer Releases</span></span></a></li></ul></section>
+            <section class="sidebar-section">
+                <h2>Explore Topics</h2>
+                <ul class="sidebar-topics"><li><a href="../../blog/">Tech News</a></li><li><a href="../../#cybersecurity">Cybersecurity</a></li><li><a href="../../#ai">Artificial Intelligence</a></li><li><a href="../../reviews/">Gadgets</a></li><li><a href="../../software/">Software</a></li><li><a href="../../academy/">Tech Academy</a></li></ul>
+            </section>
+        </aside>
     </div>
 </article>
     </main>

@@ -11,30 +11,33 @@ $updated
             <span>$reading_time</span>
         </div>
     </header>
+$standalone_cover
+    <div class="reading-layout$layout_class">
+        <div class="reading-main-column">
 $cover
-    <div class="reading-layout">
 $toc
-        <div class="reading-column">
-            <div class="article-body">
+            <div class="reading-column">
+                <div class="article-body">
 $facts
-                $body
-            </div>
-            <footer class="reading-footer">
-                <section class="reading-author" aria-label="Author">
-                    <p class="reading-label">About the author</p>
-                    <p><strong>$author</strong></p>
+                    $body
+                </div>
+                <footer class="reading-footer">
+                    <section class="reading-author" aria-label="Author">
+                        <p class="reading-label">About the author</p>
+                        <p><strong>$author</strong></p>
 $author_bio
-                </section>
+                    </section>
 $topics
 $sources
-                <div class="reading-share" aria-label="Sharing options">
-                    <a class="reading-action" href="$email_link">Share by email</a>
-                    <button class="reading-action" type="button" data-copy-article="$canonical" hidden>Copy article link</button>
-                    <span role="status" data-share-status></span>
-                </div>
-$related
+                    <div class="reading-share" aria-label="Sharing options">
+                        <a class="reading-action" href="$email_link">Share by email</a>
+                        <button class="reading-action" type="button" data-copy-article="$canonical" hidden>Copy article link</button>
+                        <span role="status" data-share-status></span>
+                    </div>
 $adjacent
-            </footer>
+                </footer>
+            </div>
         </div>
+$sidebar
     </div>
 </article>

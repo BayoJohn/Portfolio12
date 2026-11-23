@@ -71,12 +71,14 @@
         </div>
     </header>
 
-    <div class="reading-layout">
-<aside class="reading-toc"><details><summary>On this page</summary><nav aria-label="Table of contents"><ol><li><a href="#what-youll-learn">What you’ll learn</a></li><li><a href="#understand-the-prompt-and-your-location">Understand the prompt and your location</a></li><li><a href="#make-a-practice-directory">Make a practice directory</a></li><li><a href="#filter-command-output-with-a-pipe">Filter command output with a pipe</a></li><li><a href="#key-takeaways">Key takeaways</a></li></ol></nav></details></aside>
-        <div class="reading-column">
-            <div class="article-body">
+    <div class="reading-layout reading-layout-with-sidebar">
+        <div class="reading-main-column">
 
-                <p>The terminal is a way to give your computer instructions in text. You only need a few commands to get oriented, read a file and find a line of interest. Practise those first and unfamiliar examples become easier to read.</p>
+<aside class="reading-toc"><details><summary>On this page</summary><nav aria-label="Table of contents"><ol><li><a href="#what-youll-learn">What you’ll learn</a></li><li><a href="#understand-the-prompt-and-your-location">Understand the prompt and your location</a></li><li><a href="#make-a-practice-directory">Make a practice directory</a></li><li><a href="#filter-command-output-with-a-pipe">Filter command output with a pipe</a></li><li><a href="#key-takeaways">Key takeaways</a></li></ol></nav></details></aside>
+            <div class="reading-column">
+                <div class="article-body">
+
+                    <p>The terminal is a way to give your computer instructions in text. You only need a few commands to get oriented, read a file and find a line of interest. Practise those first and unfamiliar examples become easier to read.</p>
 <h2 id="what-youll-learn">What you’ll learn</h2>
 <p>You’ll find your current directory, work with absolute and relative paths, and send one command’s output into another. You’ll need a Linux shell, such as the one in Ubuntu’s Terminal app. Use an ordinary user account. The examples create a temporary practice directory and files inside it.</p>
 <h2 id="understand-the-prompt-and-your-location">Understand the prompt and your location</h2>
@@ -106,24 +108,32 @@ grep 'logs' notes.txt | wc -l
 <p>Try searching for <code>'notes'</code> instead, then use <code>ls -l "notes copy.txt"</code> to practise quoting a filename. If a command reports that a file cannot be found, run <code>pwd</code> and <code>ls</code> before changing anything. The filename might be spelled correctly but in a different directory.</p>
 <h2 id="key-takeaways">Key takeaways</h2>
 <p>Use <code>pwd</code> to establish where you are. Quote filenames with spaces. Read the destination before running a command that writes or overwrites a file. As a next step, see <a href="../../blog/troubleshooting-the-problems-that-actually-taught-me-linux/">how these habits apply to Linux troubleshooting</a>.</p>
-            </div>
-            <footer class="reading-footer">
-                <section class="reading-author" aria-label="Author">
-                    <p class="reading-label">About the author</p>
-                    <p><strong><a href="../../about/">StackedByBayo</a></strong></p>
+                </div>
+                <footer class="reading-footer">
+                    <section class="reading-author" aria-label="Author">
+                        <p class="reading-label">About the author</p>
+                        <p><strong><a href="../../about/">StackedByBayo</a></strong></p>
 
-                </section>
+                    </section>
 <section class="reading-topics"><h2>Topics</h2><ul><li>linux</li></ul></section>
 <section class="reading-references"><h2>Sources</h2><ul><li><a href="https://documentation.ubuntu.com/desktop/en/26.04/tutorial/the-linux-command-line-for-beginners/">Ubuntu’s beginner guide to the Linux command line</a></li></ul></section>
-                <div class="reading-share" aria-label="Sharing options">
-                    <a class="reading-action" href="mailto:?subject=Linux%20Terminal%20Essentials%20for%20Beginners&amp;body=https%3A%2F%2Fstackedbybayo.site%2Facademy%2Flinux-terminal-essentials%2F">Share by email</a>
-                    <button class="reading-action" type="button" data-copy-article="https://stackedbybayo.site/academy/linux-terminal-essentials/" hidden>Copy article link</button>
-                    <span role="status" data-share-status></span>
-                </div>
-<section class="reading-related"><h2>Related articles</h2><ul><li><a href="../../academy/how-the-web-works/">How the Web Works, From the Address Bar to the Page</a></li><li><a href="../../academy/protect-your-accounts-and-devices/">Cybersecurity Basics: Protect Your Accounts and Devices</a></li></ul></section>
+                    <div class="reading-share" aria-label="Sharing options">
+                        <a class="reading-action" href="mailto:?subject=Linux%20Terminal%20Essentials%20for%20Beginners&amp;body=https%3A%2F%2Fstackedbybayo.site%2Facademy%2Flinux-terminal-essentials%2F">Share by email</a>
+                        <button class="reading-action" type="button" data-copy-article="https://stackedbybayo.site/academy/linux-terminal-essentials/" hidden>Copy article link</button>
+                        <span role="status" data-share-status></span>
+                    </div>
 <nav class="reading-adjacent" aria-label="Adjacent articles"><a rel="prev" href="../../academy/how-the-web-works/"><span class="reading-label">Newer article</span><strong>How the Web Works, From the Address Bar to the Page</strong></a><a rel="next" href="../../academy/protect-your-accounts-and-devices/"><span class="reading-label">Older article</span><strong>Cybersecurity Basics: Protect Your Accounts and Devices</strong></a></nav>
-            </footer>
+                </footer>
+            </div>
         </div>
+        <aside class="reading-sidebar" role="complementary" aria-label="Discover more on StackedByBayo">
+<section class="sidebar-section"><h2>Editor’s Picks</h2><ul><li><a class="sidebar-story" href="../../blog/when-my-homelab-started-feeling-like-a-platform/"><img class="sidebar-thumbnail" src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&amp;fit=crop&amp;w=1600&amp;q=84" srcset="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&amp;fit=crop&amp;w=320&amp;q=84 320w, https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&amp;fit=crop&amp;w=480&amp;q=84 480w, https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&amp;fit=crop&amp;w=800&amp;q=84 800w" sizes="72px" alt="" loading="lazy" decoding="async"><span class="sidebar-story-copy"><span class="sidebar-category">Homelab</span><span class="sidebar-story-title">How My Homelab Grew From Docker Compose to GitOps</span></span></a></li><li><a class="sidebar-story" href="../../blog/building-my-first-kubernetes-homelab/"><img class="sidebar-thumbnail" src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&amp;fit=crop&amp;w=1600&amp;q=84" srcset="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&amp;fit=crop&amp;w=320&amp;q=84 320w, https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&amp;fit=crop&amp;w=480&amp;q=84 480w, https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&amp;fit=crop&amp;w=800&amp;q=84 800w" sizes="72px" alt="" loading="lazy" decoding="async"><span class="sidebar-story-copy"><span class="sidebar-category">Kubernetes</span><span class="sidebar-story-title">What It Took to Build My First Kubernetes Homelab</span></span></a></li></ul></section>
+<section class="sidebar-section"><h2>Related Stories</h2><ul><li><a class="sidebar-story" href="../../blog/troubleshooting-the-problems-that-actually-taught-me-linux/"><span class="sidebar-story-copy"><span class="sidebar-category">Linux</span><span class="sidebar-story-title">The Linux Failures That Taught Me to Troubleshoot</span></span></a></li><li><a class="sidebar-story" href="../../academy/how-the-web-works/"><span class="sidebar-story-copy"><span class="sidebar-category">Networking</span><span class="sidebar-story-title">How the Web Works, From the Address Bar to the Page</span></span></a></li><li><a class="sidebar-story" href="../../academy/protect-your-accounts-and-devices/"><span class="sidebar-story-copy"><span class="sidebar-category">Cybersecurity</span><span class="sidebar-story-title">Cybersecurity Basics: Protect Your Accounts and Devices</span></span></a></li></ul></section>
+            <section class="sidebar-section">
+                <h2>Explore Topics</h2>
+                <ul class="sidebar-topics"><li><a href="../../blog/">Tech News</a></li><li><a href="../../#cybersecurity">Cybersecurity</a></li><li><a href="../../#ai">Artificial Intelligence</a></li><li><a href="../../reviews/">Gadgets</a></li><li><a href="../../software/">Software</a></li><li><a href="../../academy/">Tech Academy</a></li></ul>
+            </section>
+        </aside>
     </div>
 </article>
     </main>
