@@ -4,19 +4,19 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Using Terraform and managed AWS services to make a small cloud application reproducible from the beginning.">
+    <meta name="description" content="How I used Terraform to make a small AWS application reproducible, and what an IAM mistake taught me about permissions.">
     <meta name="theme-color" content="#F7F7F2">
     <title>Building My First AWS Automation Project | StackedByBayo</title>
     <link rel="canonical" href="https://stackedbybayo.site/blog/building-my-first-aws-automation-project/">
     <meta property="og:url" content="https://stackedbybayo.site/blog/building-my-first-aws-automation-project/">
     <meta property="og:title" content="Building My First AWS Automation Project">
-    <meta property="og:description" content="Using Terraform and managed AWS services to make a small cloud application reproducible from the beginning.">
+    <meta property="og:description" content="How I used Terraform to make a small AWS application reproducible, and what an IAM mistake taught me about permissions.">
     <meta property="og:site_name" content="StackedByBayo">
     <meta property="og:type" content="article">
     <meta property="article:published_time" content="2026-05-19">
     <meta property="og:image" content="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&amp;fit=crop&amp;w=1600&amp;q=84">
     <meta property="og:image:alt" content="Cloud technology representing an AWS automation project">
-    <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "Building My First AWS Automation Project", "description": "Using Terraform and managed AWS services to make a small cloud application reproducible from the beginning.", "mainEntityOfPage": "https://stackedbybayo.site/blog/building-my-first-aws-automation-project/", "datePublished": "2026-05-19", "articleSection": "Cloud", "author": {"@type": "Person", "name": "Omobayonle Ogundele", "url": "https://stackedbybayo.site/about/"}, "keywords": ["cloud"], "image": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1600&q=84"}</script>
+    <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "Building My First AWS Automation Project", "description": "How I used Terraform to make a small AWS application reproducible, and what an IAM mistake taught me about permissions.", "mainEntityOfPage": "https://stackedbybayo.site/blog/building-my-first-aws-automation-project/", "datePublished": "2026-05-19", "articleSection": "Cloud", "author": {"@type": "Person", "name": "Omobayonle Ogundele", "url": "https://stackedbybayo.site/about/"}, "keywords": ["cloud"], "image": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1600&q=84"}</script>
     <script>
         (function () {
             try {
@@ -49,10 +49,10 @@
             <button class="theme-toggle" type="button" aria-label="Switch to dark mode" aria-pressed="false"><i class="far fa-moon" aria-hidden="true"></i><span>Dark</span></button>
             <button class="publication-menu" type="button" aria-controls="site-navigation" aria-expanded="false" hidden><span>Menu</span><i class="fas fa-bars" aria-hidden="true"></i></button>
             <nav id="site-navigation" class="blog-nav-links" aria-label="Main navigation"><a href="../../">Home</a>
-            <a href="../../blog/" class="active" aria-current="location">Tech News</a>
+            <a href="../../blog/" class="active" aria-current="location">Tech Articles</a>
             <a href="../../#cybersecurity">Cybersecurity</a>
             <a href="../../#ai">AI</a>
-            <a href="../../reviews/">Gadgets</a>
+            <a href="../../reviews/">Reviews</a>
             <a href="../../software/">Software</a>
             <a href="../../academy/">Tech Academy</a>
             <a href="../../shop/">Shop <small class="shop-nav-status">Soon</small></a>
@@ -62,7 +62,7 @@
     <main id="main-content" tabindex="-1" class="article-main">
         <article class="article-shell reading-article">
     <header class="article-header">
-        <a class="back-to-blog" href="../">Back to Tech News</a>
+        <a class="back-to-blog" href="../">Back to Tech Articles</a>
         <p class="article-eyebrow">Cloud <span class="reading-type">Commentary</span></p>
         <h1>Building My First AWS Automation Project</h1>
         <p class="article-deck">My first AWS automation project turned a manually assembled cloud experiment into infrastructure I could review, recreate and safely remove.</p>
@@ -116,7 +116,7 @@
                     <button class="reading-action" type="button" data-copy-article="https://stackedbybayo.site/blog/building-my-first-aws-automation-project/" hidden>Copy article link</button>
                     <span role="status" data-share-status></span>
                 </div>
-<section><h2>Related articles</h2><ul><li><a href="../../blog/when-my-homelab-started-feeling-like-a-platform/">When My Homelab Started Feeling Like a Platform</a></li><li><a href="../../blog/building-my-first-kubernetes-homelab/">Building My First Kubernetes Homelab</a></li><li><a href="../../blog/what-i-learned-building-a-ci-cd-pipeline-from-scratch/">What I Learned Building a CI/CD Pipeline From Scratch</a></li></ul></section>
+<section class="reading-related"><h2>Related articles</h2><ul><li><a href="../../blog/when-my-homelab-started-feeling-like-a-platform/">When My Homelab Started Feeling Like a Platform</a></li><li><a href="../../blog/building-my-first-kubernetes-homelab/">Building My First Kubernetes Homelab</a></li><li><a href="../../blog/what-i-learned-building-a-ci-cd-pipeline-from-scratch/">What I Learned Building a CI/CD Pipeline From Scratch</a></li></ul></section>
 <nav class="reading-adjacent" aria-label="Adjacent articles"><a rel="prev" href="../../blog/from-docker-containers-to-a-real-deployment-workflow/"><span class="reading-label">Newer article</span><strong>From Docker Containers to a Real Deployment Workflow</strong></a></nav>
             </footer>
         </div>
@@ -125,7 +125,7 @@
     </main>
     <footer class="blog-footer publication-footer"><div class="blog-container"><p><strong>StackedByBayo</strong><br>© 2026 StackedByBayo</p><nav aria-label="Footer navigation"><a href="../../">Home</a>
             <a href="../../academy/">Tech Academy</a>
-            <a href="../../blog/">Tech News</a>
+            <a href="../../blog/">Tech Articles</a>
             <a href="../../reviews/">Gadgets &amp; Reviews</a>
             <a href="../../software/">Software</a>
             <a href="../../shop/">Shop <small class="shop-nav-status">Soon</small></a>

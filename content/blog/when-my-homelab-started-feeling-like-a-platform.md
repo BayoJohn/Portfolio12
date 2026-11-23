@@ -10,7 +10,7 @@
   ],
   "dateTime": "2026-08-10",
   "readTime": "8 min read",
-  "excerpt": "A hands-on journey through Kubernetes, monitoring, automation and self-hosted infrastructure as my homelab evolved into something that started feeling like a real platform.",
+  "excerpt": "What changed when I brought Kubernetes, GitOps and monitoring into a homelab that grew one service at a time.",
   "introduction": "A hands-on journey through Kubernetes, monitoring, automation and self-hosted infrastructure.",
   "image": "https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=1600&q=84",
   "imageAlt": "Computer equipment representing a self-hosted homelab"

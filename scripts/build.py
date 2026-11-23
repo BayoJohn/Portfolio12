@@ -21,7 +21,7 @@ AUTHOR = "Omobayonle Ogundele"
 NAV = {
     "": "Home",
     "academy": "Tech Academy",
-    "blog": "Tech News",
+    "blog": "Tech Articles",
     "reviews": "Gadgets & Reviews",
     "software": "Software",
     "shop": "Shop",
@@ -31,10 +31,10 @@ NAV = {
 }
 HEADER_NAV = {
     "": "Home",
-    "blog": "Tech News",
+    "blog": "Tech Articles",
     "#cybersecurity": "Cybersecurity",
     "#ai": "AI",
-    "reviews": "Gadgets",
+    "reviews": "Reviews",
     "software": "Software",
     "academy": "Tech Academy",
     "shop": "Shop",
@@ -47,12 +47,12 @@ HOME_PHOTOS = {
 }
 SOFTWARE_TOPICS = {"software", "linux", "docker", "monitoring", "ci/cd", "cicd", "kubernetes"}
 COLLECTIONS = {
-    "academy": ("Beginner-friendly guides to computers, networking, operating systems, and IT troubleshooting.",
-                "There are no published guides yet."),
-    "blog": ("The StackedByBayo archive of technology reporting, hands-on projects, and practical troubleshooting.",
-             "There are no published posts yet."),
-    "reviews": ("Practical reviews of technology I’ve used, with context on what I tested and who it might suit.",
-                "There are no published reviews yet."),
+    "academy": ("Build a foundation in computers, networking and operating systems, then put it to work with practical troubleshooting.",
+                "Tech Academy has no published guides yet."),
+    "blog": ("Explore technology coverage and field notes from hands-on work with Linux, cloud infrastructure and DevOps.",
+             "The article archive is empty."),
+    "reviews": ("Find out what a device offers, where it falls short and who it suits. Each review explains how the product was evaluated.",
+                "The reviews section is awaiting its first article."),
 }
 
 
@@ -349,11 +349,11 @@ def article_toc(tokens):
             '<nav aria-label="Table of contents">' + links(tokens) + '</nav></details></aside>')
 
 
-def reading_links(title, links):
+def reading_links(title, links, *, css_class):
     if not links:
         return ""
     items = "".join(f'<li><a href="{escape(url)}">{escape(label)}</a></li>' for label, url in links)
-    return f'<section><h2>{escape(title)}</h2><ul>{items}</ul></section>'
+    return f'<section class="{css_class}"><h2>{escape(title)}</h2><ul>{items}</ul></section>'
 
 
 def cited_links(refs):
@@ -388,9 +388,12 @@ def article(post, collection, posts, page=page):
                (item["category"] == post["category"] or set(tags).intersection(item.get("categories", [])))]
     related.extend(item for item in posts if item is not post and item not in related)
     sources = (
-        reading_links("Sources", cited_links(post.get("sources", [])))
-        + reading_links("Official advisories", cited_links(post.get("security", {}).get("advisories", [])))
-        + reading_links("Related resources", cited_links(post.get("tutorial", {}).get("resources", [])))
+        reading_links("Sources", cited_links(post.get("sources", [])),
+                        css_class="reading-references")
+        + reading_links("Official advisories", cited_links(post.get("security", {}).get("advisories", [])),
+                        css_class="reading-references")
+        + reading_links("Related resources", cited_links(post.get("tutorial", {}).get("resources", [])),
+                        css_class="reading-references")
     )
     md = markdown.Markdown(
         extensions=["fenced_code", "tables", "toc", "admonition", ReadingExtension()]
@@ -435,7 +438,8 @@ def article(post, collection, posts, page=page):
         body=body, facts=article_facts(post),
         topics=topics,
         sources=sources,
-        related=reading_links("Related articles", [(item["title"], "../../" + item["url"]) for item in related[:3]]),
+        related=reading_links("Related articles", [(item["title"], "../../" + item["url"]) for item in related[:3]],
+                              css_class="reading-related"),
         adjacent='<nav class="reading-adjacent" aria-label="Adjacent articles">' + "".join(adjacent) + '</nav>' if adjacent else "",
         canonical=escape(canonical), email_link=escape(email),
     ).rstrip()
@@ -465,7 +469,7 @@ def render_site(collections, page=page, target=None):
                 for category in dict.fromkeys(post["category"] for post in posts)
             )
         if not listing:
-            suggestion = '<p><a href="../blog/">Read the blog</a></p>' if name != "blog" else ""
+            suggestion = '<p><a href="../blog/">Browse tech articles</a></p>' if name != "blog" else ""
             listing = f'<div class="publication-empty"><p>{escape(empty)}</p>{suggestion}</div>'
         page(name + "/", NAV[name], intro, section(NAV[name], intro, listing))
         for post in posts:
@@ -474,18 +478,19 @@ def render_site(collections, page=page, target=None):
             routes.append(post["url"])
 
     about = (
-        '<div class="article-body"><h2>Meet the founder</h2>'
-        '<p>I’m Omobayonle Ogundele, an IT Help Desk professional based in Lagos, Nigeria.</p>'
-        '<h2>My work in IT support</h2>'
-        '<p>I work in IT Help Desk, where I help people troubleshoot everyday technology problems. '
-        'I’m interested in the fundamentals behind those problems, from hardware and operating systems to networking.</p>'
-        '<h2>What I’m learning</h2><p>I’m learning cloud computing and DevOps through hands-on projects. '
-        'I share what I build, what goes wrong, and what I learn from fixing it.</p>'
-        '<h2>Why I write</h2><p>I want to make technical ideas easier to understand and give beginners a practical place to start.</p>'
-        '<p><a href="../blog/">Read my blog</a> · <a href="../projects/">Explore my projects</a></p></div>'
+        '<div class="article-body publication-about"><h2>What you’ll find here</h2>'
+        '<p>StackedByBayo explores how technology works and what it takes to use it in practice. '
+        'The archive follows projects from setup to troubleshooting, with the context you need to follow along '
+        'or apply a lesson to your own work.</p>'
+        '<h2>About Bayo</h2>'
+        '<p>I’m Omobayonle Ogundele, an IT Help Desk professional based in Lagos, Nigeria. '
+        'I help people troubleshoot everyday technology problems and use hands-on projects to learn more about '
+        'cloud computing and DevOps.</p>'
+        '<p>I write about what I build, what goes wrong and what I learn from fixing it.</p>'
+        '<p><a href="../blog/">Browse tech articles</a> · <a href="../projects/">Explore my projects</a></p></div>'
     )
     for route, title, intro, body in [
-        ("about", "About StackedByBayo", "StackedByBayo makes technology easier to understand through news, guides, and reviews.", about),
+        ("about", "About StackedByBayo", "StackedByBayo covers technology through news, practical guides and reviews for readers at every level.", about),
         ("projects", "Projects", "Hands-on projects exploring Linux, cloud services, automation, and DevOps.", template("projects").template),
         ("contact", "Contact", "Get in touch with Bayo.", template("contact").template),
     ]:
@@ -504,7 +509,7 @@ def render_site(collections, page=page, target=None):
         )
 
     software = matching_topics(posts, SOFTWARE_TOPICS)
-    intro = "Operating systems, applications, and the tools behind modern software."
+    intro = "Explore operating systems, containers and the tools used to build, deploy and monitor software."
     page("software/", "Software", intro, section("Software", intro, news_list(
         software, "There are no published software articles yet.", root="../"
     )))
@@ -521,7 +526,7 @@ def render_site(collections, page=page, target=None):
         '<p id="search-status" role="status"></p><div id="search-results">'
         + news_list(posts, "There are no published articles yet.", root="../") + '</div>'
     )
-    intro = "Find stories by headline, topic, or author."
+    intro = "Search by headline, topic or author."
     page("search/", "Search", intro, section("Search", intro, search))
 
     home = template("home").substitute(
@@ -531,8 +536,8 @@ def render_site(collections, page=page, target=None):
                            "No cybersecurity articles published yet."),
         ai=news_list(matching_topics(posts, {"ai", "artificial intelligence"}),
                      "No AI articles published yet."),
-        reviews=news_list(collections["reviews"][:2], "No hands-on reviews published yet."),
-        academy=news_list(collections["academy"][:2], "No Academy guides published yet."),
+        reviews=news_list(collections["reviews"][:2], "No reviews published yet."),
+        academy=news_list(collections["academy"][:2], "No guides published yet."),
     )
     page("", "Technology News, Reviews & Practical Guides",
          "Discover technology news, cybersecurity, AI, gadgets, software, and practical guides at StackedByBayo.",
@@ -540,7 +545,7 @@ def render_site(collections, page=page, target=None):
     page("404.html", "Page not found", "Find your way back to StackedByBayo.",
          section("Page not found", "The page you requested may have moved.",
                  '<div class="publication-actions"><a class="publication-button primary" href="/">Go to the homepage</a>'
-                 '<a class="publication-button" href="/blog/">Browse the blog</a></div>'))
+                 '<a class="publication-button" href="/blog/">Browse tech articles</a></div>'))
     return routes
 
 

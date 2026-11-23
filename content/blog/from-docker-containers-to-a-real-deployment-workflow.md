@@ -9,7 +9,7 @@
   ],
   "dateTime": "2026-06-02",
   "readTime": "6 min read",
-  "excerpt": "Moving beyond local containers toward repeatable builds, registries, health checks and automated releases.",
+  "excerpt": "A Docker project grows from a local container into a release workflow with versioned images, a registry and health checks.",
   "introduction": "Running a container was the easy part; building a deployment workflow meant making releases repeatable, observable and recoverable.",
   "image": "https://images.unsplash.com/photo-1587620962725-abab7fe55159?auto=format&fit=crop&w=1600&q=84",
   "imageAlt": "Developer workstation representing a Docker deployment workflow"

@@ -8,7 +8,7 @@
   ],
   "dateTime": "2026-06-16",
   "readTime": "7 min read",
-  "excerpt": "The permissions, networking and service failures that turned Linux concepts into practical operational knowledge.",
+  "excerpt": "A service that refused to start, a confusing disk-space reading and other problems that taught me how to troubleshoot Linux.",
   "introduction": "The Linux lessons that stayed with me came from broken services, confusing permissions and networks that did not behave as expected.",
   "image": "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1600&q=84",
   "imageAlt": "Computer hardware representing Linux systems troubleshooting"

@@ -4,19 +4,19 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="The permissions, networking and service failures that turned Linux concepts into practical operational knowledge.">
+    <meta name="description" content="A service that refused to start, a confusing disk-space reading and other problems that taught me how to troubleshoot Linux.">
     <meta name="theme-color" content="#F7F7F2">
     <title>Troubleshooting the Problems That Actually Taught Me Linux | StackedByBayo</title>
     <link rel="canonical" href="https://stackedbybayo.site/blog/troubleshooting-the-problems-that-actually-taught-me-linux/">
     <meta property="og:url" content="https://stackedbybayo.site/blog/troubleshooting-the-problems-that-actually-taught-me-linux/">
     <meta property="og:title" content="Troubleshooting the Problems That Actually Taught Me Linux">
-    <meta property="og:description" content="The permissions, networking and service failures that turned Linux concepts into practical operational knowledge.">
+    <meta property="og:description" content="A service that refused to start, a confusing disk-space reading and other problems that taught me how to troubleshoot Linux.">
     <meta property="og:site_name" content="StackedByBayo">
     <meta property="og:type" content="article">
     <meta property="article:published_time" content="2026-06-16">
     <meta property="og:image" content="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&amp;fit=crop&amp;w=1600&amp;q=84">
     <meta property="og:image:alt" content="Computer hardware representing Linux systems troubleshooting">
-    <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "Troubleshooting the Problems That Actually Taught Me Linux", "description": "The permissions, networking and service failures that turned Linux concepts into practical operational knowledge.", "mainEntityOfPage": "https://stackedbybayo.site/blog/troubleshooting-the-problems-that-actually-taught-me-linux/", "datePublished": "2026-06-16", "articleSection": "Linux", "author": {"@type": "Person", "name": "Omobayonle Ogundele", "url": "https://stackedbybayo.site/about/"}, "keywords": ["linux"], "image": "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1600&q=84"}</script>
+    <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "Troubleshooting the Problems That Actually Taught Me Linux", "description": "A service that refused to start, a confusing disk-space reading and other problems that taught me how to troubleshoot Linux.", "mainEntityOfPage": "https://stackedbybayo.site/blog/troubleshooting-the-problems-that-actually-taught-me-linux/", "datePublished": "2026-06-16", "articleSection": "Linux", "author": {"@type": "Person", "name": "Omobayonle Ogundele", "url": "https://stackedbybayo.site/about/"}, "keywords": ["linux"], "image": "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1600&q=84"}</script>
     <script>
         (function () {
             try {
@@ -49,10 +49,10 @@
             <button class="theme-toggle" type="button" aria-label="Switch to dark mode" aria-pressed="false"><i class="far fa-moon" aria-hidden="true"></i><span>Dark</span></button>
             <button class="publication-menu" type="button" aria-controls="site-navigation" aria-expanded="false" hidden><span>Menu</span><i class="fas fa-bars" aria-hidden="true"></i></button>
             <nav id="site-navigation" class="blog-nav-links" aria-label="Main navigation"><a href="../../">Home</a>
-            <a href="../../blog/" class="active" aria-current="location">Tech News</a>
+            <a href="../../blog/" class="active" aria-current="location">Tech Articles</a>
             <a href="../../#cybersecurity">Cybersecurity</a>
             <a href="../../#ai">AI</a>
-            <a href="../../reviews/">Gadgets</a>
+            <a href="../../reviews/">Reviews</a>
             <a href="../../software/">Software</a>
             <a href="../../academy/">Tech Academy</a>
             <a href="../../shop/">Shop <small class="shop-nav-status">Soon</small></a>
@@ -62,7 +62,7 @@
     <main id="main-content" tabindex="-1" class="article-main">
         <article class="article-shell reading-article">
     <header class="article-header">
-        <a class="back-to-blog" href="../">Back to Tech News</a>
+        <a class="back-to-blog" href="../">Back to Tech Articles</a>
         <p class="article-eyebrow">Linux <span class="reading-type">Commentary</span></p>
         <h1>Troubleshooting the Problems That Actually Taught Me Linux</h1>
         <p class="article-deck">The Linux lessons that stayed with me came from broken services, confusing permissions and networks that did not behave as expected.</p>
@@ -119,7 +119,7 @@ curl -v http://service.internal:8080/health
                     <button class="reading-action" type="button" data-copy-article="https://stackedbybayo.site/blog/troubleshooting-the-problems-that-actually-taught-me-linux/" hidden>Copy article link</button>
                     <span role="status" data-share-status></span>
                 </div>
-<section><h2>Related articles</h2><ul><li><a href="../../blog/when-my-homelab-started-feeling-like-a-platform/">When My Homelab Started Feeling Like a Platform</a></li><li><a href="../../blog/building-my-first-kubernetes-homelab/">Building My First Kubernetes Homelab</a></li><li><a href="../../blog/what-i-learned-building-a-ci-cd-pipeline-from-scratch/">What I Learned Building a CI/CD Pipeline From Scratch</a></li></ul></section>
+<section class="reading-related"><h2>Related articles</h2><ul><li><a href="../../blog/when-my-homelab-started-feeling-like-a-platform/">When My Homelab Started Feeling Like a Platform</a></li><li><a href="../../blog/building-my-first-kubernetes-homelab/">Building My First Kubernetes Homelab</a></li><li><a href="../../blog/what-i-learned-building-a-ci-cd-pipeline-from-scratch/">What I Learned Building a CI/CD Pipeline From Scratch</a></li></ul></section>
 <nav class="reading-adjacent" aria-label="Adjacent articles"><a rel="prev" href="../../blog/setting-up-prometheus-and-grafana-in-my-homelab/"><span class="reading-label">Newer article</span><strong>Setting Up Prometheus and Grafana in My Homelab</strong></a><a rel="next" href="../../blog/from-docker-containers-to-a-real-deployment-workflow/"><span class="reading-label">Older article</span><strong>From Docker Containers to a Real Deployment Workflow</strong></a></nav>
             </footer>
         </div>
@@ -128,7 +128,7 @@ curl -v http://service.internal:8080/health
     </main>
     <footer class="blog-footer publication-footer"><div class="blog-container"><p><strong>StackedByBayo</strong><br>© 2026 StackedByBayo</p><nav aria-label="Footer navigation"><a href="../../">Home</a>
             <a href="../../academy/">Tech Academy</a>
-            <a href="../../blog/">Tech News</a>
+            <a href="../../blog/">Tech Articles</a>
             <a href="../../reviews/">Gadgets &amp; Reviews</a>
             <a href="../../software/">Software</a>
             <a href="../../shop/">Shop <small class="shop-nav-status">Soon</small></a>

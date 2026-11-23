@@ -9,7 +9,7 @@
   ],
   "dateTime": "2026-06-30",
   "readTime": "6 min read",
-  "excerpt": "Building useful dashboards, collecting host metrics and learning which signals make infrastructure easier to operate.",
+  "excerpt": "How host metrics, a few focused dashboards and an alerting lesson helped me troubleshoot my homelab.",
   "introduction": "A practical monitoring stack changed homelab troubleshooting from guesswork into a process guided by useful signals.",
   "image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1600&q=84",
   "imageAlt": "Analytics dashboard representing monitoring and observability"

@@ -36,6 +36,19 @@ Optional editorial fields in the JSON front matter:
 
 `advisories` and `resources` use the same link format as `sources`. Structured detail values accept a string or a list of strings. For `severity`, use the source's stated rating as a string.
 
+### Editorial formats
+
+Use the section sequence below as a Markdown outline. Write specific headings when they help readers scan. Open with a short introduction that explains the story or the task. Define unfamiliar terms on first use and include enough detail for readers who want to go deeper.
+
+| Format | Section order | What to establish |
+| --- | --- | --- |
+| Technology News | What happened → Important details → Why it matters → What’s next | Attribute confirmed details and distinguish scheduled events from expectations. |
+| Cybersecurity | What happened → Who is affected → Technical explanation → Recommended actions → Sources | Name affected versions or audiences when verified. Ground severity and mitigation guidance in official advisories. |
+| Gadget Reviews | Overview → Features → Strengths → Limitations → Verdict | Disclose whether the evaluation was hands-on or research-based. Tie conclusions to the evidence and to the people the product suits. |
+| Tech Academy | What you’ll learn → Prerequisites → Explanation → Practical examples → Key takeaways | State the starting knowledge, tools and environment. Use fenced code with a language identifier, and explain the result readers should expect. |
+
+Provide the actual author, publication date and supporting links when preparing an article. Add references through the existing `sources` field. Use the existing security advisory and tutorial resource fields where appropriate. Use blockquotes for attributed quotations and Markdown admonitions for tips or cautions.
+
 ## Site sources
 
 - `templates/` contains the shared page shell and editable home, project and contact markup.

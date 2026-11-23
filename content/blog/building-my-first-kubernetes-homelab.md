@@ -9,7 +9,7 @@
   ],
   "dateTime": "2026-07-28",
   "readTime": "6 min read",
-  "excerpt": "What it took to turn a few Linux machines into a practical cluster for learning deployments, networking and operations.",
+  "excerpt": "How I set up my first Kubernetes cluster on Linux, worked through a networking problem and deployed my first useful workload.",
   "introduction": "How a small group of Linux machines became a practical Kubernetes environment for learning real cluster operations.",
   "image": "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1600&q=84",
   "imageAlt": "Server racks representing a Kubernetes homelab"

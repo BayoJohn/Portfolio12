@@ -8,7 +8,7 @@
   ],
   "dateTime": "2026-05-19",
   "readTime": "7 min read",
-  "excerpt": "Using Terraform and managed AWS services to make a small cloud application reproducible from the beginning.",
+  "excerpt": "How I used Terraform to make a small AWS application reproducible, and what an IAM mistake taught me about permissions.",
   "introduction": "My first AWS automation project turned a manually assembled cloud experiment into infrastructure I could review, recreate and safely remove.",
   "image": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1600&q=84",
   "imageAlt": "Cloud technology representing an AWS automation project"

@@ -8,7 +8,7 @@
   ],
   "dateTime": "2026-07-14",
   "readTime": "7 min read",
-  "excerpt": "Lessons from connecting source control, testing, image builds and deployment into one repeatable workflow.",
+  "excerpt": "How I connected testing, image builds and deployment, and what I changed after the first pipeline failures.",
   "introduction": "Connecting source control, tests, container builds and deployment revealed where automation creates confidence—and where it can hide risk.",
   "image": "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=1600&q=84",
   "imageAlt": "Code editor representing a CI/CD workflow"

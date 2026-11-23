@@ -1,5 +1,5 @@
 .reading-article {
-  --reading-width: 46rem;
+  --reading-width: 43rem;
   --reading-offset: 6rem;
   --reading-code-bg: #16191f;
   --reading-code-text: #f2f3f5;
@@ -7,7 +7,7 @@
 }
 .article-main:has(.reading-article) { padding: clamp(24px, 4vw, 58px) max(16px, 3vw) 72px; }
 .reading-article .article-header {
-  max-width: 58rem;
+  max-width: 53rem;
   margin: 0 auto clamp(22px, 4vw, 40px);
   text-align: left;
   overflow-wrap: anywhere;
@@ -36,14 +36,15 @@
   color: var(--editorial-muted);
 }
 .reading-article .article-header h1 {
-  max-width: 28ch;
-  font-size: clamp(2rem, 5vw, 3.75rem);
-  line-height: 1.08;
+  max-width: 31ch;
+  font-size: clamp(1.875rem, 1.35rem + 2.6vw, 3.125rem);
+  line-height: 1.12;
   letter-spacing: -.045em;
   text-wrap: balance;
 }
 .reading-article .article-deck {
-  margin: 16px 0 22px;
+  color: var(--editorial-muted);
+  margin: 12px 0 18px;
   max-width: 66ch;
   font-size: clamp(1.0625rem, 1.75vw, 1.25rem);
   line-height: 1.55;
@@ -63,11 +64,12 @@
   color: var(--editorial-accent-ink);
   text-decoration: underline;
 }
-.reading-cover { margin: 0 0 clamp(28px, 5vw, 60px); }
+.reading-cover { margin: 0 0 clamp(24px, 4vw, 44px); }
 .reading-cover img {
   display: block;
   width: 100%;
-  aspect-ratio: 2.15;
+  aspect-ratio: 2.25;
+  border-radius: 10px;
   object-fit: cover;
   background: var(--editorial-line);
 }
@@ -109,19 +111,20 @@
 .reading-article .article-body {
   color: var(--editorial-ink);
   font-size: clamp(1rem, 1.65vw, 1.125rem);
-  line-height: 1.78;
+  font-family: Inter, system-ui, sans-serif;
+  line-height: 1.72;
   overflow-wrap: anywhere;
 }
-.reading-article .article-body p { margin: 0 0 1.25em; }
+.reading-article .article-body p { margin: 0 0 1.1em; }
 .reading-article .article-body > :last-child { margin-bottom: 0; }
 .reading-article .article-body :is(h2, h3, h4) { scroll-margin-top: var(--reading-offset); line-height: 1.25; }
-.reading-article .article-body h2 { margin: 1.8em 0 .55em; font-size: clamp(1.45rem, 3vw, 2rem); }
+.reading-article .article-body h2 { margin: 1.65em 0 .5em; font-size: clamp(1.45rem, 3vw, 2rem); }
 .reading-article .article-body h3 { margin: 1.5em 0 .55em; font-size: clamp(1.15rem, 2.5vw, 1.45rem); }
 .reading-article .article-body h4 { font: 700 1.0625rem/1.3 var(--news-headline); }
-.reading-article .article-body :is(ul, ol) { margin: 0 0 1.25em; padding-inline-start: 1.45em; }
+.reading-article .article-body :is(ul, ol) { margin: 0 0 1.1em; padding-inline-start: 1.45em; }
 .reading-article .article-body li { margin-bottom: .35em; padding-inline-start: .15em; }
 .reading-article .article-body li :is(ul, ol) { margin: .35em 0 0; }
-.reading-article .article-body img { display: block; max-width: 100%; height: auto; }
+.reading-article .article-body img { display: block; max-width: 100%; height: auto; border-radius: 6px; }
 .reading-article .article-body figure { margin: 1.5em 0; }
 .reading-article .article-body :is(video, audio, iframe) { max-width: 100%; }
 .reading-article .article-body iframe { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; border: 0; }
@@ -129,8 +132,8 @@
   margin: 1.6em 0;
   border: 0;
   border-inline-start: 3px solid var(--editorial-accent);
-  border-radius: 0;
-  padding: clamp(14px, 3vw, 24px);
+  border-radius: 0 8px 8px 0;
+  padding: clamp(14px, 3vw, 22px);
   background: var(--editorial-white);
   color: var(--editorial-ink);
   font-size: inherit;
@@ -138,6 +141,17 @@
 .reading-article .article-body :is(blockquote, .admonition, .reading-facts) > :first-child { margin-top: 0; }
 .reading-article .article-body :is(blockquote, .admonition, .reading-facts, dd) > :last-child { margin-bottom: 0; }
 .reading-article :is(.admonition-title, .reading-facts dt) { font-weight: 700; }
+.reading-article .article-body blockquote {
+  background: transparent;
+  font-family: var(--news-headline);
+  font-size: 1.17em;
+  line-height: 1.5;
+}
+.reading-article .article-body .admonition-title {
+  margin-bottom: .5em;
+  color: var(--editorial-accent-ink);
+  font: 600 .8125rem/1.5 var(--news-mono);
+}
 .reading-facts dl { margin: 0; }
 .reading-facts dd { margin: 0 0 .7em; }
 .reading-table { overflow-x: auto; margin: 1.5em 0; }
@@ -154,12 +168,13 @@
 .reading-article :is(pre, .code-block) {
   background: var(--reading-code-bg);
   color: var(--reading-code-text);
-  border-radius: 0;
+  border: 1px solid #343741;
+  border-radius: 8px;
 }
 .reading-article pre { max-width: 100%; overflow-x: auto; padding: 16px; margin: 1.4em 0; }
 .reading-article pre code { background: transparent; color: inherit; font: .875rem/1.65 var(--news-mono); }
 .reading-article .code-block { overflow: visible; margin: 1.4em 0; border-color: #343741; }
-.reading-article .code-block pre { margin: 0; }
+.reading-article .code-block pre { margin: 0; border: 0; }
 .reading-article .code-toolbar { border-color: #343741; color: #ced1d7; font-family: var(--news-mono); }
 .reading-article .code-toolbar button {
   min-height: 36px;
@@ -177,6 +192,23 @@
 .reading-footer p { margin: 0 0 .4em; }
 .reading-footer ul { margin: 0; padding-inline-start: 1.25em; }
 .reading-footer li + li { margin-top: .35em; }
+.reading-footer .reading-references ul { list-style-type: square; }
+.reading-footer .reading-related ul { display: grid; gap: 8px; padding: 0; list-style: none; }
+.reading-related li + li { margin-top: 0; }
+.reading-article .reading-related a {
+  display: block;
+  padding: 10px 14px;
+  border: 1px solid var(--editorial-line);
+  border-radius: 6px;
+  background: var(--editorial-white);
+  color: var(--editorial-ink);
+  font: 600 1rem/1.4 var(--news-headline);
+  text-decoration: none;
+}
+.reading-article .reading-related a:is(:hover, :focus-visible) {
+  border-color: var(--editorial-accent-ink);
+  color: var(--editorial-accent-ink);
+}
 .reading-topics ul { display: flex; flex-wrap: wrap; gap: 8px; padding: 0; list-style: none; }
 .reading-topics li, .reading-topics li + li {
   margin: 0;
@@ -227,6 +259,7 @@
 }
 @media (max-width: 650px) {
   .reading-cover img { aspect-ratio: 16 / 10; }
+  .reading-article .article-byline { column-gap: 12px; }
   .reading-adjacent { grid-template-columns: minmax(0, 1fr); }
 }
 @media (prefers-reduced-motion: no-preference) {
