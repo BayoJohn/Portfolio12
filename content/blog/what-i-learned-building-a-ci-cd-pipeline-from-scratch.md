@@ -1,6 +1,7 @@
 ---
 {
   "title": "What I Learned Building a CI/CD Pipeline From Scratch",
+  "articleType": "commentary",
   "category": "CI/CD",
   "categories": [
     "cicd"

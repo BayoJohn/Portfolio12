@@ -4,18 +4,19 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="The Linux lessons that stayed with me came from broken services, confusing permissions and networks that did not behave as expected.">
+    <meta name="description" content="The permissions, networking and service failures that turned Linux concepts into practical operational knowledge.">
     <meta name="theme-color" content="#F7F7F2">
     <title>Troubleshooting the Problems That Actually Taught Me Linux | StackedByBayo</title>
     <link rel="canonical" href="https://stackedbybayo.site/blog/troubleshooting-the-problems-that-actually-taught-me-linux/">
     <meta property="og:url" content="https://stackedbybayo.site/blog/troubleshooting-the-problems-that-actually-taught-me-linux/">
     <meta property="og:title" content="Troubleshooting the Problems That Actually Taught Me Linux">
-    <meta property="og:description" content="The Linux lessons that stayed with me came from broken services, confusing permissions and networks that did not behave as expected.">
+    <meta property="og:description" content="The permissions, networking and service failures that turned Linux concepts into practical operational knowledge.">
     <meta property="og:site_name" content="StackedByBayo">
     <meta property="og:type" content="article">
     <meta property="article:published_time" content="2026-06-16">
     <meta property="og:image" content="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&amp;fit=crop&amp;w=1600&amp;q=84">
-    <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "Troubleshooting the Problems That Actually Taught Me Linux", "description": "The Linux lessons that stayed with me came from broken services, confusing permissions and networks that did not behave as expected.", "mainEntityOfPage": "https://stackedbybayo.site/blog/troubleshooting-the-problems-that-actually-taught-me-linux/", "datePublished": "2026-06-16", "author": {"@type": "Person", "name": "Omobayonle Ogundele", "url": "https://stackedbybayo.site/about/"}, "image": "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1600&q=84"}</script>
+    <meta property="og:image:alt" content="Computer hardware representing Linux systems troubleshooting">
+    <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "Troubleshooting the Problems That Actually Taught Me Linux", "description": "The permissions, networking and service failures that turned Linux concepts into practical operational knowledge.", "mainEntityOfPage": "https://stackedbybayo.site/blog/troubleshooting-the-problems-that-actually-taught-me-linux/", "datePublished": "2026-06-16", "articleSection": "Linux", "author": {"@type": "Person", "name": "Omobayonle Ogundele", "url": "https://stackedbybayo.site/about/"}, "keywords": ["linux"], "image": "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1600&q=84"}</script>
     <script>
         (function () {
             try {
@@ -37,6 +38,7 @@
     <link rel="stylesheet" href="../../assets/css/platform.css">
     <link rel="stylesheet" href="../../assets/css/editorial.css">
     <link rel="stylesheet" href="../../assets/css/news.css">
+    <link rel="stylesheet" href="../../assets/css/article.css">
 </head>
 <body class="blog-page publication-page">
     <a class="skip-link" href="#main-content">Skip to content</a>
@@ -58,23 +60,42 @@
         </div>
     </header>
     <main id="main-content" tabindex="-1" class="article-main">
-        <article class="article-shell"><a class="back-to-blog" href="../">Back to Tech News</a><header class="article-header"><p class="article-eyebrow">Linux · <time datetime="2026-06-16">Jun 16, 2026</time> · 7 min read</p><h1>Troubleshooting the Problems That Actually Taught Me Linux</h1><p class="article-deck">The Linux lessons that stayed with me came from broken services, confusing permissions and networks that did not behave as expected.</p><p>By Omobayonle Ogundele</p></header><img class="article-cover platform-cover" src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&amp;fit=crop&amp;w=1600&amp;q=84" alt="Computer hardware representing Linux systems troubleshooting" loading="lazy" decoding="async"><div class="article-body"><p>Reading Linux documentation gave me vocabulary. Troubleshooting real failures taught me how the pieces connect and how to gather evidence before making a change.</p>
-<h2>The service that would not start</h2>
+        <article class="article-shell reading-article">
+    <header class="article-header">
+        <a class="back-to-blog" href="../">Back to Tech News</a>
+        <p class="article-eyebrow">Linux <span class="reading-type">Commentary</span></p>
+        <h1>Troubleshooting the Problems That Actually Taught Me Linux</h1>
+        <p class="article-deck">The Linux lessons that stayed with me came from broken services, confusing permissions and networks that did not behave as expected.</p>
+        <div class="article-byline">
+            <span>By <a href="../../about/">Omobayonle Ogundele</a></span>
+            <span>Published <time datetime="2026-06-16">Jun 16, 2026</time></span>
+
+            <span>7 min read</span>
+        </div>
+    </header>
+    <figure class="reading-cover"><img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&amp;fit=crop&amp;w=1600&amp;q=84" alt="Computer hardware representing Linux systems troubleshooting" srcset="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&amp;fit=crop&amp;w=480&amp;q=84 480w, https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&amp;fit=crop&amp;w=800&amp;q=84 800w, https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&amp;fit=crop&amp;w=1200&amp;q=84 1200w, https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&amp;fit=crop&amp;w=1600&amp;q=84 1600w" sizes="(max-width: 1230px) 94vw, 1160px" fetchpriority="high" decoding="async"></figure>
+    <div class="reading-layout reading-layout-with-toc">
+<aside class="reading-toc"><details><summary>On this page</summary><nav aria-label="Table of contents"><ol><li><a href="#the-service-that-would-not-start">The service that would not start</a></li><li><a href="#permissions-beyond-chmod">Permissions beyond chmod</a></li><li><a href="#following-a-network-request">Following a network request</a></li><li><a href="#disk-space-that-looked-available">Disk space that looked available</a></li><li><a href="#the-habit-that-mattered-most">The habit that mattered most</a></li></ol></nav></details></aside>
+        <div class="reading-column">
+            <div class="article-body">
+
+                <p>Reading Linux documentation gave me vocabulary. Troubleshooting real failures taught me how the pieces connect and how to gather evidence before making a change.</p>
+<h2 id="the-service-that-would-not-start">The service that would not start</h2>
 <p>A systemd unit kept restarting with a generic failure. The useful clue was not in the application output but in the journal, where a working-directory permission error showed exactly which user was being denied.</p>
 <pre><code class="language-shell">systemctl status my-service
 journalctl -u my-service --since &quot;10 minutes ago&quot;
 namei -l /srv/my-service/config.yml
 </code></pre>
-<h2>Permissions beyond chmod</h2>
+<h2 id="permissions-beyond-chmod">Permissions beyond chmod</h2>
 <p>Changing a file to 777 would have hidden the underlying mistake. Checking ownership, parent-directory traversal and the service account led to a narrow fix that preserved the intended access model.</p>
-<h2>Following a network request</h2>
+<h2 id="following-a-network-request">Following a network request</h2>
 <p>When a host could resolve a name but not reach the service, I learned to test DNS, routing, listening sockets and firewall rules independently. That sequence made network debugging far less mysterious.</p>
 <pre><code class="language-shell">dig service.internal
 ip route
 ss -lntp
 curl -v http://service.internal:8080/health
 </code></pre>
-<h2>Disk space that looked available</h2>
+<h2 id="disk-space-that-looked-available">Disk space that looked available</h2>
 <p>One node reported free disk space but could not create files. The filesystem had exhausted its inodes because a failed job had created millions of tiny files.</p>
 <ul>
 <li>Read logs before restarting.</li>
@@ -82,8 +103,28 @@ curl -v http://service.internal:8080/health
 <li>Test one network layer at a time.</li>
 <li>Measure both disk blocks and inodes.</li>
 </ul>
-<h2>The habit that mattered most</h2>
-<p>The biggest improvement was forming a hypothesis, running a command that could disprove it and recording the result. Linux became easier when troubleshooting became an investigation instead of a sequence of guesses.</p></div></article>
+<h2 id="the-habit-that-mattered-most">The habit that mattered most</h2>
+<p>The biggest improvement was forming a hypothesis, running a command that could disprove it and recording the result. Linux became easier when troubleshooting became an investigation instead of a sequence of guesses.</p>
+            </div>
+            <footer class="reading-footer">
+                <section class="reading-author" aria-label="Author">
+                    <p class="reading-label">About the author</p>
+                    <p><strong><a href="../../about/">Omobayonle Ogundele</a></strong></p>
+<p>IT Help Desk professional based in Lagos, Nigeria.</p>
+                </section>
+<section class="reading-topics"><h2>Topics</h2><ul><li>linux</li></ul></section>
+
+                <div class="reading-share" aria-label="Sharing options">
+                    <a class="reading-action" href="mailto:?subject=Troubleshooting%20the%20Problems%20That%20Actually%20Taught%20Me%20Linux&amp;body=https%3A%2F%2Fstackedbybayo.site%2Fblog%2Ftroubleshooting-the-problems-that-actually-taught-me-linux%2F">Share by email</a>
+                    <button class="reading-action" type="button" data-copy-article="https://stackedbybayo.site/blog/troubleshooting-the-problems-that-actually-taught-me-linux/" hidden>Copy article link</button>
+                    <span role="status" data-share-status></span>
+                </div>
+<section><h2>Related articles</h2><ul><li><a href="../../blog/when-my-homelab-started-feeling-like-a-platform/">When My Homelab Started Feeling Like a Platform</a></li><li><a href="../../blog/building-my-first-kubernetes-homelab/">Building My First Kubernetes Homelab</a></li><li><a href="../../blog/what-i-learned-building-a-ci-cd-pipeline-from-scratch/">What I Learned Building a CI/CD Pipeline From Scratch</a></li></ul></section>
+<nav class="reading-adjacent" aria-label="Adjacent articles"><a rel="prev" href="../../blog/setting-up-prometheus-and-grafana-in-my-homelab/"><span class="reading-label">Newer article</span><strong>Setting Up Prometheus and Grafana in My Homelab</strong></a><a rel="next" href="../../blog/from-docker-containers-to-a-real-deployment-workflow/"><span class="reading-label">Older article</span><strong>From Docker Containers to a Real Deployment Workflow</strong></a></nav>
+            </footer>
+        </div>
+    </div>
+</article>
     </main>
     <footer class="blog-footer publication-footer"><div class="blog-container"><p><strong>StackedByBayo</strong><br>© 2026 StackedByBayo</p><nav aria-label="Footer navigation"><a href="../../">Home</a>
             <a href="../../academy/">Tech Academy</a>
@@ -96,5 +137,6 @@ curl -v http://service.internal:8080/health
             <a href="../../contact/">Contact</a></nav><nav aria-label="Social links"><a href="https://github.com/BayoJohn">GitHub</a><a href="https://www.linkedin.com/in/bayo123/">LinkedIn</a><a href="mailto:ogundelebayo8@gmail.com">Email</a></nav></div></footer>
     <script src="../../assets/js/portfolio-home.js"></script>
     <script src="../../assets/js/publication.js" defer></script>
+    <script src="../../assets/js/article.js" defer></script>
 </body>
 </html>

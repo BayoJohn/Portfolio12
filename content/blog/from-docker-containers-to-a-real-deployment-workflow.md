@@ -1,6 +1,7 @@
 ---
 {
   "title": "From Docker Containers to a Real Deployment Workflow",
+  "articleType": "commentary",
   "category": "Docker",
   "categories": [
     "cicd",

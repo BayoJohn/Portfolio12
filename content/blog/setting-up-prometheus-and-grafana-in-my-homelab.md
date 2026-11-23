@@ -1,6 +1,7 @@
 ---
 {
   "title": "Setting Up Prometheus and Grafana in My Homelab",
+  "articleType": "commentary",
   "category": "Monitoring",
   "categories": [
     "monitoring",

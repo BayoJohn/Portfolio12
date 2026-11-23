@@ -1,13 +1,18 @@
 """Build static pages from the site templates and Markdown collections."""
 from datetime import date
-from html import escape
+from html import escape, unescape
 import json
+from math import ceil
 from pathlib import Path
 import re
 from string import Template
+from urllib.parse import quote, urlencode, urlsplit
+from xml.etree.ElementTree import Element
 from xml.sax.saxutils import escape as xml_escape
 
 import markdown
+from markdown.extensions import Extension
+from markdown.treeprocessors import Treeprocessor
 
 ROOT = Path(__file__).resolve().parents[1]
 ORIGIN = "https://stackedbybayo.site/"
@@ -51,6 +56,46 @@ COLLECTIONS = {
 }
 
 
+ARTICLE_TYPES = {
+    "reporting": "Original reporting",
+    "news-summary": "News summary",
+    "commentary": "Commentary",
+    "security-update": "Cybersecurity update",
+    "review": "Review",
+    "tutorial": "Tutorial",
+}
+ARTICLE_FACTS = (
+    ("security", "Security details", {"severity": "Severity", "affectedProducts": "Affected products",
+                         "audience": "Who is affected", "recommendedActions": "Recommended actions"}),
+    ("review", "Review details", {"productOverview": "Product overview", "specifications": "Specifications",
+                       "advantages": "Advantages", "limitations": "Limitations",
+                       "verdict": "Verdict", "testingDisclosure": "Evaluation disclosure"}),
+    ("tutorial", "Tutorial details", {"prerequisites": "Prerequisites", "troubleshooting": "Troubleshooting"}),
+)
+
+
+class ReadingMarkup(Treeprocessor):
+    def run(self, root):
+        for parent in list(root.iter()):
+            for index, child in enumerate(list(parent)):
+                if child.tag == "table":
+                    wrapper = Element("div", {"class": "reading-table", "tabindex": "0",
+                                              "role": "region", "aria-label": "Scrollable table"})
+                    parent.remove(child)
+                    wrapper.append(child)
+                    parent.insert(index, wrapper)
+                elif child.tag == "pre":
+                    child.set("tabindex", "0")
+                elif child.tag == "img":
+                    child.set("loading", "lazy")
+                    child.set("decoding", "async")
+
+
+class ReadingExtension(Extension):
+    def extendMarkdown(self, md):
+        md.treeprocessors.register(ReadingMarkup(md), "reading_markup", 0)
+
+
 def template(name):
     return Template((ROOT / "templates" / f"{name}.html").read_text(encoding="utf-8"))
 
@@ -68,11 +113,21 @@ def metadata(route, title, description, post=None):
     if post:
         tags.append(f'<meta property="article:published_time" content="{post["dateTime"]}">')
         data = {"@context": "https://schema.org", "@type": "BlogPosting",
-                "headline": title, "description": description, "mainEntityOfPage": url,
+                "headline": post["title"], "description": description, "mainEntityOfPage": url,
                 "datePublished": post["dateTime"],
-                "author": {"@type": "Person", "name": post["author"], "url": ORIGIN + "about/"}}
+                "articleSection": post["category"],
+                "author": {"@type": "Person", "name": post["author"]}}
+        if url := author_url(post):
+            data["author"]["url"] = url
+        if updated := post.get("updatedTime"):
+            tags.append(f'<meta property="article:modified_time" content="{updated}">')
+            data["dateModified"] = updated
+        if topics := post.get("categories"):
+            data["keywords"] = topics
         if post.get("image"):
             tags.append(f'<meta property="og:image" content="{escape(post["image"])}">')
+            if alt := post.get("imageAlt"):
+                tags.append(f'<meta property="og:image:alt" content="{escape(alt)}">')
             data["image"] = post["image"]
         tags.append('<script type="application/ld+json">' + json.dumps(data).replace("<", "\\u003c") + "</script>")
     return "\n    ".join(tags)
@@ -120,6 +175,8 @@ def page(route, title, description, content, post=None):
     write(route, template("page").substitute(
         root=root, title=escape(f"{title} | StackedByBayo" if route else f"StackedByBayo | {title}"),
         description=escape(description),
+        article_styles=f'    <link rel="stylesheet" href="{root}assets/css/article.css">\n' if post else "",
+        article_script=f'    <script src="{root}assets/js/article.js" defer></script>\n' if post else "",
         metadata=seo, navigation=navigation(root, active, bool(post), header=True),
         footer=footer(root, show_wordmark=bool(route)), content=content, body_class=" news-home" if not route else "", main_class="article-main" if post else "platform-main",
     ))
@@ -144,6 +201,16 @@ def read_posts(collection):
                 raise ValueError("Article body is empty")
             published = date.fromisoformat(post["dateTime"])
             post["dateTime"] = published.isoformat()
+            if post.get("updatedTime"):
+                updated = date.fromisoformat(post["updatedTime"])
+                if updated < published:
+                    raise ValueError("updatedTime must be on or after dateTime")
+                post["updatedTime"] = updated.isoformat()
+            if post.get("articleType") and post["articleType"] not in ARTICLE_TYPES:
+                raise ValueError("Unknown articleType")
+            details = post.get("security", {})
+            if details.get("severity") and not web_url(details.get("severitySource", "")):
+                raise ValueError("A severity rating requires a severitySource URL")
         except (KeyError, ValueError, TypeError) as error:
             raise ValueError(f"{path}: {error}") from error
         post.update(url=f"{collection}/{path.stem}/", body=body, date=published,
@@ -152,9 +219,12 @@ def read_posts(collection):
     return sorted(posts, key=lambda post: post["date"], reverse=True)
 
 
+def date_markup(value):
+    return f'<time datetime="{value.isoformat()}">{value:%b} {value.day}, {value.year}</time>'
+
+
 def post_date(post):
-    published = post["date"]
-    return f'<time datetime="{published.isoformat()}">{published:%b} {published.day}, {published.year}</time>'
+    return date_markup(post["date"])
 
 
 def image(post, css_class, *, preview=False, priority=False, root="./"):
@@ -218,26 +288,135 @@ def section(title, intro, body=""):
             f'<div class="blog-container platform-content">{body}</div>')
 
 
-def article(post, collection, posts):
-    title = escape(post["title"])
-    intro = post.get("introduction", post["excerpt"])
-    tags = set(post.get("categories", []))
-    related = [item for item in posts if item is not post and
-               (item["category"] == post["category"] or tags.intersection(item.get("categories", [])))]
-    related_links = "".join(f'<li><a href="../../{item["url"]}">{escape(item["title"])}</a></li>'
-                            for item in related[:3])
-    reading_time = f' · {escape(post["readTime"])}' if post.get("readTime") else ""
-    body = markdown.markdown(post["body"], extensions=["fenced_code", "tables"])
-    content = (
-        f'<article class="article-shell"><a class="back-to-blog" href="../">Back to {NAV[collection]}</a>'
-        f'<header class="article-header"><p class="article-eyebrow">{escape(post["category"])} · '
-        f'{post_date(post)}{reading_time}</p><h1>{title}</h1>'
-        f'<p class="article-deck">{escape(intro)}</p><p>By {escape(post["author"])}</p></header>'
-        f'{image(post, "article-cover platform-cover")}<div class="article-body">{body}'
-        + (f'<h2>Related reading</h2><ul>{related_links}</ul>' if related_links else "")
-        + '</div></article>'
+def web_url(value):
+    parts = urlsplit(value)
+    return value if parts.scheme in {"https", "http"} and parts.hostname else ""
+
+
+def author_url(post):
+    return web_url(post.get("authorURL", "")) or (ORIGIN + "about/" if post["author"] == AUTHOR else "")
+
+
+def article_cover(post):
+    if not post.get("image"):
+        return ""
+    url = post["image"]
+    responsive = ""
+    if url.startswith("https://images.unsplash.com/") and re.search(r"[?&]w=\d+", url):
+        variants = [escape(re.sub(r"([?&]w=)\d+", rf"\g<1>{width}", url)) + f" {width}w"
+                    for width in (480, 800, 1200, 1600)]
+        responsive = (f' srcset="{", ".join(variants)}"'
+                      ' sizes="(max-width: 1230px) 94vw, 1160px"')
+    credit = escape(post.get("imageCredit", ""))
+    if credit and (link := web_url(post.get("imageCreditURL", ""))):
+        credit = f'<a href="{escape(link)}">{credit}</a>'
+    caption = " · ".join(filter(None, (escape(post.get("imageCaption", "")), credit)))
+    return (
+        '<figure class="reading-cover">'
+        f'<img src="{escape(url)}" alt="{escape(post.get("imageAlt", ""))}"{responsive} '
+        'fetchpriority="high" decoding="async">'
+        + (f'<figcaption>{caption}</figcaption>' if caption else "") + '</figure>'
     )
-    page(post["url"], post["title"], intro, content, post)
+
+
+def article_toc(tokens):
+    def links(items):
+        return '<ol>' + "".join(
+            f'<li><a href="#{escape(quote(item["id"]))}">{escape(unescape(item["name"]))}</a>'
+            + (links(item["children"]) if item["children"] else "") + '</li>'
+            for item in items
+        ) + '</ol>'
+
+    return ('<aside class="reading-toc"><details><summary>On this page</summary>'
+            '<nav aria-label="Table of contents">' + links(tokens) + '</nav></details></aside>')
+
+
+def reading_links(title, links):
+    if not links:
+        return ""
+    items = "".join(f'<li><a href="{escape(url)}">{escape(label)}</a></li>' for label, url in links)
+    return f'<section><h2>{escape(title)}</h2><ul>{items}</ul></section>'
+
+
+def cited_links(refs):
+    return [(ref["label"], url) for ref in refs if (url := web_url(ref["url"]))]
+
+
+def article_facts(post):
+    sections = []
+    for key, title, labels in ARTICLE_FACTS:
+        fields = post.get(key, {})
+        rows = []
+        for field, label in labels.items():
+            value = fields.get(field)
+            if not value:
+                continue
+            if isinstance(value, list):
+                text = '<ul>' + "".join(f'<li>{escape(item)}</li>' for item in value) + '</ul>'
+            else:
+                text = escape(value)
+            if field == "severity":
+                text += f' <a href="{escape(fields["severitySource"])}">Rating source</a>'
+            rows.append(f'<dt>{label}</dt><dd>{text}</dd>')
+        if rows:
+            sections.append(f'<section class="reading-facts"><h2>{title}</h2><dl>{"".join(rows)}</dl></section>')
+    return "".join(sections)
+
+
+def article(post, collection, posts):
+    intro = post.get("introduction", post["excerpt"])
+    tags = post.get("categories", [])
+    related = [item for item in posts if item is not post and
+               (item["category"] == post["category"] or set(tags).intersection(item.get("categories", [])))]
+    related.extend(item for item in posts if item is not post and item not in related)
+    sources = (
+        reading_links("Sources", cited_links(post.get("sources", [])))
+        + reading_links("Official advisories", cited_links(post.get("security", {}).get("advisories", [])))
+        + reading_links("Related resources", cited_links(post.get("tutorial", {}).get("resources", [])))
+    )
+    md = markdown.Markdown(
+        extensions=["fenced_code", "tables", "toc", "attr_list", "admonition", ReadingExtension()],
+        extension_configs={"toc": {"toc_depth": "2-4"}},
+    )
+    body = md.convert(post["body"])
+    show_toc = len(md.toc_tokens) >= 3 or post.get("articleType") == "tutorial"
+    toc = article_toc(md.toc_tokens) if show_toc and md.toc_tokens else ""
+    reading_time = post.get("readTime") or f'{max(1, ceil(len(post["body"].split()) / 220))} min read'
+    author = escape(post["author"])
+    if url := author_url(post):
+        href = "../../about/" if url == ORIGIN + "about/" else url
+        author = f'<a href="{escape(href)}">{author}</a>'
+    bio = post.get("authorBio") or ("IT Help Desk professional based in Lagos, Nigeria." if post["author"] == AUTHOR else "")
+    canonical = ORIGIN + post["url"]
+    email = "mailto:?" + urlencode({"subject": post["title"], "body": canonical}, quote_via=quote)
+    index = posts.index(post)
+    adjacent = []
+    for label, offset, rel in (("Newer article", -1, "prev"), ("Older article", 1, "next")):
+        position = index + offset
+        if 0 <= position < len(posts):
+            item = posts[position]
+            adjacent.append(
+                f'<a rel="{rel}" href="../../{item["url"]}"><span class="reading-label">{label}</span>'
+                f'<strong>{escape(item["title"])}</strong></a>'
+            )
+    topic_items = "".join(f'<li>{escape(tag)}</li>' for tag in tags)
+    topics = f'<section class="reading-topics"><h2>Topics</h2><ul>{topic_items}</ul></section>' if topic_items else ""
+    kind = ARTICLE_TYPES.get(post.get("articleType", ""))
+    content = template("article").substitute(
+        collection=escape(NAV[collection]), category=escape(post["category"]), title=escape(post["title"]),
+        type_label=f' <span class="reading-type">{kind}</span>' if kind else "",
+        summary=escape(intro), author=author, author_bio=f'<p>{escape(bio)}</p>' if bio else "",
+        published=post_date(post), reading_time=escape(reading_time),
+        updated=f'<span>Updated {date_markup(date.fromisoformat(post["updatedTime"]))}</span>' if post.get("updatedTime") else "",
+        cover=article_cover(post), toc=toc, toc_class=" reading-layout-with-toc" if toc else "",
+        body=body, facts=article_facts(post),
+        topics=topics,
+        sources=sources,
+        related=reading_links("Related articles", [(item["title"], "../../" + item["url"]) for item in related[:3]]),
+        adjacent='<nav class="reading-adjacent" aria-label="Adjacent articles">' + "".join(adjacent) + '</nav>' if adjacent else "",
+        canonical=escape(canonical), email_link=escape(email),
+    ).rstrip()
+    page(post["url"], post["title"], post["excerpt"], content, post)
 
 
 def main():

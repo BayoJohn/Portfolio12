@@ -1,6 +1,7 @@
 ---
 {
   "title": "Building My First AWS Automation Project",
+  "articleType": "commentary",
   "category": "Cloud",
   "categories": [
     "cloud"

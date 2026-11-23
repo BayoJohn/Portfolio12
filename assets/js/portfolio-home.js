@@ -76,7 +76,7 @@
     });
   });
 
-  document.querySelectorAll('a[href^="#"]:not(.sidebar-nav a, .skip-link, .carousel-cta, .editorial-cta)').forEach(function (link) {
+  document.querySelectorAll('a[href^="#"]:not(.sidebar-nav a, .skip-link, .carousel-cta, .editorial-cta, .reading-article a)').forEach(function (link) {
     link.addEventListener('click', function (event) {
       var href = link.getAttribute('href');
       if (!href || href === '#') return;

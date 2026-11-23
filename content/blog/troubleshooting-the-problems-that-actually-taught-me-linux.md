@@ -1,6 +1,7 @@
 ---
 {
   "title": "Troubleshooting the Problems That Actually Taught Me Linux",
+  "articleType": "commentary",
   "category": "Linux",
   "categories": [
     "linux"

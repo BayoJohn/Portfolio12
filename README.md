@@ -17,6 +17,25 @@ python3 -m http.server 8000
 
 Use a virtual environment for the Python dependency if your system requires one. Open the preview at `http://localhost:8000/`. The custom 404 page and any server-side redirects depend on the production host.
 
+## Article reading template
+
+The article template adds a table of contents to articles with three or more main sections and to tutorials with headings. Use Markdown headings in order, starting at level two. Keep heading text and any explicitly assigned IDs stable after publishing. Use fenced code blocks, Markdown tables, and `!!! note "Title"` followed by an indented paragraph for callouts. For inline captions, use trusted `figure` and `figcaption` HTML. Give embedded iframes descriptive titles and use native controls with captions or transcripts where applicable.
+
+Optional editorial fields in the JSON front matter:
+
+| Field | Use |
+| --- | --- |
+| `articleType` | `reporting`, `news-summary`, `commentary`, `security-update`, `review`, or `tutorial`. |
+| `updatedTime` | An actual update date in YYYY-MM-DD format, on or after publication. |
+| `author`, `authorURL`, `authorBio` | Byline details. The existing publication author is used when the byline is omitted. |
+| `imageAlt`, `imageCaption`, `imageCredit`, `imageCreditURL` | Supply descriptive alt text for meaningful cover images and credit information as required by the license. |
+| `sources` | A list of objects with `label` and absolute `url` fields. |
+| `security` | Optional `severity`, `affectedProducts`, `audience`, `recommendedActions`, and `advisories`. Add an authoritative `severitySource` URL whenever a rating is shown. |
+| `review` | Optional `productOverview`, `specifications`, `advantages`, `limitations`, `verdict`, and `testingDisclosure`. State whether you tested the product hands-on or evaluated it through research. |
+| `tutorial` | Optional `prerequisites`, `troubleshooting`, and `resources`. Use body headings for the steps. |
+
+`advisories` and `resources` use the same link format as `sources`. Structured detail values accept a string or a list of strings. For `severity`, use the source's stated rating as a string.
+
 ## Site sources
 
 - `templates/` contains the shared page shell and editable home, project and contact markup.

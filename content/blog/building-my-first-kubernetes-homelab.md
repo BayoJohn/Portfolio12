@@ -1,6 +1,7 @@
 ---
 {
   "title": "Building My First Kubernetes Homelab",
+  "articleType": "commentary",
   "category": "Kubernetes",
   "categories": [
     "homelab",

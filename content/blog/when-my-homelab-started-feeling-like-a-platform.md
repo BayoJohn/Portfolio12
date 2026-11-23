@@ -2,6 +2,7 @@
 {
   "featured": true,
   "title": "When My Homelab Started Feeling Like a Platform",
+  "articleType": "commentary",
   "category": "Homelab",
   "categories": [
     "homelab",
