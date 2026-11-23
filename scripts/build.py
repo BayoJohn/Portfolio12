@@ -179,6 +179,53 @@ def article(post, collection, posts):
     page(post["url"], post["title"], intro, content, post)
 
 
+def carousel():
+    items = [
+        ("workspace", "StackedByBayo", "Technology, Explained Simply.",
+         "Explore practical IT knowledge, technology insights, and the ideas shaping our digital world.",
+         "Explore StackedByBayo", "#explore"),
+        ("hardware", "Tech Academy", "Understand the Technology Around You.",
+         "Learn computer fundamentals, networking, operating systems, and everyday IT concepts through practical explanations.",
+         "Start Learning", "academy/"),
+        ("reviews", "Tech Reviews", "Technology Worth Exploring.",
+         "Discover practical insights into software, hardware, and the tools we use every day.",
+         "Explore Reviews", "reviews/"),
+        ("bayo", "About Bayo", "Learning. Building. Sharing.",
+         "I'm Bayo, an IT Help Desk professional exploring technology, solving practical problems, and sharing what I learn.",
+         "Meet Bayo", "about/"),
+    ]
+    slides, thumbnails = [], []
+    for index, (image_name, label, headline, description, cta, href) in enumerate(items, 1):
+        base = f"assets/img/carousel/{image_name}"
+        first = index == 1
+        heading = "h1" if first else "h2"
+        srcset = (f"{base}-720.webp 720w, {base}-1440.webp 1440w" if image_name != "bayo"
+                  else "assets/img/bayo-portrait-640.webp 640w, assets/img/omobayonle-ogundele.webp 1024w")
+        photo = (f'src="{base}-720.webp" srcset="{srcset}" fetchpriority="high"' if first
+                 else f'src="{base}-320.webp" data-srcset="{srcset}"')
+        state = " is-active" if first else ""
+        inactive = "" if first else ' inert aria-hidden="true"'
+        position = f"{index} of {len(items)}"
+        alt = "Portrait of Bayo Ogundele at his workstation" if image_name == "bayo" else ""
+        slides.append(
+            f'<div class="carousel-slide carousel-{image_name}{state}" id="carousel-slide-{index}" '
+            f'role="group" aria-roledescription="slide" aria-label="{position}"{inactive}>'
+            f'<img class="carousel-photo" {photo} sizes="(max-width: 600px) 94vw, (max-width: 1200px) 92vw, 1112px" '
+            f'alt="{alt}" decoding="async">'
+            f'<div class="carousel-copy"><p class="carousel-label">{label}</p>'
+            f'<{heading}>{headline}</{heading}><p class="carousel-description">{description}</p>'
+            f'<a class="publication-button primary carousel-cta" href="{href}">{cta}</a></div></div>'
+        )
+        current = ' aria-current="true"' if first else ""
+        thumbnails.append(
+            f'<button class="carousel-thumbnail" type="button" aria-controls="carousel-slide-{index}" '
+            f'aria-label="Show {label}, slide {position}" data-label="{label}"{current}>'
+            f'<img src="{base}-320.webp" width="320" height="140" alt="" decoding="async">'
+            f'<span>{label}</span></button>'
+        )
+    return "\n        ".join(slides), "\n        ".join(thumbnails)
+
+
 def main():
     routes = [f"{route}/" if route else "" for route in NAV]
     collections = {name: read_posts(name) for name in COLLECTIONS}
@@ -233,7 +280,10 @@ def main():
                     key=lambda post: post["date"], reverse=True)[:3]
     latest = ('<div class="article-grid">' + "".join(card(post, "./") for post in recent) + '</div>'
               if recent else '<p>There are no published articles yet.</p>')
-    home = template("home").substitute(selected_projects="".join(project_cards[:2]), recent=latest)
+    slides, thumbnails = carousel()
+    home = template("home").substitute(
+        slides=slides, thumbnails=thumbnails, selected_projects="".join(project_cards[:2]), recent=latest,
+    )
     page("", "Technology, Explained Simply",
          "Practical technology guides, IT troubleshooting lessons, hands-on projects, and reviews by Bayo Ogundele.",
          home)

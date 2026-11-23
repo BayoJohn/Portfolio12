@@ -1,22 +1,19 @@
-<section class="publication-hero" id="home" aria-labelledby="home-title">
-    <div class="blog-container publication-hero-inner">
-        <div>
-            <p class="publication-label">By Omobayonle Ogundele</p>
-            <h1 id="home-title">Technology,<br><span>Explained Simply.</span></h1>
-            <p class="publication-intro">Hey, I'm Bayo — an IT professional, tech enthusiast, and aspiring educator. I simplify everyday technology, share practical IT knowledge, and document what I'm learning.</p>
-            <div class="publication-actions">
-                <a class="publication-button primary" href="academy/">Explore Tech Academy</a>
-                <a class="publication-button" href="about/">Meet Bayo</a>
-            </div>
+<section class="blog-container publication-carousel" id="home" aria-label="Discover StackedByBayo" aria-roledescription="carousel">
+    <div class="carousel-stage" id="carousel-stage">
+        $slides
+        <div class="carousel-controls" hidden>
+            <button type="button" data-step="-1" aria-controls="carousel-stage" aria-label="Previous slide"><i class="fas fa-chevron-left" aria-hidden="true"></i></button>
+            <span class="carousel-count" aria-hidden="true">01 / 04</span>
+            <button type="button" data-step="1" aria-controls="carousel-stage" aria-label="Next slide"><i class="fas fa-chevron-right" aria-hidden="true"></i></button>
         </div>
-        <figure class="publication-portrait">
-            <img src="assets/img/bayo-portrait-640.webp" srcset="assets/img/bayo-portrait-640.webp 640w, assets/img/omobayonle-ogundele.webp 1024w" sizes="(max-width: 720px) min(86vw, 440px), 440px" width="1024" height="1536" alt="Omobayonle Ogundele at his workstation" fetchpriority="high">
-            <figcaption><strong>Bayo Ogundele</strong><span>IT Help Desk · Lagos, Nigeria</span></figcaption>
-        </figure>
+        <span class="carousel-status" role="status"></span>
+    </div>
+    <div class="carousel-thumbnails" role="group" aria-label="Choose a slide" hidden>
+        $thumbnails
     </div>
 </section>
 
-<section class="blog-container publication-section" aria-labelledby="explore-title">
+<section class="blog-container publication-section" id="explore" aria-labelledby="explore-title">
     <h2 id="explore-title">Explore Technology</h2>
     <div class="publication-topics">
         <a class="publication-topic academy-topic" href="academy/">
