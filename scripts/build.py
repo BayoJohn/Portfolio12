@@ -91,10 +91,12 @@ def navigation(root, active, article_page=False, *, header=False):
     )
 
 
-def footer(root):
+def footer(root, *, show_wordmark=True):
     return (
         '<footer class="blog-footer publication-footer"><div class="blog-container">'
-        f'<p><strong>StackedByBayo</strong><br>© {date.today().year} StackedByBayo</p>'
+        '<p>'
+        + ('<strong>StackedByBayo</strong><br>' if show_wordmark else '')
+        + f'© {date.today().year} StackedByBayo</p>'
         f'<nav aria-label="Footer navigation">{navigation(root, None)}</nav>'
         '<nav aria-label="Social links"><a href="https://github.com/BayoJohn">GitHub</a>'
         '<a href="https://www.linkedin.com/in/bayo123/">LinkedIn</a>'
@@ -119,7 +121,7 @@ def page(route, title, description, content, post=None):
         root=root, title=escape(f"{title} | StackedByBayo" if route else f"StackedByBayo | {title}"),
         description=escape(description),
         metadata=seo, navigation=navigation(root, active, bool(post), header=True),
-        footer=footer(root), content=content, body_class=" news-home" if not route else "", main_class="article-main" if post else "platform-main",
+        footer=footer(root, show_wordmark=bool(route)), content=content, body_class=" news-home" if not route else "", main_class="article-main" if post else "platform-main",
     ))
 
 
@@ -202,11 +204,11 @@ def matching_topics(posts, topics):
     )]
 
 
-def news_list(posts, empty, *, layout="news-list", photo_count=0, root="./"):
+def news_list(posts, empty, *, layout="news-list", root="./"):
     if not posts:
         return f'<p class="news-empty">{escape(empty)}</p>'
     return f'<div class="{layout}">' + "".join(
-        news_card(post, root=root, photo=index < photo_count) for index, post in enumerate(posts)
+        news_card(post, root=root, photo=False) for post in posts
     ) + '</div>'
 
 
@@ -322,7 +324,7 @@ def main():
 
     home = template("home").substitute(
         featured=featured,
-        latest=news_list(posts[:6], "There are no published articles yet.", layout="news-latest", photo_count=3),
+        latest=news_list(posts[:6], "There are no published articles yet.", layout="news-latest"),
         security=news_list(matching_topics(posts, {"cybersecurity", "security"}),
                            "No cybersecurity articles published yet."),
         ai=news_list(matching_topics(posts, {"ai", "artificial intelligence"}),

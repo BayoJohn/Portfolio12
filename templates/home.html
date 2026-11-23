@@ -30,7 +30,7 @@
 
 <div class="news-wrap">
     <section class="news-section news-gadgets" aria-labelledby="gadgets-title">
-        <img src="assets/img/carousel/reviews-720.webp" alt="" width="720" height="480" loading="lazy" decoding="async">
+        <img src="assets/img/carousel/reviews-720.webp" alt="" srcset="assets/img/carousel/reviews-320.webp 320w, assets/img/carousel/reviews-720.webp 720w, assets/img/carousel/reviews-1440.webp 1440w" sizes="(max-width: 650px) 92vw, (max-width: 1340px) 50vw, 650px" width="720" height="480" loading="lazy" decoding="async">
         <div>
             <h2 id="gadgets-title">Gadgets &amp; Reviews</h2>
             <p>Hands-on coverage of hardware and everyday electronics.</p>
@@ -40,13 +40,16 @@
     </section>
 
     <section class="news-section news-academy" aria-labelledby="academy-title">
-        <div class="news-heading"><h2 id="academy-title">Tech Academy</h2><a href="academy/">Visit Tech Academy</a></div>
-        <p>Build confidence with computers, networking, operating systems, and troubleshooting.</p>
-        $academy
+        <div>
+            <h2 id="academy-title">Tech Academy</h2>
+            <p>Build confidence with computers, networking, operating systems, and troubleshooting.</p>
+            <a class="news-link" href="academy/">Visit Tech Academy</a>
+        </div>
+        <div class="news-academy-guides">$academy</div>
     </section>
 
     <section class="news-section news-about" aria-labelledby="about-title">
-        <h2 id="about-title">About StackedByBayo</h2>
+        <h2 id="about-title">About the publication</h2>
         <div>
             <p>StackedByBayo makes technology easier to understand through news, educational articles, practical guides, and reviews. It was founded by Bayo Ogundele, an IT Help Desk professional in Lagos, Nigeria.</p>
             <a class="news-link" href="about/">About the publication and its founder</a>
