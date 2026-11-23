@@ -33,7 +33,7 @@ NAV = {
 HEADER_NAV = {
     "": "Home",
     "blog": "Tech News",
-    "#cybersecurity": "Cybersecurity",
+    "cybersecurity": "Cybersecurity",
     "#ai": "Artificial Intelligence",
     "reviews": "Gadgets",
     "software": "Software",
@@ -421,7 +421,7 @@ def article_sidebar(post, published, featured):
 
     related = sorted(candidates.values(), key=relevance, reverse=True)[:3]
     topic_links = []
-    for route in ("blog", "#cybersecurity", "#ai", "reviews", "software", "academy"):
+    for route in ("blog", "cybersecurity", "#ai", "reviews", "software", "academy"):
         href = "../../" + (route if route.startswith("#") else route + "/")
         topic_links.append(f'<li><a href="{href}">{escape(HEADER_NAV[route])}</a></li>')
     return template("article-sidebar").substitute(
@@ -706,37 +706,53 @@ def academy_library(posts, archive, intro, empty):
     ).rstrip()
 
 
-SECURITY_TOPICS = (
-    ("Threats & Attacks", {"threats", "attacks", "phishing", "malware"}, "phishing"),
-    ("Vulnerabilities", {"vulnerabilities", "vulnerability"}, None),
-    ("Privacy", {"privacy", "digital privacy"}, None),
-    ("Account Security", {"account security", "password security", "multi-factor authentication"}, "passwords"),
-    ("Security Guides", {"security guides", "security guide", "cybersecurity basics"}, "guide"),
-)
+def cve_entry(record):
+    """Render an editorially verified record, with optional verified exploitation evidence."""
+    identifier = record["id"]
+    advisory = web_url(record["advisory"])
+    if not re.fullmatch(r"CVE-[0-9]{4}-[0-9]{4,}", identifier) or not advisory.startswith("https://"):
+        raise ValueError("A CVE entry requires an identifier and an HTTPS advisory")
+    fields = []
+    for key, label in (("severity", "Severity"), ("cvss", "CVSS score"), ("product", "Affected product")):
+        value = record.get(key)
+        if value is not None and value != "":
+            fields.append(f'<dt>{label}</dt><dd>{escape(str(value))}</dd>')
+    if record.get("published"):
+        fields.append(f'<dt>Published</dt><dd>{date_markup(date.fromisoformat(record["published"]))}</dd>')
+    if evidence := web_url(record.get("exploitation_source", "")):
+        if evidence.startswith("https://"):
+            fields.append(f'<dt>Known exploitation</dt><dd><a href="{escape(evidence)}">Verified evidence</a></dd>')
+    details = f'<dl class="security-cve-details">{"".join(fields)}</dl>' if fields else ""
+    return (
+        '<article class="security-cve">'
+        f'<h3>{escape(identifier)}</h3><p>{escape(record["description"])}</p>{details}'
+        f'<a href="{escape(advisory)}">Official advisory</a></article>'
+    )
 
 
-def security_hub(posts):
-    intro = "Understand emerging threats, protect your digital life, and explore the technologies shaping modern security."
-    tags = {"cybersecurity", "security", *(tag for _, group, _ in SECURITY_TOPICS for tag in group)}
-    stories = matching_topics(posts, tags)
+def security_topic_reading(stories, tags):
+    links = "".join(
+        f'<li><a href="../{escape(story["url"])}">{escape(story["title"])}</a></li>'
+        for story in matching_topics(stories, tags)[:3]
+    )
+    return f'<ul class="security-reading" aria-label="Related reading">{links}</ul>' if links else ""
+
+
+def security_hub(posts, *, cves=()):
+    intro = "Understand the threats shaping our digital world. Explore vulnerabilities, malware, security developments, and practical ways to stay protected."
+    malware_tags = {"malware", "ransomware", "trojans", "spyware"}
+    threat_tags = {"threats", "attacks", "phishing", "supply chain", "supply-chain attacks"}
+    privacy_tags = {"privacy", "digital privacy"}
+    security_tags = {"cybersecurity", "security", "cve", "vulnerabilities", "vulnerability",
+                     "account security", "password security", "multi-factor authentication", "security guides",
+                     "security guide", "cybersecurity basics"}
+    stories = matching_topics(posts, security_tags | malware_tags | threat_tags | privacy_tags)
     lead = next((post for post in stories if post.get("featured")), stories[0] if stories else None)
     remaining = [post for post in stories if post is not lead]
     urls = {post["url"]: post for post in posts}
     account_guide = "academy/protect-your-accounts-and-devices/"
     web_guide = "academy/how-the-web-works/"
-    passwords = "../" + account_guide + "#give-each-account-its-own-password"
-    phishing = "../" + account_guide + "#rehearse-what-youll-do-with-a-suspicious-message"
-    guide_links = {"passwords": passwords, "phishing": phishing, "guide": "../" + account_guide}
-    topic_links = []
-    for label, terms, fallback in SECURITY_TOPICS:
-        match = matching_topics(stories, terms)
-        href = "../" + match[0]["url"] if match else guide_links.get(fallback) if account_guide in urls else None
-        if href:
-            topic_links.append(f'<li><a href="{escape(href)}">{escape(label)}</a></li>')
-    navigation = (
-        '<nav class="newsroom-filters" aria-label="Security topics"><ul>'
-        + "".join(topic_links) + '</ul></nav>'
-    ) if topic_links else ""
+    linux_guide = "academy/linux-terminal-essentials/"
 
     # The web primer’s HTTPS section is supporting reading, not a security news report.
     related = urls.get(web_guide)
@@ -761,24 +777,51 @@ def security_hub(posts):
         '<article class="newsroom-row">' + newsroom_story(post, variant="row", heading="h3") + '</article>'
         for post in stories
     ) or '<p class="newsroom-summary">No security stories have been published yet.</p>'
-    essentials = []
-    if account_guide in urls:
-        essentials.extend([
-            ("Password security", passwords),
-            ("Multi-factor authentication", "../" + account_guide + "#add-a-stronger-sign-in-method"),
-            ("Phishing awareness", phishing),
-            ("Device security and software updates", "../" + account_guide + "#make-updates-routine"),
-        ])
-    if related:
-        essentials.append(("Safe browsing and HTTPS", "../" + web_guide + "#https-protects-the-request-and-response"))
+    actions = (
+        ("Passwords and account security", account_guide, "#give-each-account-its-own-password",
+         "Use a different password for each account. Start with the inbox that receives your reset links."),
+        ("Multi-factor authentication", account_guide, "#add-a-stronger-sign-in-method",
+         "Add another way to verify a sign-in and keep recovery codes somewhere you can access safely."),
+        ("Phishing awareness", account_guide, "#rehearse-what-youll-do-with-a-suspicious-message",
+         "If a message asks you to sign in, open the service independently through its app or a saved address."),
+        ("Device security and software updates", account_guide, "#make-updates-routine",
+         "Turn on automatic updates where available and restart when an update requires it."),
+        ("Safe browsing and HTTPS", web_guide, "#https-protects-the-request-and-response",
+         "Check the site’s address before signing in. HTTPS protects the connection to that address."),
+    )
+    protection = "".join(
+        f'<li><h3><a href="../{url}{anchor}">{escape(label)}</a></h3><p>{escape(description)}</p></li>'
+        for label, url, anchor, description in actions if url in urls
+    )
+    essentials = [(label, "../" + url + anchor) for label, url, anchor, _ in actions if url in urls]
+    essentials.append(("Online privacy", "./#privacy"))
     sidebar = (
         '<aside class="newsroom-sidebar" aria-labelledby="security-essentials">'
         '<section class="newsroom-side-section"><h2 id="security-essentials">Security Essentials</h2><ul>'
         + "".join(f'<li><a href="{escape(href)}">{escape(label)}</a></li>' for label, href in essentials)
         + '</ul></section></aside>'
-    ) if essentials else ""
+    )
+    learning = "".join(
+        '<article class="newsroom-row">' + newsroom_story(urls[url], variant="row", heading="h3") + '</article>'
+        for url in (web_guide, account_guide, linux_guide) if url in urls
+    )
+    threat_reading = security_topic_reading(stories, threat_tags)
+    if not threat_reading and account_guide in urls:
+        threat_reading = (
+            f'<p><a href="../{account_guide}#rehearse-what-youll-do-with-a-suspicious-message">'
+            'Practise checking a suspicious message</a></p>'
+        )
     return intro, template("cybersecurity").substitute(
-        intro=escape(intro), topics=navigation, featured=featured, feed=feed, essentials=sidebar
+        intro=escape(intro), featured=featured, feed=feed, essentials=sidebar,
+        cves="".join(cve_entry(record) for record in cves) or (
+            '<p>No verified CVE records are listed here yet. '
+            '<a href="https://nvd.nist.gov/vuln/search">Search NIST’s National Vulnerability Database</a>.</p>'
+        ),
+        malware_stories=security_topic_reading(stories, malware_tags),
+        threat_stories=threat_reading,
+        privacy_stories=security_topic_reading(stories, privacy_tags),
+        protection=f'<ul class="security-actions">{protection}</ul>' if protection else "",
+        learning=learning or '<p><a href="../academy/">Browse Tech Academy</a></p>',
     ).rstrip()
 
 
@@ -873,8 +916,6 @@ def render_site(collections, page=page, target=None):
         featured=featured,
         latest=news_list([post for post in posts if post.get("dateTime")][:6],
                          "No recent articles.", layout="news-latest"),
-        security=news_list(matching_topics(posts, {"cybersecurity", "security"}),
-                           "No cybersecurity articles published yet."),
         ai=news_list(matching_topics(posts, {"ai", "artificial intelligence"}),
                      "No AI articles published yet."),
         reviews=news_list(collections["reviews"][:2], "No reviews published yet."),

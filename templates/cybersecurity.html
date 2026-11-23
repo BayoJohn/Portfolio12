@@ -3,13 +3,65 @@
         <h1>Cybersecurity</h1>
         <p>$intro</p>
     </header>
-$topics
+    <nav class="newsroom-filters" aria-label="Cybersecurity topics">
+        <ul>
+            <li><a href="./#security-latest">Latest</a></li>
+            <li><a href="./#cves">CVEs</a></li>
+            <li><a href="./#malware">Malware</a></li>
+            <li><a href="./#threats">Threats</a></li>
+            <li><a href="./#privacy">Privacy</a></li>
+            <li><a href="./#security-guides">Security Guides</a></li>
+        </ul>
+    </nav>
 $featured
+    <section class="security-section" id="cves" tabindex="-1" aria-labelledby="cve-title">
+        <h2 id="cve-title">CVEs &amp; Vulnerabilities</h2>
+        <p>A CVE identifier gives a publicly disclosed vulnerability a common reference. Check the affected versions and recommended fixes in the vendor’s advisory.</p>
+$cves
+    </section>
     <div class="newsroom-layout">
-        <section class="newsroom-feed" aria-labelledby="security-latest">
-            <h2 id="security-latest">Latest Security Stories</h2>
+        <section class="newsroom-feed" id="security-latest" tabindex="-1" aria-labelledby="latest-security-title">
+            <h2 id="latest-security-title">Latest Security Stories</h2>
 $feed
         </section>
 $essentials
     </div>
+    <div class="security-topic-grid">
+        <section class="security-section" id="malware" tabindex="-1" aria-labelledby="malware-title">
+            <h2 id="malware-title">Malware</h2>
+            <p>Malware is software designed to harm a system or misuse its access.</p>
+            <dl class="security-definitions">
+                <div><dt>Ransomware</dt><dd>Blocks access to files or systems and demands payment. Some incidents also involve stolen data.</dd></div>
+                <div><dt>Trojans</dt><dd>Masquerade as legitimate programs or files to persuade someone to run them.</dd></div>
+                <div><dt>Spyware</dt><dd>Collects information such as activity or sensitive data without informed consent.</dd></div>
+            </dl>
+$malware_stories
+        </section>
+        <section class="security-section" id="threats" tabindex="-1" aria-labelledby="threats-title">
+            <h2 id="threats-title">Threats</h2>
+            <p>Some attacks exploit trust in a message, supplier or service.</p>
+            <dl class="security-definitions">
+                <div><dt>Phishing</dt><dd>Messages or sites impersonate trusted people or services to obtain information or prompt an unsafe action.</dd></div>
+                <div><dt>Supply-chain attacks</dt><dd>A compromise at a supplier, software dependency or service provider can affect the people and systems that rely on it.</dd></div>
+            </dl>
+$threat_stories
+            <p><a href="https://www.cisa.gov/sites/default/files/2024-01/2023_fema_planning-considerations-cyber-incidents.pdf">Read CISA and FEMA’s cyber incident guide</a></p>
+        </section>
+    </div>
+    <section class="security-section" aria-labelledby="protect-title">
+        <h2 id="protect-title">Protect Yourself</h2>
+        <p>Start with the accounts you use for password resets and the devices you rely on every day.</p>
+$protection
+        <section class="security-privacy" id="privacy" tabindex="-1" aria-labelledby="privacy-title">
+            <h3 id="privacy-title">Online Privacy</h3>
+            <p>Review which apps can access your location, camera, microphone or contacts. Check the privacy controls on shared devices and browsers, too.</p>
+            <p><a href="https://consumer.ftc.gov/articles/how-websites-and-apps-collect-and-use-your-information">See the FTC guide to website and app privacy</a></p>
+$privacy_stories
+        </section>
+    </section>
+    <section class="security-section" id="security-guides" tabindex="-1" aria-labelledby="security-guides-title">
+        <h2 id="security-guides-title">Security Learning Center</h2>
+        <p>Build the fundamentals in Tech Academy, from how your browser connects to a site to the habits that protect your accounts.</p>
+$learning
+    </section>
 </div>
