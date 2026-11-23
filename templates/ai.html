@@ -1,0 +1,78 @@
+<div class="newsroom ai-hub news-wrap">
+    <header class="newsroom-header">
+        <h1>Artificial Intelligence</h1>
+        <p>$intro</p>
+    </header>
+    <nav class="newsroom-filters" aria-label="Artificial intelligence topics">
+        <ul>
+            <li><a href="./#latest">Latest</a></li>
+            <li><a href="./#tools">AI Tools</a></li>
+            <li><a href="./#models">Models</a></li>
+            <li><a href="./#research">Research</a></li>
+            <li><a href="./#guides">AI Guides</a></li>
+            <li><a href="./#work">AI at Work</a></li>
+        </ul>
+    </nav>
+$featured
+    <section class="ai-section" id="tools" tabindex="-1" aria-labelledby="ai-tools-title">
+        <h2 id="ai-tools-title">AI Tools</h2>
+        <p>Explore tools by the task you want help with. Choose a tool to visit its provider’s site.</p>
+        <div class="ai-tools">
+$tools
+        </div>
+    </section>
+    <div class="ai-layout">
+        <section class="ai-section ai-latest" id="latest" tabindex="-1" aria-labelledby="ai-latest-title">
+            <h2 id="ai-latest-title">Latest AI Developments</h2>
+$latest
+        </section>
+        <aside class="ai-section ai-reading" aria-labelledby="ai-reading-title">
+            <h2 id="ai-reading-title">Start Learning</h2>
+            <ul>
+                <li><a href="./#guides">Get familiar with AI terminology</a></li>
+                <li><a href="./#research">Read benchmark claims critically</a></li>
+                <li><a href="./#work">Try a task you can verify</a></li>
+            </ul>
+        </aside>
+    </div>
+    <div class="ai-topic-grid">
+        <section class="ai-section" id="models" tabindex="-1" aria-labelledby="ai-models-title">
+            <h2 id="ai-models-title">Models</h2>
+            <p>A model is a trained system that turns input into a prediction or output. When reading a release, look for what it accepts, what it produces, and which limits the provider documents.</p>
+            <p>For open-weight releases, check which model parameters are downloadable and what the license permits. Training data and training code may be available separately.</p>
+$model_reading
+        </section>
+        <section class="ai-section" id="research" tabindex="-1" aria-labelledby="ai-research-title">
+            <h2 id="ai-research-title">Research &amp; Evaluation</h2>
+            <p>A benchmark measures performance on selected tasks under defined conditions. Compare results only after checking the dataset, model version and evaluation method. A strong score on one task can leave other capabilities untested.</p>
+            <p>Safety evaluations can examine harmful outputs, privacy risks and reliability. Look for the conditions the researchers tested and the limitations they report.</p>
+            <p><a href="https://www.nist.gov/publications/artificial-intelligence-risk-management-framework-generative-artificial-intelligence">Read NIST’s generative AI risk profile</a></p>
+$research_reading
+        </section>
+    </div>
+    <section class="ai-section" id="guides" tabindex="-1" aria-labelledby="ai-guides-title">
+        <h2 id="ai-guides-title">AI Explained</h2>
+        <dl class="ai-definitions">
+            <div><dt>Artificial intelligence</dt><dd>A broad term for systems that perform tasks such as recognizing patterns, making predictions or generating content.</dd></div>
+            <div><dt>Machine learning and deep learning</dt><dd>Machine learning uses data to fit a model. Deep learning is a family of machine learning methods that use neural networks with multiple layers.</dd></div>
+            <div><dt>Large language models</dt><dd>Large language models learn patterns in text. Many generate a response one token at a time, using the prompt and the tokens already generated. A token can be part of a word.</dd></div>
+            <div><dt>Generative AI</dt><dd>Models that produce outputs such as text, images or audio based on their inputs and patterns learned during training.</dd></div>
+            <div><dt>Hallucinations</dt><dd>Outputs that sound convincing but contain unsupported or false details. Check dates, quotes and citations against the original sources before relying on them.</dd></div>
+        </dl>
+        <p><a href="https://developers.google.com/machine-learning/crash-course/llm">Read Google’s introduction to large language models</a></p>
+$guide_reading
+    </section>
+    <section class="ai-section" id="work" tabindex="-1" aria-labelledby="ai-work-title">
+        <h2 id="ai-work-title">AI at Work</h2>
+        <p>Start with a task where you can review the result. Use approved tools for sensitive work, and remove passwords, customer information and confidential data from examples.</p>
+        <dl class="ai-definitions ai-work">
+            <div><dt>Writing</dt><dd>Ask for a shorter version of a draft, then compare it with the original to catch changed claims or missing context.</dd></div>
+            <div><dt>Programming</dt><dd>Ask for an explanation of an unfamiliar function. Check the API documentation, review suggested changes and run the tests.</dd></div>
+            <div><dt>Research</dt><dd>Ask for themes across documents you provide. Open each cited source and check whether it supports the summary.</dd></div>
+            <div><dt>IT troubleshooting</dt><dd>Give the tool a redacted error message and ask for questions to narrow down the cause. Verify suggested commands before use.</dd></div>
+            <div><dt>Productivity</dt><dd>Turn meeting notes into a list of actions. Confirm assignments and deadlines with the people responsible.</dd></div>
+            <div><dt>Learning</dt><dd>Ask for a practice question and a hint. Try it yourself and check the answer against lesson material.</dd></div>
+        </dl>
+        <p>For hands-on practice checking commands, read <a href="../academy/linux-terminal-essentials/">Linux Terminal Essentials</a>.</p>
+    </section>
+</div>

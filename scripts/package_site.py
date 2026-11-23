@@ -5,7 +5,7 @@ from shutil import copy2, copytree
 root = Path(__file__).resolve().parents[1]
 output = root / "public"
 output.mkdir(exist_ok=True)
-for folder in ("assets", "about", "academy", "blog", "contact", "cybersecurity", "projects", "reviews",
+for folder in ("assets", "about", "academy", "ai", "blog", "contact", "cybersecurity", "projects", "reviews",
                "search", "shop", "software", "writing", "Doc"):
     if (root / folder).is_dir():
         copytree(root / folder, output / folder, dirs_exist_ok=True)

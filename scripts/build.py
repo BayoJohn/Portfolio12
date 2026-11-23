@@ -34,7 +34,7 @@ HEADER_NAV = {
     "": "Home",
     "blog": "Tech News",
     "cybersecurity": "Cybersecurity",
-    "#ai": "Artificial Intelligence",
+    "ai": "Artificial Intelligence",
     "reviews": "Gadgets",
     "software": "Software",
     "academy": "Tech Academy",
@@ -186,8 +186,8 @@ def render_page(route, title, description, content, post=None):
         seo += '\n    <meta name="robots" content="noindex">'
     page_asset = "article" if post else "newsroom" if route == "blog/" else None
     stylesheet = page_asset or ("academy" if route == "academy/" else None)
-    if route == "cybersecurity/":
-        styles = ("newsroom", "cybersecurity")
+    if route in {"cybersecurity/", "ai/"}:
+        styles = ("newsroom", route.rstrip("/"))
     else:
         styles = (stylesheet,) if stylesheet else ()
     return template("page").substitute(
@@ -358,11 +358,11 @@ def article_toc(tokens):
             '<nav aria-label="Table of contents">' + links(tokens) + '</nav></details></aside>')
 
 
-def reading_links(title, links, *, css_class):
+def reading_links(title, links, *, css_class, heading="h2"):
     if not links:
         return ""
     items = "".join(f'<li><a href="{escape(url)}">{escape(label)}</a></li>' for label, url in links)
-    return f'<section class="{css_class}"><h2>{escape(title)}</h2><ul>{items}</ul></section>'
+    return f'<section class="{css_class}"><{heading}>{escape(title)}</{heading}><ul>{items}</ul></section>'
 
 
 def cited_links(refs):
@@ -421,7 +421,7 @@ def article_sidebar(post, published, featured):
 
     related = sorted(candidates.values(), key=relevance, reverse=True)[:3]
     topic_links = []
-    for route in ("blog", "cybersecurity", "#ai", "reviews", "software", "academy"):
+    for route in ("blog", "cybersecurity", "ai", "reviews", "software", "academy"):
         href = "../../" + (route if route.startswith("#") else route + "/")
         topic_links.append(f'<li><a href="{href}">{escape(HEADER_NAV[route])}</a></li>')
     return template("article-sidebar").substitute(
@@ -825,6 +825,58 @@ def security_hub(posts, *, cves=()):
     ).rstrip()
 
 
+AI_TOOLS = (
+    ("Writing", "ChatGPT", "A conversational assistant for drafting and revising text.", "Prepare a first draft from your own notes.", "https://chatgpt.com/"),
+    ("Coding", "GitHub Copilot", "A coding assistant that suggests code and answers questions about it.", "Explore an unfamiliar function in your editor.", "https://github.com/features/copilot"),
+    ("Research", "Gemini Notebook", "Google’s notebook assistant answers questions about sources you add and links back to passages.", "Compare claims across a set of source documents.", "https://notebook.google/"),
+    ("Image Generation", "Adobe Firefly", "Adobe’s generative tools include text-to-image creation.", "Explore visual directions from a written brief.", "https://www.adobe.com/products/firefly.html"),
+    ("Productivity", "Microsoft Copilot", "Microsoft’s work assistant can summarize documents in supported Microsoft 365 apps.", "Identify key points in a Word document.", "https://www.microsoft.com/en-us/copilot"),
+    ("Learning", "Khanmigo", "Khan Academy’s AI tutor offers guided practice and hints.", "Work through a problem with hints.", "https://khanmigo.ai/"),
+)
+
+
+def ai_hub(posts):
+    intro = "Explore the latest AI developments, discover useful tools, and understand the technology reshaping how we live and work."
+    model_tags = {"ai models", "large language models", "llm", "open-source ai", "open source ai"}
+    research_tags = {"ai research", "ai safety", "ai benchmarks", "machine learning"}
+    guide_tags = {"ai guides", "ai education", "generative ai"}
+    stories = matching_topics(posts, {"ai", "artificial intelligence"} | model_tags | research_tags | guide_tags)
+    lead = next((post for post in stories if post.get("featured")), stories[0] if stories else None)
+    remaining = [post for post in stories if post is not lead]
+    briefing = ""
+    if remaining:
+        briefing = (
+            '<section class="newsroom-top ai-briefing"><h2>AI Briefing</h2><ul>'
+            + "".join('<li>' + newsroom_story(post, variant="top", heading="h3") + '</li>'
+                      for post in remaining[:3])
+            + '</ul></section>'
+        )
+    featured = (
+        '<div class="newsroom-lead"><article class="newsroom-lead-story ai-featured">'
+        + newsroom_story(lead, variant="lead", heading="h2") + '</article>' + briefing + '</div>'
+    ) if lead else ""
+    latest = "".join(
+        '<article class="newsroom-row">' + newsroom_story(post, variant="row", heading="h3") + '</article>'
+        for post in remaining
+    )
+    if not latest:
+        message = "No additional AI stories have been published yet." if lead else "No AI stories have been published yet."
+        latest = f'<p class="newsroom-summary">{message}</p>'
+    tools = "".join(
+        f'<article class="ai-tool"><p class="newsroom-category">{escape(category)}</p>'
+        f'<h3><a href="{escape(url)}">{escape(name)}</a></h3>'
+        f'<p>{escape(description)}</p><p class="ai-tool-use">{escape(use_case)}</p></article>'
+        for category, name, description, use_case, url in AI_TOOLS
+    )
+    def reading(tags):
+        return reading_links("Related articles", [(post["title"], "../" + post["url"])
+                             for post in matching_topics(stories, tags)[:3]], css_class="ai-related", heading="h3")
+    return intro, template("ai").substitute(
+        intro=escape(intro), tools=tools, featured=featured, latest=latest,
+        model_reading=reading(model_tags), research_reading=reading(research_tags), guide_reading=reading(guide_tags),
+    ).rstrip()
+
+
 def render_site(collections, page=page, target=None):
     routes = [f"{route}/" if route else "" for route in NAV]
     published = sorted((post for items in collections.values() for post in items),
@@ -883,6 +935,9 @@ def render_site(collections, page=page, target=None):
     security_intro, security_body = security_hub(posts)
     page("cybersecurity/", "Cybersecurity", security_intro, security_body)
     routes.append("cybersecurity/")
+    ai_intro, ai_body = ai_hub(posts)
+    page("ai/", "Artificial Intelligence", ai_intro, ai_body)
+    routes.append("ai/")
     featured = '<p class="news-empty">There are no featured stories yet.</p>'
     if lead:
         featured = (
@@ -916,8 +971,6 @@ def render_site(collections, page=page, target=None):
         featured=featured,
         latest=news_list([post for post in posts if post.get("dateTime")][:6],
                          "No recent articles.", layout="news-latest"),
-        ai=news_list(matching_topics(posts, {"ai", "artificial intelligence"}),
-                     "No AI articles published yet."),
         reviews=news_list(collections["reviews"][:2], "No reviews published yet."),
         academy=news_list(collections["academy"][:2], "No guides published yet."),
     )
