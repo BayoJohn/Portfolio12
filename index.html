@@ -32,42 +32,39 @@
     <link rel="stylesheet" href="./assets/css/portfolio-home.css">
     <link rel="stylesheet" href="./assets/css/blog.css">
     <link rel="stylesheet" href="./assets/css/platform.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@800&amp;display=swap">
+    <link rel="stylesheet" href="./assets/css/editorial.css">
 </head>
 <body class="blog-page publication-page">
     <a class="skip-link" href="#main-content">Skip to content</a>
-    <header class="blog-navbar platform-navbar">
+    <header class="blog-navbar platform-navbar editorial-nav">
         <div class="blog-navbar-inner">
-            <a class="blog-brand" href="./"><i class="fas fa-layer-group" aria-hidden="true"></i><strong>StackedByBayo</strong></a>
+            <a class="blog-brand" href="./"><strong>StackedByBayo</strong></a>
+            <button class="theme-toggle" type="button" aria-label="Switch to light mode" aria-pressed="true"><i class="fas fa-sun" aria-hidden="true"></i><span>Light</span></button>
+            <button class="publication-menu" type="button" aria-controls="site-navigation" aria-expanded="false" hidden><span>Menu</span><i class="fas fa-bars" aria-hidden="true"></i></button>
             <nav id="site-navigation" class="blog-nav-links" aria-label="Main navigation"><a href="./" class="active" aria-current="page">Home</a>
+            <a href="./about/">About</a>
             <a href="./academy/">Tech Academy</a>
             <a href="./blog/">Blog</a>
             <a href="./reviews/">Tech Reviews</a>
             <a href="./projects/">Projects</a>
-            <a href="./about/">About</a>
             <a href="./contact/">Contact</a></nav>
-            <button class="theme-toggle" type="button" aria-label="Switch to light mode" aria-pressed="true"><i class="fas fa-sun" aria-hidden="true"></i><span>Light</span></button>
-            <button class="publication-menu" type="button" aria-controls="site-navigation" aria-expanded="false" hidden>Menu</button>
         </div>
     </header>
     <main id="main-content" tabindex="-1" class="platform-main">
-        <section class="blog-container publication-carousel" id="home" aria-label="Discover StackedByBayo" aria-roledescription="carousel">
-    <div class="carousel-stage" id="carousel-stage">
-        <div class="carousel-slide carousel-workspace is-active" id="carousel-slide-1" role="group" aria-roledescription="slide" aria-label="1 of 4"><img class="carousel-photo" src="assets/img/carousel/workspace-720.webp" srcset="assets/img/carousel/workspace-720.webp 720w, assets/img/carousel/workspace-1440.webp 1440w" fetchpriority="high" sizes="(max-width: 600px) 94vw, (max-width: 1200px) 92vw, 1112px" alt="" decoding="async"><div class="carousel-copy"><p class="carousel-label">StackedByBayo</p><h1>Technology, Explained Simply.</h1><p class="carousel-description">Explore practical IT knowledge, technology insights, and the ideas shaping our digital world.</p><a class="publication-button primary carousel-cta" href="#explore">Explore StackedByBayo</a></div></div>
-        <div class="carousel-slide carousel-hardware" id="carousel-slide-2" role="group" aria-roledescription="slide" aria-label="2 of 4" inert aria-hidden="true"><img class="carousel-photo" src="assets/img/carousel/hardware-320.webp" data-srcset="assets/img/carousel/hardware-720.webp 720w, assets/img/carousel/hardware-1440.webp 1440w" sizes="(max-width: 600px) 94vw, (max-width: 1200px) 92vw, 1112px" alt="" decoding="async"><div class="carousel-copy"><p class="carousel-label">Tech Academy</p><h2>Understand the Technology Around You.</h2><p class="carousel-description">Learn computer fundamentals, networking, operating systems, and everyday IT concepts through practical explanations.</p><a class="publication-button primary carousel-cta" href="academy/">Start Learning</a></div></div>
-        <div class="carousel-slide carousel-reviews" id="carousel-slide-3" role="group" aria-roledescription="slide" aria-label="3 of 4" inert aria-hidden="true"><img class="carousel-photo" src="assets/img/carousel/reviews-320.webp" data-srcset="assets/img/carousel/reviews-720.webp 720w, assets/img/carousel/reviews-1440.webp 1440w" sizes="(max-width: 600px) 94vw, (max-width: 1200px) 92vw, 1112px" alt="" decoding="async"><div class="carousel-copy"><p class="carousel-label">Tech Reviews</p><h2>Technology Worth Exploring.</h2><p class="carousel-description">Discover practical insights into software, hardware, and the tools we use every day.</p><a class="publication-button primary carousel-cta" href="reviews/">Explore Reviews</a></div></div>
-        <div class="carousel-slide carousel-bayo" id="carousel-slide-4" role="group" aria-roledescription="slide" aria-label="4 of 4" inert aria-hidden="true"><img class="carousel-photo" src="assets/img/carousel/bayo-320.webp" data-srcset="assets/img/bayo-portrait-640.webp 640w, assets/img/omobayonle-ogundele.webp 1024w" sizes="(max-width: 600px) 94vw, (max-width: 1200px) 92vw, 1112px" alt="Portrait of Bayo Ogundele at his workstation" decoding="async"><div class="carousel-copy"><p class="carousel-label">About Bayo</p><h2>Learning. Building. Sharing.</h2><p class="carousel-description">I'm Bayo, an IT Help Desk professional exploring technology, solving practical problems, and sharing what I learn.</p><a class="publication-button primary carousel-cta" href="about/">Meet Bayo</a></div></div>
-        <div class="carousel-controls" hidden>
-            <button type="button" data-step="-1" aria-controls="carousel-stage" aria-label="Previous slide"><i class="fas fa-chevron-left" aria-hidden="true"></i></button>
-            <span class="carousel-count" aria-hidden="true">01 / 04</span>
-            <button type="button" data-step="1" aria-controls="carousel-stage" aria-label="Next slide"><i class="fas fa-chevron-right" aria-hidden="true"></i></button>
+        <section class="editorial-hero" id="home" aria-labelledby="hero-name">
+    <div class="editorial-hero-inner">
+        <h1 id="hero-name"><span>BAYO</span> <span>OGUNDELE</span></h1>
+        <div class="editorial-hero-details">
+            <div class="editorial-intro">
+                <p class="editorial-lead">Hey, I'm Bayo — an IT professional, technology enthusiast, and aspiring tech educator.</p>
+                <p class="editorial-summary">I simplify everyday technology, share practical IT knowledge, explore new tools, and document what I learn along the way.</p>
+                <a class="editorial-cta" href="#explore">Explore My World</a>
+            </div>
+            <figure class="editorial-portrait">
+                <img src="assets/img/bayo-portrait-640.webp" width="640" height="960" alt="Black-and-white portrait of Bayo Ogundele" fetchpriority="high" decoding="async">
+            </figure>
         </div>
-        <span class="carousel-status" role="status"></span>
-    </div>
-    <div class="carousel-thumbnails" role="group" aria-label="Choose a slide" hidden>
-        <button class="carousel-thumbnail" type="button" aria-controls="carousel-slide-1" aria-label="Show StackedByBayo, slide 1 of 4" data-label="StackedByBayo" aria-current="true"><img src="assets/img/carousel/workspace-320.webp" width="320" height="140" alt="" decoding="async"><span>StackedByBayo</span></button>
-        <button class="carousel-thumbnail" type="button" aria-controls="carousel-slide-2" aria-label="Show Tech Academy, slide 2 of 4" data-label="Tech Academy"><img src="assets/img/carousel/hardware-320.webp" width="320" height="140" alt="" decoding="async"><span>Tech Academy</span></button>
-        <button class="carousel-thumbnail" type="button" aria-controls="carousel-slide-3" aria-label="Show Tech Reviews, slide 3 of 4" data-label="Tech Reviews"><img src="assets/img/carousel/reviews-320.webp" width="320" height="140" alt="" decoding="async"><span>Tech Reviews</span></button>
-        <button class="carousel-thumbnail" type="button" aria-controls="carousel-slide-4" aria-label="Show About Bayo, slide 4 of 4" data-label="About Bayo"><img src="assets/img/carousel/bayo-320.webp" width="320" height="140" alt="" decoding="async"><span>About Bayo</span></button>
     </div>
 </section>
 
