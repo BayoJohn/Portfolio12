@@ -526,7 +526,7 @@ def newsroom_story(post, *, variant):
     )
     byline = f'<span>{escape(post["author"])}</span>' if variant == "lead" else ""
     meta = post_date(post) + byline
-    heading = "h2" if variant == "lead" else "h3"
+    heading = "h4" if variant == "row" or compact else "h3"
     return (
         photo + '<div class="newsroom-story-copy">'
         f'<p class="newsroom-category">{escape(post["category"])}</p>'
@@ -538,15 +538,15 @@ def newsroom_story(post, *, variant):
 def newsroom_sidebar(topics, picks, guides):
     topic_links = (
         '<nav class="newsroom-side-section" aria-label="Explore Topics" data-newsroom-filters hidden>'
-        '<h2>Explore Topics</h2>' + newsroom_filter_links(topics) + '</nav>'
+        '<h3>Explore Topics</h3>' + newsroom_filter_links(topics) + '</nav>'
     ) if topics else ""
     pick_list = (
-        '<section class="newsroom-side-section" data-newsroom-front><h2>Editor’s Picks</h2><ul>'
+        '<section class="newsroom-side-section" data-newsroom-front><h3>Editor’s Picks</h3><ul>'
         + "".join('<li>' + newsroom_story(post, variant="sidebar") + '</li>' for post in picks)
         + '</ul></section>'
     ) if picks else ""
     academy = (
-        '<section class="newsroom-side-section" data-newsroom-academy><h2>From Tech Academy</h2><ul>'
+        '<section class="newsroom-side-section" data-newsroom-academy><h3>From Tech Academy</h3><ul>'
         + "".join(f'<li data-guide-topics="{escape(newsroom_post_topics(post))}"'
                   + (' hidden>' if i >= 2 else '>')
                   + newsroom_story(post, variant="sidebar") + '</li>' for i, post in enumerate(guides))
@@ -577,7 +577,7 @@ def newsroom(posts, academy, intro, empty):
     lead_block = ""
     if lead:
         top_block = (
-            '<section class="newsroom-top"><h2>Top Stories</h2><ol>'
+            '<section class="newsroom-top"><h3>Top Stories</h3><ol>'
             + "".join('<li>' + newsroom_story(post, variant="top") + '</li>' for post in top)
             + '</ol></section>'
         ) if top else ""
@@ -587,7 +587,7 @@ def newsroom(posts, academy, intro, empty):
             + '</article>' + top_block + '</div>'
         )
     secondary = (
-        '<section class="newsroom-features" data-newsroom-front><h2>More Featured Stories</h2>'
+        '<section class="newsroom-features" data-newsroom-front><h3>More Featured Stories</h3>'
         '<div class="newsroom-features-grid">'
         + "".join('<article>' + newsroom_story(post, variant="feature") + '</article>' for post in extras)
         + '</div></section>'

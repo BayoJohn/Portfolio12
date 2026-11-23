@@ -3,15 +3,26 @@
         <h1>Tech News</h1>
         <p>$intro</p>
     </header>
+    <section aria-labelledby="stacked-stories">
+        <h2 id="stacked-stories" class="newsroom-section-title">StackedByBayo Stories</h2>
 $filters
 $lead
 $secondary
     <div class="newsroom-layout">
         <section class="newsroom-feed" aria-labelledby="latest-news">
-            <h2 id="latest-news" tabindex="-1" data-newsroom-heading>Latest News</h2>
+            <h3 id="latest-news" tabindex="-1" data-newsroom-heading>Latest News</h3>
             <p class="sr-only" role="status" data-newsroom-status></p>
             $feed
         </section>
 $sidebar
     </div>
+    </section>
+
+    <section class="newsroom-external" aria-labelledby="around-tech" data-external-news>
+        <h2 id="around-tech">Latest from Around Tech</h2>
+        <p class="newsroom-summary">Headlines from external publishers. Links open the original stories.</p>
+        <p class="newsroom-external-status" role="status" data-external-status>No recent external headlines are available.</p>
+        <ul class="newsroom-external-list" data-external-list></ul>
+        <button class="newsroom-load-more" type="button" data-external-more hidden>Load more headlines</button>
+    </section>
 </div>

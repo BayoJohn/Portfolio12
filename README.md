@@ -108,3 +108,18 @@ python3 scripts/package_site.py
 ```
 
 The tests use an isolated provider fixture. They do not connect to a production service.
+
+## External technology headlines
+
+The Tech News page reads a same-origin JSON snapshot at `/assets/data/tech-news.json`. It makes one request for that file and never requests publisher feeds from visitors’ browsers. The collector stores headlines, publisher attribution, direct HTTPS links, source dates when valid, topics and first-fetch timestamps. The current sources supply no descriptions or images to the snapshot.
+
+- [Electronic Frontier Foundation RSS](https://www.eff.org/rss/updates.xml) and [copyright policy](https://www.eff.org/copyright). EFF licenses its original material under CC BY 4.0 unless otherwise noted. The feed shows the publisher and links to the original headline.
+- [NASA Technology RSS](https://www.nasa.gov/technology/feed/) and [media usage guidelines](https://www.nasa.gov/nasa-brand-center/images-and-media/). The feed shows NASA headlines and direct links. Third-party imagery, logos and article text are excluded.
+
+`Refresh Tech News` is scheduled at minute 23 every four hours UTC on GitHub Actions. Repository users with the required GitHub permissions can also run it manually on `main`. The workflow serializes runs and commits only snapshot changes using GitHub’s repository-scoped token. It needs GitHub Actions enabled and permission to push the snapshot to `main` under the existing branch rules. GitHub may delay scheduled jobs and can disable them after 60 days of inactivity in a public repository. See the [GitHub schedule documentation](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows#schedule).
+
+Vercel serves the snapshot from the existing production deployment. If the connected Vercel project does not automatically deploy bot-authored commits, an administrator can test a [Vercel deploy hook](https://vercel.com/docs/deploy-hooks) for the existing project and `main` branch. Save its URL only as the GitHub Actions secret `VERCEL_NEWS_DEPLOY_HOOK` if that route is supported by the project’s plan and collaboration settings. A hook does not replace project authorization. See the [Vercel collaboration requirements](https://vercel.com/docs/deployments/troubleshoot-project-collaboration).
+
+The page initially shows eight headlines and can load up to 48 from the snapshot, with at most 24 per source. Recent cached items survive an upstream outage and expire after 14 days, using the publication timestamp where available. Duplicate links use a stable hash with common tracking parameters, fragment, query order, the `www` prefix and trailing slash ignored. Unrecognised or conflicting topic labels fall back to the publisher’s broad subject area.
+
+For a manual check without updating the repository snapshot, run `python3 scripts/collect_news.py --output /tmp/stackedbybayo-news.json`. Run the production packaging command with `python3 scripts/package_site.py`.

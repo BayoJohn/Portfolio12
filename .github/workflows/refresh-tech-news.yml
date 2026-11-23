@@ -1,0 +1,53 @@
+name: Refresh Tech News
+
+on:
+  schedule:
+    - cron: '23 */4 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: refresh-tech-news-main
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          ref: main
+      - name: Collect and publish the headline snapshot
+        id: snapshot
+        run: |
+          python3 scripts/collect_news.py
+          if git diff --quiet -- assets/data/tech-news.json; then
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- assets/data/tech-news.json
+          git commit -m 'Refresh external technology headlines'
+          git push origin HEAD:main
+          echo 'published=true' >> "$GITHUB_OUTPUT"
+      - name: Request a deployment if a deploy hook is configured
+        if: steps.snapshot.outputs.published == 'true' || github.event_name == 'workflow_dispatch'
+        env:
+          VERCEL_NEWS_DEPLOY_HOOK: ${{ secrets.VERCEL_NEWS_DEPLOY_HOOK }}
+        run: |
+          if [ -z "$VERCEL_NEWS_DEPLOY_HOOK" ]; then
+            exit 0
+          fi
+          case "$VERCEL_NEWS_DEPLOY_HOOK" in
+            https://api.vercel.com/v1/integrations/deploy/*) ;;
+            *) printf '%s\n' 'Invalid Vercel deploy hook URL.' >&2; exit 1 ;;
+          esac
+          curl --silent --fail --output /dev/null --connect-timeout 5 --max-time 15 \
+            --proto '=https' --request POST --url "$VERCEL_NEWS_DEPLOY_HOOK" ||
+            { printf '%s\n' 'Vercel rejected the deployment request.' >&2; exit 1; }
