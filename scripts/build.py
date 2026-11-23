@@ -45,7 +45,7 @@ SOFTWARE_TOPICS = {"software", "linux", "docker", "monitoring", "ci/cd", "cicd",
 COLLECTIONS = {
     "academy": ("Learn how networks, websites and operating systems work, with experiments you can try as you read.",
                 "Tech Academy has no published guides yet."),
-    "blog": ("Technology coverage and field notes on what it takes to build, deploy and maintain software and infrastructure.",
+    "blog": ("Technology coverage and field notes on building, deploying and running software and infrastructure.",
              "The article archive is empty."),
     "reviews": ("Find out what a device offers, where it falls short and who it suits. Each review explains how the product was evaluated.",
                 "No gadget reviews have been published yet."),
@@ -184,11 +184,12 @@ def render_page(route, title, description, content, post=None):
     seo = '<meta name="robots" content="noindex">' if missing else metadata(route, title, description, post)
     if route == "search/":
         seo += '\n    <meta name="robots" content="noindex">'
+    page_asset = "article" if post else "newsroom" if route == "blog/" else None
     return template("page").substitute(
         root=root, title=escape(f"{title} | StackedByBayo" if route else f"StackedByBayo | {title}"),
         description=escape(description),
-        article_styles=f'    <link rel="stylesheet" href="{root}assets/css/article.css">\n' if post else "",
-        article_script=f'    <script src="{root}assets/js/article.js" defer></script>\n' if post else "",
+        article_styles=f'    <link rel="stylesheet" href="{root}assets/css/{page_asset}.css">\n' if page_asset else "",
+        article_script=f'    <script src="{root}assets/js/{page_asset}.js" defer></script>\n' if page_asset else "",
         metadata=seo, navigation=navigation(root, active, bool(post), header=True),
         footer=footer(root, show_wordmark=bool(route)), content=content, body_class=" news-home" if not route else "", main_class="article-main" if post else "platform-main",
     )
@@ -490,6 +491,123 @@ def article(post, collection, posts, page=page, *, published=None, featured=()):
     page(post["url"], post["title"], post.get("seoDescription") or post["excerpt"], content, post)
 
 
+def newsroom_topic(value):
+    return re.sub(r"[\W_]+", "", value.casefold())
+
+
+def newsroom_post_topics(post):
+    return " ".join(dict.fromkeys(filter(None, map(
+        newsroom_topic, [post["category"], *post.get("categories", [])]
+    ))))
+
+
+def newsroom_filter_links(topics):
+    links = ['<li><a href="./" data-newsroom-topic="">All News</a></li>']
+    for key, label in topics.items():
+        url = "?" + urlencode({"topic": key})
+        links.append(f'<li><a href="{escape(url)}" data-newsroom-topic="{escape(key)}">{escape(label)}</a></li>')
+    return "<ul>" + "".join(links) + "</ul>"
+
+
+def newsroom_story(post, *, variant):
+    compact = variant in {"top", "sidebar"}
+    sizes = {
+        "lead": "(min-width: 1350px) 800px, (min-width: 780px) 60vw, 92vw",
+        "feature": "(min-width: 1350px) 610px, (min-width: 640px) 44vw, 92vw",
+        "row": "(max-width: 639px) 100px, 168px",
+    }
+    photo = "" if compact else image(
+        post, "newsroom-image", priority=variant == "lead", sizes=sizes[variant]
+    )
+    title = escape(post["title"])
+    url = "../" + escape(post["url"])
+    summary = "" if compact else (
+        f'<p class="newsroom-summary">{escape(post.get("newsroomExcerpt") or post["excerpt"])}</p>'
+    )
+    byline = f'<span>{escape(post["author"])}</span>' if variant == "lead" else ""
+    meta = post_date(post) + byline
+    heading = "h2" if variant == "lead" else "h3"
+    return (
+        photo + '<div class="newsroom-story-copy">'
+        f'<p class="newsroom-category">{escape(post["category"])}</p>'
+        f'<{heading}><a href="{url}">{title}</a></{heading}>' + summary
+        + (f'<p class="newsroom-meta">{meta}</p>' if meta else "") + '</div>'
+    )
+
+
+def newsroom_sidebar(topics, picks, guides):
+    topic_links = (
+        '<nav class="newsroom-side-section" aria-label="Explore Topics" data-newsroom-filters hidden>'
+        '<h2>Explore Topics</h2>' + newsroom_filter_links(topics) + '</nav>'
+    ) if topics else ""
+    pick_list = (
+        '<section class="newsroom-side-section" data-newsroom-front><h2>Editor’s Picks</h2><ul>'
+        + "".join('<li>' + newsroom_story(post, variant="sidebar") + '</li>' for post in picks)
+        + '</ul></section>'
+    ) if picks else ""
+    academy = (
+        '<section class="newsroom-side-section" data-newsroom-academy><h2>From Tech Academy</h2><ul>'
+        + "".join(f'<li data-guide-topics="{escape(newsroom_post_topics(post))}"'
+                  + (' hidden>' if i >= 2 else '>')
+                  + newsroom_story(post, variant="sidebar") + '</li>' for i, post in enumerate(guides))
+        + '</ul></section>'
+    ) if guides else ""
+    if not (topic_links or pick_list or academy):
+        return ""
+    return template("newsroom-sidebar").substitute(topics=topic_links, picks=pick_list, academy=academy).rstrip()
+
+
+def newsroom(posts, academy, intro, empty):
+    topics = {newsroom_topic(post["category"]): post["category"] for post in posts}
+    topics.pop("", None)
+    topics = dict(sorted(topics.items(), key=lambda item: item[1].casefold()))
+    filters = (
+        '<nav class="newsroom-filters" aria-label="Filter Tech News by topic" data-newsroom-filters hidden>'
+        + newsroom_filter_links(topics) + '</nav>'
+    ) if topics else ""
+    lead = next((post for post in posts if post.get("featured")), posts[0] if posts else None)
+    remaining = [post for post in posts if post is not lead]
+    # Keep a chronological feed and a distinct editor’s pick before adding secondary features.
+    top = remaining[:min(3, max(0, len(remaining) - 1))]
+    remaining = remaining[len(top):]
+    extras = remaining[:min(2, max(0, len(remaining) - 4))]
+    remaining = remaining[len(extras):]
+    picks = remaining[-1:] if len(remaining) >= 3 else []
+    archived = {post["url"] for post in [lead, *top, *extras, *picks] if post is not None}
+    lead_block = ""
+    if lead:
+        top_block = (
+            '<section class="newsroom-top"><h2>Top Stories</h2><ol>'
+            + "".join('<li>' + newsroom_story(post, variant="top") + '</li>' for post in top)
+            + '</ol></section>'
+        ) if top else ""
+        lead_block = (
+            '<div class="newsroom-lead" data-newsroom-front>'
+            '<article class="newsroom-lead-story">' + newsroom_story(lead, variant="lead")
+            + '</article>' + top_block + '</div>'
+        )
+    secondary = (
+        '<section class="newsroom-features" data-newsroom-front><h2>More Featured Stories</h2>'
+        '<div class="newsroom-features-grid">'
+        + "".join('<article>' + newsroom_story(post, variant="feature") + '</article>' for post in extras)
+        + '</div></section>'
+    ) if extras else ""
+    rows = []
+    for post in posts:
+        displaced = post["url"] in archived
+        state = ' data-newsroom-archived hidden' if displaced else ''
+        rows.append(f'<article class="newsroom-row" data-story-topics="{escape(newsroom_post_topics(post))}"{state}>'
+                    + newsroom_story(post, variant="row") + '</article>')
+    feed = "".join(rows) if rows else f'<p class="newsroom-summary">{escape(empty)}</p>'
+    if lead and len(posts) == 1:
+        feed += '<p class="newsroom-summary" data-newsroom-front>There are no additional stories yet.</p>'
+    guides = [guide for guide in academy if set(newsroom_post_topics(guide).split()).intersection(topics)]
+    return template("newsroom").substitute(
+        intro=escape(intro), filters=filters, lead=lead_block, secondary=secondary,
+        feed=feed, sidebar=newsroom_sidebar(topics, picks, guides),
+    ).rstrip()
+
+
 def render_site(collections, page=page, target=None):
     routes = [f"{route}/" if route else "" for route in NAV]
     published = sorted((post for items in collections.values() for post in items),
@@ -502,16 +620,7 @@ def render_site(collections, page=page, target=None):
     for name, posts in collections.items():
         intro, empty = COLLECTIONS[name]
         if name == "blog":
-            featured = next((post for post in posts if post.get("featured")), None)
-            remaining = [post for post in posts if post is not featured]
-            listing = (
-                f'<section class="platform-feature"><h2>Featured article</h2>{card(featured, "../")}</section>'
-                if featured else ""
-            )
-            if remaining:
-                listing += '<h2>Recent articles</h2><div class="article-grid">' + "".join(
-                    card(post, "../") for post in remaining
-                ) + '</div>'
+            page("blog/", NAV[name], intro, newsroom(posts, collections.get("academy", []), intro, empty))
         elif name == "academy" and posts:
             listing = '<div class="article-grid">' + "".join(
                 card(post, "../", heading="h2") for post in posts
@@ -523,10 +632,13 @@ def render_site(collections, page=page, target=None):
                 + '</div></section>'
                 for category in dict.fromkeys(post["category"] for post in posts)
             )
-        if not listing:
-            suggestion = '<p><a href="../blog/">Browse tech articles</a></p>' if name != "blog" else ""
-            listing = f'<div class="publication-empty"><p>{escape(empty)}</p>{suggestion}</div>'
-        page(name + "/", NAV[name], intro, section(NAV[name], intro, listing))
+        if name != "blog":
+            if not listing:
+                listing = (
+                    f'<div class="publication-empty"><p>{escape(empty)}</p>'
+                    '<p><a href="../blog/">Browse tech articles</a></p></div>'
+                )
+            page(name + "/", NAV[name], intro, section(NAV[name], intro, listing))
         for post in posts:
             if target is None or target == post["url"]:
                 article(post, name, posts, page, published=published, featured=sidebar_features)

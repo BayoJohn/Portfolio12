@@ -10,6 +10,7 @@
   ],
   "dateTime": "2026-08-10",
   "excerpt": "I started with a few containers and scattered notes. Kubernetes, GitOps and monitoring made the setup easier to rebuild and troubleshoot.",
+  "newsroomExcerpt": "From a few Docker Compose services to a Kubernetes homelab with GitOps and monitoring, with lessons on making it easier to rebuild.",
   "introduction": "My homelab became a better place to learn when changes moved into Git, workloads had an explicit deployment path, and failures left useful evidence.",
   "image": "https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=1600&q=84",
   "imageAlt": "Computer equipment representing a self-hosted homelab"

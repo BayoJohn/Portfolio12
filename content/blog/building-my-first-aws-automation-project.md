@@ -8,6 +8,7 @@
   ],
   "dateTime": "2026-05-19",
   "excerpt": "A small AWS application gave me a reason to learn how Terraform plans, state and least-privilege permissions fit together.",
+  "newsroomExcerpt": "A small AWS application became a practical lesson in Terraform plans, remote state and least-privilege permissions.",
   "introduction": "I used Terraform to turn a small AWS application into infrastructure I could review, recreate and remove.",
   "image": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1600&q=84",
   "imageAlt": "Cloud technology representing an AWS automation project"

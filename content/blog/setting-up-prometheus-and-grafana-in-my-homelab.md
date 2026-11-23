@@ -9,6 +9,7 @@
   ],
   "dateTime": "2026-06-30",
   "excerpt": "Two metrics, fewer alerts and a storage slowdown that became easier to investigate once I could see what the hosts were doing.",
+  "newsroomExcerpt": "Metrics showed when a slowdown coincided with backups. Revisiting the alerts helped cut ones that had no clear response.",
   "introduction": "I used Prometheus and Grafana to investigate what changed before a service slowed down and to trim alerts that had no clear response.",
   "image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1600&q=84",
   "imageAlt": "Analytics dashboard representing monitoring and observability",

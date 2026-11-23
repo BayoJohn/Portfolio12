@@ -8,6 +8,7 @@
   ],
   "dateTime": "2026-06-16",
   "excerpt": "A restart loop, an unreachable service and a disk with free space all had clues. Here’s where I found them.",
+  "newsroomExcerpt": "Four Linux failures show what the journal, file permissions, network checks and inode counts can tell you.",
   "introduction": "Four Linux failures taught me to check the journal, process identity, network path and filesystem before changing settings.",
   "image": "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1600&q=84",
   "imageAlt": "Computer hardware representing Linux systems troubleshooting"

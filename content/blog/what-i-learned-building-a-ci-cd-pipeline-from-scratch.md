@@ -8,6 +8,7 @@
   ],
   "dateTime": "2026-07-14",
   "excerpt": "A passing build once triggered deployment immediately. Here’s how I added checks and made rollback easier to reason about.",
+  "newsroomExcerpt": "Adding health checks and commit-tagged images made releases easier to verify and roll back.",
   "introduction": "I rebuilt my first CI/CD pipeline around explicit tests, commit-tagged images and a health check after deployment.",
   "image": "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=1600&q=84",
   "imageAlt": "Code editor representing a CI/CD workflow"

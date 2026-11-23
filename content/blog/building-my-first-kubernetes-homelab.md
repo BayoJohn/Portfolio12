@@ -9,6 +9,7 @@
   ],
   "dateTime": "2026-07-28",
   "excerpt": "Three Linux nodes, one unreachable service and the lessons that made my first Kubernetes cluster worth keeping.",
+  "newsroomExcerpt": "What went into a three-node K3s cluster, from preparing Linux hosts to diagnosing an unreachable service.",
   "introduction": "I built a three-node K3s cluster to practise deployments, debug networking and learn how Kubernetes reacts when a workload stops responding.",
   "image": "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1600&q=84",
   "imageAlt": "Server racks representing a Kubernetes homelab",

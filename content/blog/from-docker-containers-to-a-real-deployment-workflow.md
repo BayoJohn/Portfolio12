@@ -9,6 +9,7 @@
   ],
   "dateTime": "2026-06-02",
   "excerpt": "What changed when I added versioned images, a registry and health checks to a Docker project that previously ran only locally.",
+  "newsroomExcerpt": "How commit-tagged Docker images, a registry and readiness checks made deployments repeatable.",
   "introduction": "My Docker workflow changed when I had to answer three release questions. Which image is running? Is it ready? How can I roll back?",
   "image": "https://images.unsplash.com/photo-1587620962725-abab7fe55159?auto=format&fit=crop&w=1600&q=84",
   "imageAlt": "Developer workstation representing a Docker deployment workflow",
