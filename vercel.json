@@ -1,0 +1,21 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "buildCommand": "python3 scripts/package_site.py",
+  "outputDirectory": "public",
+  "functions": {
+    "api/publishing.py": {
+      "includeFiles": "{content/**,templates/**,scripts/build.py,editorial/**}",
+      "excludeFiles": "{assets/**,public/**,Doc/**}"
+    }
+  },
+  "routes": [
+    { "src": "^/admin(?:/(.*))?$", "dest": "/api/publishing?route=/admin/$1" },
+    { "src": "^/media/([a-f0-9-]+)\\.webp$", "dest": "/api/publishing?route=/media/$1.webp" },
+    { "src": "^/$", "dest": "/api/publishing?route=/" },
+    { "src": "^/(blog|academy|reviews)(?:/([a-z0-9-]+))?/?$", "dest": "/api/publishing?route=/$1/$2" },
+    { "src": "^/(software|search)/?$", "dest": "/api/publishing?route=/$1/" },
+    { "src": "^/sitemap\\.xml$", "dest": "/api/publishing?route=/sitemap.xml" },
+    { "handle": "filesystem" }
+  ]
+}

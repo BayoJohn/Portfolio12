@@ -91,6 +91,19 @@ class ReadingMarkup(Treeprocessor):
                     child.set("decoding", "async")
 
 
+class ManagedLinks(Treeprocessor):
+    def run(self, root):
+        for node in root.iter():
+            attribute = {"a": "href", "img": "src"}.get(node.tag)
+            if not attribute or attribute not in node.attrib:
+                continue
+            value = node.get(attribute)
+            if node.tag == "a" and value.startswith("#"):
+                continue
+            if not web_url(value) or any(char.isspace() or ord(char) < 32 for char in value):
+                del node.attrib[attribute]
+
+
 class ReadingExtension(Extension):
     def extendMarkdown(self, md):
         md.treeprocessors.register(ReadingMarkup(md), "reading_markup", 0)
@@ -125,10 +138,11 @@ def metadata(route, title, description, post=None):
         if topics := post.get("categories"):
             data["keywords"] = topics
         if post.get("image"):
-            tags.append(f'<meta property="og:image" content="{escape(post["image"])}">')
+            image_url = ORIGIN + post["image"].lstrip("/") if post["image"].startswith("/") else post["image"]
+            tags.append(f'<meta property="og:image" content="{escape(image_url)}">')
             if alt := post.get("imageAlt"):
                 tags.append(f'<meta property="og:image:alt" content="{escape(alt)}">')
-            data["image"] = post["image"]
+            data["image"] = image_url
         tags.append('<script type="application/ld+json">' + json.dumps(data).replace("<", "\\u003c") + "</script>")
     return "\n    ".join(tags)
 
@@ -165,21 +179,25 @@ def write(route, html):
     target.write_text(html.replace("<!doctype html>", "<!doctype html>\n" + GENERATED, 1), encoding="utf-8")
 
 
-def page(route, title, description, content, post=None):
+def render_page(route, title, description, content, post=None):
     missing = route == "404.html"
     active = None if missing else route.split("/", 1)[0]
     root = "/" if missing else "../" * route.count("/") or "./"
     seo = '<meta name="robots" content="noindex">' if missing else metadata(route, title, description, post)
     if route == "search/":
         seo += '\n    <meta name="robots" content="noindex">'
-    write(route, template("page").substitute(
+    return template("page").substitute(
         root=root, title=escape(f"{title} | StackedByBayo" if route else f"StackedByBayo | {title}"),
         description=escape(description),
         article_styles=f'    <link rel="stylesheet" href="{root}assets/css/article.css">\n' if post else "",
         article_script=f'    <script src="{root}assets/js/article.js" defer></script>\n' if post else "",
         metadata=seo, navigation=navigation(root, active, bool(post), header=True),
         footer=footer(root, show_wordmark=bool(route)), content=content, body_class=" news-home" if not route else "", main_class="article-main" if post else "platform-main",
-    ))
+    )
+
+
+def page(route, title, description, content, post=None):
+    write(route, render_page(route, title, description, content, post))
 
 
 def read_posts(collection):
@@ -363,7 +381,7 @@ def article_facts(post):
     return "".join(sections)
 
 
-def article(post, collection, posts):
+def article(post, collection, posts, page=page):
     intro = post.get("introduction", post["excerpt"])
     tags = post.get("categories", [])
     related = [item for item in posts if item is not post and
@@ -375,9 +393,14 @@ def article(post, collection, posts):
         + reading_links("Related resources", cited_links(post.get("tutorial", {}).get("resources", [])))
     )
     md = markdown.Markdown(
-        extensions=["fenced_code", "tables", "toc", "attr_list", "admonition", ReadingExtension()],
+        extensions=["fenced_code", "tables", "toc", "admonition", ReadingExtension()]
+        + ([] if post.get("managed") else ["attr_list"]),
         extension_configs={"toc": {"toc_depth": "2-4"}},
     )
+    if post.get("managed"):
+        md.preprocessors.deregister("html_block")
+        md.inlinePatterns.deregister("html")
+        md.treeprocessors.register(ManagedLinks(md), "managed_links", 1)
     body = md.convert(post["body"])
     show_toc = len(md.toc_tokens) >= 3 or post.get("articleType") == "tutorial"
     toc = article_toc(md.toc_tokens) if show_toc and md.toc_tokens else ""
@@ -416,12 +439,11 @@ def article(post, collection, posts):
         adjacent='<nav class="reading-adjacent" aria-label="Adjacent articles">' + "".join(adjacent) + '</nav>' if adjacent else "",
         canonical=escape(canonical), email_link=escape(email),
     ).rstrip()
-    page(post["url"], post["title"], post["excerpt"], content, post)
+    page(post["url"], post["title"], post.get("seoDescription") or post["excerpt"], content, post)
 
 
-def main():
+def render_site(collections, page=page, target=None):
     routes = [f"{route}/" if route else "" for route in NAV]
-    collections = {name: read_posts(name) for name in COLLECTIONS}
     for name, posts in collections.items():
         intro, empty = COLLECTIONS[name]
         if name == "blog":
@@ -447,7 +469,8 @@ def main():
             listing = f'<div class="publication-empty"><p>{escape(empty)}</p>{suggestion}</div>'
         page(name + "/", NAV[name], intro, section(NAV[name], intro, listing))
         for post in posts:
-            article(post, name, posts)
+            if target is None or target == post["url"]:
+                article(post, name, posts, page)
             routes.append(post["url"])
 
     about = (
@@ -518,6 +541,12 @@ def main():
          section("Page not found", "The page you requested may have moved.",
                  '<div class="publication-actions"><a class="publication-button primary" href="/">Go to the homepage</a>'
                  '<a class="publication-button" href="/blog/">Browse the blog</a></div>'))
+    return routes
+
+
+def main():
+    collections = {name: read_posts(name) for name in COLLECTIONS}
+    routes = render_site(collections)
     published_pages = {ROOT / route / "index.html" for route in routes}
     for collection in collections:
         for generated_page in (ROOT / collection).glob("*/index.html"):
@@ -526,11 +555,13 @@ def main():
             ):
                 generated_page.unlink()
 
+    (ROOT / "sitemap.xml").write_text(sitemap(routes), encoding="utf-8")
+
+
+def sitemap(routes):
     urls = "\n".join(f"  <url><loc>{xml_escape(ORIGIN + route)}</loc></url>" for route in routes)
-    (ROOT / "sitemap.xml").write_text(
-        '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
-        + urls + "\n</urlset>\n", encoding="utf-8",
-    )
+    return ('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+            + urls + "\n</urlset>\n")
 
 
 if __name__ == "__main__":
