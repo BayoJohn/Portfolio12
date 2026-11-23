@@ -37,6 +37,16 @@
     mobile.addEventListener('change', function () { setMenu(false); });
   }
 
+  var editionDate = document.querySelector('[data-edition-date]');
+  if (editionDate) {
+    var today = new Date();
+    var month = String(today.getMonth() + 1).padStart(2, '0');
+    var day = String(today.getDate()).padStart(2, '0');
+    editionDate.dateTime = today.getFullYear() + '-' + month + '-' + day;
+    editionDate.textContent = new Intl.DateTimeFormat('en', { dateStyle: 'full' }).format(today);
+    editionDate.hidden = false;
+  }
+
   var search = document.querySelector('.news-search-form');
   if (search) {
     var input = search.elements.q;

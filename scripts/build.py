@@ -115,14 +115,10 @@ def page(route, title, description, content, post=None):
     seo = '<meta name="robots" content="noindex">' if missing else metadata(route, title, description, post)
     if route == "search/":
         seo += '\n    <meta name="robots" content="noindex">'
-    display_font = (
-        '    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif&amp;display=swap">\n'
-        if not route else ""
-    )
     write(route, template("page").substitute(
         root=root, title=escape(f"{title} | StackedByBayo" if route else f"StackedByBayo | {title}"),
         description=escape(description),
-        metadata=seo, navigation=navigation(root, active, bool(post), header=True), display_font=display_font,
+        metadata=seo, navigation=navigation(root, active, bool(post), header=True),
         footer=footer(root), content=content, body_class=" news-home" if not route else "", main_class="article-main" if post else "platform-main",
     ))
 
@@ -187,13 +183,13 @@ def card(post, root):
     )
 
 
-def news_card(post, *, root="./", lead=False, photo=True):
+def news_card(post, *, root="./", lead=False, photo=True, heading="h3"):
     cover = image(post, "news-photo", preview=True, priority=lead, root=root) if photo else ""
     return (
         f'<article class="news-card{" news-card-lead" if lead else ""}">'
         + (f'<div class="news-image">{cover}</div>' if cover else "")
         + f'<div class="news-card-copy"><p class="news-category">{escape(post["category"])}</p>'
-        f'<h3><a href="{root}{post["url"]}">{escape(post["title"])}</a></h3>'
+        f'<{heading}><a href="{root}{post["url"]}">{escape(post["title"])}</a></{heading}>'
         f'<p class="news-excerpt">{escape(post["excerpt"])}</p>'
         f'<p class="news-byline">{post_date(post)} <span>{escape(post["author"])}</span></p>'
         '</div></article>'
@@ -298,8 +294,8 @@ def main():
     if lead:
         supporting = [post for post in posts if post is not lead][:2]
         featured = (
-            '<div class="news-features">' + news_card(lead, lead=True)
-            + '<div class="news-support">' + "".join(news_card(post) for post in supporting)
+            '<div class="news-features">' + news_card(lead, lead=True, heading="h2")
+            + '<div class="news-support">' + "".join(news_card(post, heading="h2") for post in supporting)
             + '</div></div>'
         )
 

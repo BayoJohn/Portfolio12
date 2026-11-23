@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Discover technology news, cybersecurity, AI, gadgets, software, and practical guides at StackedByBayo.">
-    <meta name="theme-color" content="#F5F3ED">
+    <meta name="theme-color" content="#F7F7F2">
     <title>StackedByBayo | Technology News, Reviews &amp; Practical Guides</title>
     <link rel="canonical" href="https://stackedbybayo.site/">
     <meta property="og:url" content="https://stackedbybayo.site/">
@@ -19,7 +19,7 @@
                 var savedTheme = localStorage.getItem('theme');
                 if (savedTheme === 'dark') {
                     document.documentElement.setAttribute('data-theme', 'dark');
-                    document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0b0b0b');
+                    document.querySelector('meta[name="theme-color"]').setAttribute('content', '#111318');
                 }
             } catch (error) {}
         }());
@@ -27,12 +27,11 @@
     <link rel="shortcut icon" href="./assets/img/favicon.ico">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=Inter:wght@400..800&amp;family=Space+Grotesk:wght@500..700&amp;display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./assets/css/fontawesome-all.min.css">
     <link rel="stylesheet" href="./assets/css/portfolio-home.css">
     <link rel="stylesheet" href="./assets/css/blog.css">
     <link rel="stylesheet" href="./assets/css/platform.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif&amp;display=swap">
     <link rel="stylesheet" href="./assets/css/editorial.css">
     <link rel="stylesheet" href="./assets/css/news.css">
 </head>
@@ -56,14 +55,14 @@
         </div>
     </header>
     <main id="main-content" tabindex="-1" class="platform-main">
-        <div class="news-masthead news-wrap">
-    <h1>Stacked<span>By</span>Bayo<span class="masthead-period">.</span></h1>
-    <p>Technology news, reviews &amp; practical guides</p>
+        <div class="news-edition news-wrap">
+    <time class="news-edition-date" data-edition-date hidden></time>
+    <p>Technology / Cybersecurity / AI / Gadgets</p>
 </div>
 
 <section class="news-wrap news-section news-front" aria-labelledby="featured-title">
-    <div class="news-heading"><h2 id="featured-title">Featured Stories</h2><a href="blog/">Browse all articles</a></div>
-    <div class="news-features"><article class="news-card news-card-lead"><div class="news-image"><img class="news-photo" src="./assets/img/carousel/hardware-720.webp" srcset="./assets/img/carousel/hardware-320.webp 320w, ./assets/img/carousel/hardware-720.webp 720w, ./assets/img/carousel/hardware-1440.webp 1440w" sizes="(max-width: 650px) 94vw, (max-width: 900px) 90vw, 65vw" alt="" fetchpriority="high" decoding="async"></div><div class="news-card-copy"><p class="news-category">Homelab</p><h3><a href="./blog/when-my-homelab-started-feeling-like-a-platform/">When My Homelab Started Feeling Like a Platform</a></h3><p class="news-excerpt">A hands-on journey through Kubernetes, monitoring, automation and self-hosted infrastructure as my homelab evolved into something that started feeling like a real platform.</p><p class="news-byline"><time datetime="2026-08-10">Aug 10, 2026</time> <span>Omobayonle Ogundele</span></p></div></article><div class="news-support"><article class="news-card"><div class="news-image"><img class="news-photo" src="./assets/img/carousel/workspace-720.webp" srcset="./assets/img/carousel/workspace-320.webp 320w, ./assets/img/carousel/workspace-720.webp 720w, ./assets/img/carousel/workspace-1440.webp 1440w" sizes="(max-width: 650px) 45vw, 34vw" alt="" loading="lazy" decoding="async"></div><div class="news-card-copy"><p class="news-category">Kubernetes</p><h3><a href="./blog/building-my-first-kubernetes-homelab/">Building My First Kubernetes Homelab</a></h3><p class="news-excerpt">What it took to turn a few Linux machines into a practical cluster for learning deployments, networking and operations.</p><p class="news-byline"><time datetime="2026-07-28">Jul 28, 2026</time> <span>Omobayonle Ogundele</span></p></div></article><article class="news-card"><div class="news-image"><img class="news-photo" src="./assets/img/carousel/reviews-720.webp" srcset="./assets/img/carousel/reviews-320.webp 320w, ./assets/img/carousel/reviews-720.webp 720w, ./assets/img/carousel/reviews-1440.webp 1440w" sizes="(max-width: 650px) 45vw, 34vw" alt="" loading="lazy" decoding="async"></div><div class="news-card-copy"><p class="news-category">CI/CD</p><h3><a href="./blog/what-i-learned-building-a-ci-cd-pipeline-from-scratch/">What I Learned Building a CI/CD Pipeline From Scratch</a></h3><p class="news-excerpt">Lessons from connecting source control, testing, image builds and deployment into one repeatable workflow.</p><p class="news-byline"><time datetime="2026-07-14">Jul 14, 2026</time> <span>Omobayonle Ogundele</span></p></div></article></div></div>
+    <div class="news-heading"><h1 id="featured-title">Featured Stories</h1><a href="blog/">Browse all articles</a></div>
+    <div class="news-features"><article class="news-card news-card-lead"><div class="news-image"><img class="news-photo" src="./assets/img/carousel/hardware-720.webp" srcset="./assets/img/carousel/hardware-320.webp 320w, ./assets/img/carousel/hardware-720.webp 720w, ./assets/img/carousel/hardware-1440.webp 1440w" sizes="(max-width: 650px) 94vw, (max-width: 900px) 90vw, 65vw" alt="" fetchpriority="high" decoding="async"></div><div class="news-card-copy"><p class="news-category">Homelab</p><h2><a href="./blog/when-my-homelab-started-feeling-like-a-platform/">When My Homelab Started Feeling Like a Platform</a></h2><p class="news-excerpt">A hands-on journey through Kubernetes, monitoring, automation and self-hosted infrastructure as my homelab evolved into something that started feeling like a real platform.</p><p class="news-byline"><time datetime="2026-08-10">Aug 10, 2026</time> <span>Omobayonle Ogundele</span></p></div></article><div class="news-support"><article class="news-card"><div class="news-image"><img class="news-photo" src="./assets/img/carousel/workspace-720.webp" srcset="./assets/img/carousel/workspace-320.webp 320w, ./assets/img/carousel/workspace-720.webp 720w, ./assets/img/carousel/workspace-1440.webp 1440w" sizes="(max-width: 650px) 45vw, 34vw" alt="" loading="lazy" decoding="async"></div><div class="news-card-copy"><p class="news-category">Kubernetes</p><h2><a href="./blog/building-my-first-kubernetes-homelab/">Building My First Kubernetes Homelab</a></h2><p class="news-excerpt">What it took to turn a few Linux machines into a practical cluster for learning deployments, networking and operations.</p><p class="news-byline"><time datetime="2026-07-28">Jul 28, 2026</time> <span>Omobayonle Ogundele</span></p></div></article><article class="news-card"><div class="news-image"><img class="news-photo" src="./assets/img/carousel/reviews-720.webp" srcset="./assets/img/carousel/reviews-320.webp 320w, ./assets/img/carousel/reviews-720.webp 720w, ./assets/img/carousel/reviews-1440.webp 1440w" sizes="(max-width: 650px) 45vw, 34vw" alt="" loading="lazy" decoding="async"></div><div class="news-card-copy"><p class="news-category">CI/CD</p><h2><a href="./blog/what-i-learned-building-a-ci-cd-pipeline-from-scratch/">What I Learned Building a CI/CD Pipeline From Scratch</a></h2><p class="news-excerpt">Lessons from connecting source control, testing, image builds and deployment into one repeatable workflow.</p><p class="news-byline"><time datetime="2026-07-14">Jul 14, 2026</time> <span>Omobayonle Ogundele</span></p></div></article></div></div>
 </section>
 
 <section class="news-wrap news-section" id="latest" aria-labelledby="latest-title">

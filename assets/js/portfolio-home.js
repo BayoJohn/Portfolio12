@@ -13,7 +13,7 @@
     var themeColor = document.querySelector('meta[name="theme-color"]');
     if (themeColor) {
       var publication = document.body.classList.contains('publication-page');
-      var color = publication ? (isDark ? '#0b0b0b' : '#f5f3ed') : (isDark ? '#090d14' : '#f8fafc');
+      var color = publication ? (isDark ? '#111318' : '#f7f7f2') : (isDark ? '#090d14' : '#f8fafc');
       themeColor.setAttribute('content', color);
     }
     if (themeToggle) {
