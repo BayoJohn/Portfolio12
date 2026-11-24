@@ -2,6 +2,24 @@
   "version": 1,
   "stories": [
     {
+      "id": "dabc28092bf3471e55f04233c20e62a8d7253822d018e305a596a1b7817f8c0e",
+      "headline": "New York and California Age Gating Rules Go Into Effect in the New Year",
+      "publisher": "Electronic Frontier Foundation",
+      "url": "https://www.eff.org/deeplinks/2026/11/new-york-and-california-age-gating-rules-go-effect-new-year",
+      "published_at": "2026-11-24T22:35:05+00:00",
+      "category": "Digital Rights",
+      "fetched_at": "2026-11-24T22:35:48+00:00"
+    },
+    {
+      "id": "89ed42864d97e35ac1eeb2784160d06ecbbda652cda5c08dc5dfb12a652a7aed",
+      "headline": "Signal Moves to Block AI Agents",
+      "publisher": "Electronic Frontier Foundation",
+      "url": "https://www.eff.org/deeplinks/2026/11/signal-now-blocks-ai-agents",
+      "published_at": "2026-11-24T19:43:49+00:00",
+      "category": "Artificial Intelligence",
+      "fetched_at": "2026-11-24T22:35:48+00:00"
+    },
+    {
       "id": "cc4155ee16f38b75e01d84809c05c3325e3c02eb1c08b84b40d3a746fedba1b2",
       "headline": "NASA Seeks Partners to Design First Nuclear Reactor for the Moon",
       "publisher": "NASA",
