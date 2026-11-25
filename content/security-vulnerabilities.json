@@ -1,0 +1,58 @@
+{
+  "checked": "2026-11-25",
+  "records": [
+    {
+      "id": "CVE-2026-134624",
+      "vendor": "N-able",
+      "product": "MailAssure",
+      "description": "MailAssure vulnerability affecting releases before the build listed in the advisory.",
+      "published": "2026-11-23",
+      "modified": "2026-11-23",
+      "kev_added": "2026-11-23",
+      "advisory": "https://www.cyber.gc.ca/en/alerts-advisories/n-able-security-advisory-av26-1191",
+      "exploitation_source": "https://www.cyber.gc.ca/en/alerts-advisories/n-able-security-advisory-av26-1191",
+      "action": "Check the deployed service build and follow the vendor update guidance linked by the Cyber Centre.",
+      "alert": "Review N-able MailAssure update guidance"
+    },
+    {
+      "id": "CVE-2026-123890",
+      "vendor": "Broadcom",
+      "product": "VMware vCenter",
+      "description": "Authentication bypass in VMware Directory Service.",
+      "cvss": 9.8,
+      "cvss_version": "CVSS v3",
+      "score_source": "Broadcom",
+      "published": "2026-11-19",
+      "modified": "2026-11-20",
+      "advisory": "https://support.broadcom.com/web/ecx/support-content-notification/-/external/content/SecurityAdvisories/VMSA-2026-0009--VMware-vCenter--Tools--and-SDDC-Manager-updates-address-multiple-vulnerabilities--CVE-2026-123890--CVE-2026-123891--CVE-2026-123892--CVE-2026-123893--CVE-2026-123894-/39495",
+      "action": "Apply the fixed build for your product branch in Broadcom’s response matrix.",
+      "alert": "Broadcom publishes critical vCenter fixes"
+    },
+    {
+      "id": "CVE-2026-123891",
+      "vendor": "Broadcom",
+      "product": "SDDC Manager",
+      "description": "A flaw affecting database access in SDDC Manager.",
+      "cvss": 8.1,
+      "cvss_version": "CVSS v3",
+      "score_source": "Broadcom",
+      "published": "2026-11-19",
+      "modified": "2026-11-20",
+      "advisory": "https://support.broadcom.com/web/ecx/support-content-notification/-/external/content/SecurityAdvisories/VMSA-2026-0009--VMware-vCenter--Tools--and-SDDC-Manager-updates-address-multiple-vulnerabilities--CVE-2026-123890--CVE-2026-123891--CVE-2026-123892--CVE-2026-123893--CVE-2026-123894-/39495",
+      "action": "Use the relevant Broadcom fixed build or cumulative update."
+    },
+    {
+      "id": "CVE-2026-123894",
+      "vendor": "Broadcom",
+      "product": "VMware Tools for Windows",
+      "description": "A VMware Tools flaw can affect privilege boundaries inside Windows guests.",
+      "cvss": 6.7,
+      "cvss_version": "CVSS v3",
+      "score_source": "Broadcom",
+      "published": "2026-11-19",
+      "modified": "2026-11-20",
+      "advisory": "https://support.broadcom.com/web/ecx/support-content-notification/-/external/content/SecurityAdvisories/VMSA-2026-0009--VMware-vCenter--Tools--and-SDDC-Manager-updates-address-multiple-vulnerabilities--CVE-2026-123890--CVE-2026-123891--CVE-2026-123892--CVE-2026-123893--CVE-2026-123894-/39495",
+      "action": "Check the Broadcom response matrix for the supported VMware Tools branch and fixed version."
+    }
+  ]
+}

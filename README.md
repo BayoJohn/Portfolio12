@@ -25,6 +25,12 @@ Edit `content/home-edition.json` to select the lead story, two secondary stories
 
 Edit `content/software-apps.json` to update directory entries. Keep publisher links on official sites and point each `article` field to a published Software article slug. Software articles use the existing `content/blog/` collection and article URLs. Set `softwareFormat` to `news`, `guide`, `comparison`, `overview`, or `hands-on`, and add platform or subject tags to place the article in filters. News can include `softwareEventDate` for the release or announcement date. For reviews, use `softwareReview` with fields such as `platforms`, `license`, `limitations`, `verdict`, and `evaluation`. Reserve the hands-on label for documented testing.
 
+## Cybersecurity desk
+
+New desk articles use `securityDesk` tags for the section’s editorial collections. Use `securityEventDate` for a verified advisory, disclosure or release date, and keep the article's original publication date in `dateTime`. The existing `security` fields and Markdown tables support affected products, mitigations and official references.
+
+`content/security-vulnerabilities.json` is a manually reviewed selection. Record the actual review date in `checked`. Attribute any numeric `cvss` score with its version and source, and use `kev_added` only when an authoritative source confirms both exploitation and the catalogue date. Advisory dates refer to the cited advisory. Remove obsolete `alert` labels during editorial review. The table and filters consume local records. A future NVD, KEV or vendor integration can supply the same fields after verification and normalization. The deployed page makes no catalogue API calls.
+
 ## Publication information
 
 The About, Contact, Editorial Standards, Corrections, Privacy and Disclosures pages use templates in `templates/`. The shared route labels and verified contact address are in `scripts/build.py`. The legacy `contact.html` URL leads to the email-based Contact page.

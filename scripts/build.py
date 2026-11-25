@@ -236,6 +236,8 @@ def render_page(route, title, description, content, post=None):
     active = None if missing else route.split("/", 1)[0]
     if post and post.get("softwareFormat"):
         active = "software"
+    elif post and post.get("securityDesk"):
+        active = "cybersecurity"
     root = "/" if missing else "../" * route.count("/") or "./"
     seo = '<meta name="robots" content="noindex">' if missing else metadata(route, title, description, post)
     if route == "search/":
@@ -246,8 +248,11 @@ def render_page(route, title, description, content, post=None):
     if not route:
         styles = ("newsroom", "edition")
         scripts = ("edition", "newsroom")
-    elif route in {"cybersecurity/", "ai/"}:
-        styles = ("newsroom", route.rstrip("/"))
+    elif route == "cybersecurity/":
+        styles = ("cybersecurity",)
+        scripts = ("cybersecurity",)
+    elif route == "ai/":
+        styles = ("newsroom", "ai")
     elif route == "software/":
         styles = ("software",)
     elif route == "reviews/":
@@ -585,9 +590,11 @@ def article(post, collection, posts, page=page, *, published=None, featured=()):
         SOFTWARE_FORMATS.get(post.get("softwareFormat")) or GADGET_FORMATS.get(post.get("gadgetFormat"))
         or ARTICLE_TYPES.get(post.get("articleType", ""))
     )
+    section_route = "software" if post.get("softwareFormat") else "cybersecurity" if post.get("securityDesk") else ""
     content = template("article").substitute(
-        collection="Software" if post.get("softwareFormat") else escape(NAV[collection]),
-        back_url="../../software/" if post.get("softwareFormat") else "../", category=escape(post["category"]), title=escape(post["title"]),
+        collection=escape(HEADER_NAV[section_route] if section_route else NAV[collection]),
+        back_url=f"../../{section_route}/" if section_route else "../",
+        security_class=" reading-security" if post.get("securityDesk") else "", category=escape(post["category"]), title=escape(post["title"]),
         type_label=f' <span class="reading-type">{kind}</span>' if kind else "",
         summary=escape(intro), author=author, author_bio=f'<p>{escape(bio)}</p>' if bio else "",
         publication=f'<span>Published {post_date(post)}</span>' if post.get("dateTime") else "",
@@ -815,124 +822,225 @@ def academy_library(posts, archive, intro, empty):
     ).rstrip()
 
 
-def cve_entry(record):
-    """Render an editorially verified record, with optional verified exploitation evidence."""
-    identifier = record["id"]
-    advisory = web_url(record["advisory"])
-    if not re.fullmatch(r"CVE-[0-9]{4}-[0-9]{4,}", identifier) or not advisory.startswith("https://"):
-        raise ValueError("A CVE entry requires an identifier and an HTTPS advisory")
-    fields = []
-    for key, label in (("severity", "Severity"), ("cvss", "CVSS score"), ("product", "Affected product")):
-        value = record.get(key)
-        if value is not None and value != "":
-            fields.append(f'<dt>{label}</dt><dd>{escape(str(value))}</dd>')
-    if record.get("published"):
-        fields.append(f'<dt>Published</dt><dd>{date_markup(date.fromisoformat(record["published"]))}</dd>')
-    if evidence := web_url(record.get("exploitation_source", "")):
-        if evidence.startswith("https://"):
-            fields.append(f'<dt>Known exploitation</dt><dd><a href="{escape(evidence)}">Verified evidence</a></dd>')
-    details = f'<dl class="security-cve-details">{"".join(fields)}</dl>' if fields else ""
+SECURITY_INTRO = "Follow the latest cybersecurity developments, understand emerging threats, and discover practical ways to protect your digital life."
+SEVERITY_LABELS = ("Critical", "High", "Medium", "Low", "Unscored")
+
+
+def security_snapshot():
+    snapshot = json.loads((ROOT / "content" / "security-vulnerabilities.json").read_text(encoding="utf-8"))
+    records = snapshot["records"]
+    if not records:
+        return snapshot
+    checked = date.fromisoformat(snapshot["checked"])
+    identifiers = set()
+    for record in records:
+        identifier = record["id"]
+        if not re.fullmatch(r"CVE-[0-9]{4}-[0-9]{4,}", identifier) or identifier in identifiers:
+            raise ValueError(f"Invalid or duplicate CVE identifier: {identifier}")
+        identifiers.add(identifier)
+        if not web_url(record["advisory"]).startswith("https://"):
+            raise ValueError(f"{identifier} needs an official HTTPS advisory")
+        published = date.fromisoformat(record["published"])
+        modified = date.fromisoformat(record.get("modified", record["published"]))
+        if not published <= modified <= checked:
+            raise ValueError(f"Inconsistent advisory dates for {identifier}")
+        if record.get("kev_added"):
+            if not web_url(record["exploitation_source"]).startswith("https://"):
+                raise ValueError(f"{identifier} needs an HTTPS exploitation source")
+            if not published <= date.fromisoformat(record["kev_added"]) <= checked:
+                raise ValueError(f"Inconsistent exploitation date for {identifier}")
+        if record.get("cvss") is not None:
+            if not 0 <= record["cvss"] <= 10 or not (record.get("score_source") and record.get("cvss_version")):
+                raise ValueError(f"{identifier} needs a valid and attributed CVSS score")
+    return snapshot
+
+
+def cve_severity(record):
+    score = record.get("cvss")
+    if score is None:
+        return "Unscored"
+    if score >= 9:
+        return "Critical"
+    if score >= 7:
+        return "High"
+    if score >= 4:
+        return "Medium"
+    return "Low" if score > 0 else "None"
+
+
+def security_severity(label):
+    return f'<span class="security-severity severity-{label.lower()}">{label}</span>'
+
+
+def vulnerability_table(snapshot):
+    records = snapshot["records"]
+    if not records:
+        return '<p>No verified records are included in this edition. Use the official catalogues below.</p>'
+
+    def options(values):
+        return '<option value="">All</option>' + "".join(
+            f'<option value="{escape(value)}">{escape(value)}</option>' for value in values
+        )
+
+    fields = (
+        ("severity", "Severity", [v for v in (*SEVERITY_LABELS, "None") if v in {cve_severity(r) for r in records}]),
+        ("vendor", "Vendor", sorted({r["vendor"] for r in records})),
+        ("product", "Product", sorted({r["product"] for r in records})),
+        ("exploitation", "Exploitation", sorted({"Known exploited" if r.get("kev_added") else "Unknown" for r in records})),
+    )
+    filters = "".join(
+        f'<label>{label}<select name="{key}">{options(values)}</select></label>'
+        for key, label, values in fields if len(values) > 1
+    )
+    form = (
+        f'<form class="security-filters" aria-label="Filter vulnerabilities" hidden>{filters}'
+        '<button type="reset">Clear filters</button></form><p class="security-filter-status" role="status"></p>'
+    ) if filters else ""
+    rows = []
+    for record in records:
+        severity = cve_severity(record)
+        scored = record.get("cvss") is not None
+        score = (f'<span class="security-meta">{record["cvss"]:.1f} · '
+                 f'{escape(record["cvss_version"])} · {escape(record["score_source"])}</span>') if scored else ""
+        exploitation = "Known exploited" if record.get("kev_added") else "Unknown"
+        evidence = f'<a href="{escape(record["exploitation_source"])}">Known exploited</a>' if record.get("kev_added") else "Unknown"
+        updated = ('<small>Modified ' + date_markup(date.fromisoformat(record["modified"])) + '</small>'
+                   if record.get("modified") else '<small>Modification date unavailable</small>')
+        rows.append(
+            f'<tr id="{escape(record["id"])}" tabindex="-1" data-severity="{severity}" data-exploitation="{exploitation}" '
+            f'data-vendor="{escape(record["vendor"])}" data-product="{escape(record["product"])}">'
+            f'<th scope="row"><span class="security-cve-code">{escape(record["id"])}</span><span>{escape(record["description"])}</span></th>'
+            f'<td><strong>{escape(record["vendor"])}</strong><span>{escape(record["product"])}</span></td>'
+            f'<td>{security_severity(severity)}{score}</td><td>{evidence}</td>'
+            f'<td>{date_markup(date.fromisoformat(record["published"]))}{updated}</td>'
+            f'<td>{escape(record["action"])}<br><a href="{escape(record["advisory"])}">Official advisory</a></td></tr>'
+        )
     return (
-        '<article class="security-cve">'
-        f'<h3>{escape(identifier)}</h3><p>{escape(record["description"])}</p>{details}'
-        f'<a href="{escape(advisory)}">Official advisory</a></article>'
+        '<div data-vulnerability-table>'
+        f'<p>Selected records reviewed {date_markup(date.fromisoformat(snapshot["checked"]))}. '
+        'Scores shown are attributed base scores. Unscored means this selection has no verified score on file. '
+        'Unknown exploitation status does not rule out attacks.</p>'
+        + form + '<div class="security-scroll" tabindex="0" role="region" aria-labelledby="security-table-caption">'
+        '<table><caption id="security-table-caption">Selected vulnerability records</caption><thead><tr>'
+        + "".join(f'<th scope="col">{label}</th>' for label in
+                  ("CVE and summary", "Vendor and product", "Severity and score", "Exploitation", "Advisory dates", "Defensive action"))
+        + '</tr></thead><tbody>' + "".join(rows) + '</tbody></table></div></div>'
     )
 
 
-def security_topic_reading(stories, tags):
-    links = "".join(
-        f'<li><a href="../{escape(story["url"])}">{escape(story["title"])}</a></li>'
-        for story in matching_topics(stories, tags)[:3]
+def security_records(records):
+    if not records:
+        return '<p>No confirmed entries are included in this edition. Consult the <a href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog">official CISA catalogue</a>.</p>'
+    return '<ul class="security-kev">' + "".join(
+        f'<li><div><a href="./#{escape(record["id"])}" class="security-cve-code">{escape(record["id"])}</a>'
+        f'<strong>{escape(record["product"])}</strong></div><p>{escape(record["action"])}</p>'
+        '<p class="security-meta">Known exploited · Added '
+        f'{date_markup(date.fromisoformat(record["kev_added"]))} · '
+        f'<a href="{escape(record["exploitation_source"])}">Official confirmation</a></p></li>'
+        for record in records
+    ) + '</ul>'
+
+
+def security_alerts(records):
+    alerts = [record for record in records if record.get("alert")]
+    if not alerts:
+        return ""
+    cards = "".join(
+        '<article>'
+        f'<h3><a href="{escape(r["advisory"])}">{escape(r["alert"])}</a></h3>'
+        f'<p class="security-meta">{escape(r["vendor"])} · {escape(r["product"])} · '
+        f'{date_markup(date.fromisoformat(r["published"]))}</p>'
+        f'<p>{escape(r["action"])}</p>'
+        + (security_severity(cve_severity(r)) if r.get("cvss") is not None else "")
+        + (f'<p class="security-meta"><a href="{escape(r["exploitation_source"])}">Known exploited</a></p>'
+           if r.get("kev_added") else '')
+        + '</article>' for r in alerts
     )
-    return f'<ul class="security-reading" aria-label="Related reading">{links}</ul>' if links else ""
+    return '<section class="security-alerts" aria-labelledby="security-alert-title"><h2 id="security-alert-title">Security Alerts</h2>' + cards + '</section>'
 
 
-def security_hub(posts, *, cves=()):
-    intro = "Understand the threats shaping our digital world. Explore vulnerabilities, malware, security developments, and practical ways to stay protected."
-    malware_tags = {"malware", "ransomware", "trojans", "spyware"}
-    threat_tags = {"threats", "attacks", "phishing", "supply chain", "supply-chain attacks"}
-    privacy_tags = {"privacy", "digital privacy"}
-    security_tags = {"cybersecurity", "security", "cve", "vulnerabilities", "vulnerability",
-                     "account security", "password security", "multi-factor authentication", "security guides",
-                     "security guide", "cybersecurity basics"}
-    stories = matching_topics(posts, security_tags | malware_tags | threat_tags | privacy_tags)
-    lead = next((post for post in stories if post.get("featured")), stories[0] if stories else None)
-    remaining = [post for post in stories if post is not lead]
-    urls = {post["url"]: post for post in posts}
-    account_guide = "academy/protect-your-accounts-and-devices/"
-    web_guide = "academy/how-the-web-works/"
-    linux_guide = "academy/linux-terminal-essentials/"
+def security_story(post, style, *, heading="h3"):
+    detail = post.get("securityDeck") or post["excerpt"]
+    photo = image(post, "security-photo", priority=style == "lead",
+                  sizes="(min-width: 1020px) 560px, 92vw") if style in {"lead", "row"} else ""
+    media = (f'<figure>{photo}<figcaption>{escape(post.get("imageCaption", ""))}'
+             f' · {image_credit(post)}</figcaption></figure>') if photo else ""
+    summary = f'<p class="security-desc">{escape(detail)}</p>' if style != "brief" else ""
+    return (
+        f'<article class="security-story security-story-{style}">{media}<div>'
+        f'<p class="security-meta security-category">{escape(post["category"])}</p>'
+        f'<{heading}><a href="../{escape(post["url"])}">{escape(post["title"])}</a></{heading}>'
+        f'{summary}<p class="security-meta">{post_date(post)} <span>{escape(reading_duration(post))}</span></p>'
+        '</div></article>'
+    )
 
-    # The web primer’s HTTPS section is supporting reading, not a security news report.
-    related = urls.get(web_guide)
-    briefing = remaining[:3]
-    if len(briefing) < 3 and related and related not in stories:
-        briefing.append(related)
-    brief = (
-        '<section class="newsroom-top"><h2>Security Briefing</h2><ul>'
-        + "".join('<li>' + newsroom_story(post, variant="top", heading="h3") + '</li>' for post in briefing)
-        + '</ul></section>'
-    ) if briefing else ""
-    featured = (
-        '<div class="newsroom-lead"><article class="newsroom-lead-story">'
-        + newsroom_story(lead, variant="lead", heading="h2",
-                         summary="Start with the email account you use for password resets, then strengthen sign-ins, check for updates and verify suspicious messages."
-                         if lead["url"] == account_guide else None)
-        + '</article>' + brief + '</div>'
-    ) if lead else ""
 
-    # The newest published stories remain visible in the feed, including the featured story.
-    feed = "".join(
-        '<article class="newsroom-row">' + newsroom_story(post, variant="row", heading="h3") + '</article>'
-        for post in stories
-    ) or '<p class="newsroom-summary">No security stories have been published yet.</p>'
+def security_hub(posts, snapshot):
+    by_url = {post["url"]: post for post in posts}
+    articles = [post for post in posts if post.get("securityDesk")]
+    current = [post for post in articles if post.get("securityEventDate")]
+    current.sort(key=lambda post: (post["date"], post["securityEventDate"]), reverse=True)
+    slots = ("blog/hitachi-vantara-employee-breach-notice/", "blog/firefox-161-security-updates/",
+             "blog/broadcom-vcenter-november-advisory/")
+    selected = [by_url[url] for url in slots if url in by_url]
+    featured = list({post["url"]: post for post in [*selected, *current]}.values())[:3]
+    remaining = [post for post in current if post not in featured]
+    lead = featured[0] if featured else next(iter(articles), None)
+
+    def list_stories(items, empty, style="row"):
+        return "".join(security_story(post, style) for post in items) or f'<p>{empty}</p>'
+
+    def stories(tag, empty):
+        return list_stories([post for post in articles if tag in post["securityDesk"]], empty)
+
+    def story_id(post):
+        return "security-story-" + post["url"].rstrip("/").rsplit("/", 1)[-1]
+
+    feed_posts = remaining[:]
+    if linked := by_url.get("blog/signal-screen-privacy-mobile/"):
+        feed_posts.append(linked)
+    briefing = "".join(
+        f'<li><a href="./#{story_id(post)}">{escape(post["category"])}</a>'
+        f'<p class="security-desc">{escape(post["excerpt"])}</p></li>' for post in feed_posts[:3]
+    )
+    news = "".join(
+        f'<div id="{story_id(post)}" tabindex="-1">{security_story(post, "row")}</div>' for post in feed_posts
+    ) or '<p>There are no additional reports in this edition.</p>'
+    account = "academy/protect-your-accounts-and-devices/"
     actions = (
-        ("Passwords and account security", account_guide, "#give-each-account-its-own-password",
-         "Use a different password for each account. Start with the inbox that receives your reset links."),
-        ("Multi-factor authentication", account_guide, "#add-a-stronger-sign-in-method",
-         "Add another way to verify a sign-in and keep recovery codes somewhere you can access safely."),
-        ("Phishing awareness", account_guide, "#rehearse-what-youll-do-with-a-suspicious-message",
-         "If a message asks you to sign in, open the service independently through its app or a saved address."),
-        ("Device security and software updates", account_guide, "#make-updates-routine",
-         "Turn on automatic updates where available and restart when an update requires it."),
-        ("Safe browsing and HTTPS", web_guide, "#https-protects-the-request-and-response",
-         "Check the site’s address before signing in. HTTPS protects the connection to that address."),
+        ("Password managers and recovery", account, "#give-each-account-its-own-password", "Use a unique password for each account and keep recovery details safe."),
+        ("Passkeys and multi-factor authentication", account, "#add-a-stronger-sign-in-method", "Use stronger sign-in on accounts that support it."),
+        ("Device and software updates", account, "#make-updates-routine", "Enable automatic updates and schedule restarts where needed."),
+        ("Messaging and banking scams", "blog/verify-urgent-messages/", "", "Verify the sender through a number or app you already trust."),
+        ("Backups and ransomware", "blog/restore-ready-ransomware-backups/", "", "Keep a separate copy of critical files and practise restoring one."),
+        ("Downloads and app permissions", "blog/safe-software-downloads-and-licenses/", "", "Start with the official publisher or a trusted store."),
+        ("Home networks and privacy", "blog/security-terms-in-practice/", "#least-privilege", "Review device access, router updates, and which accounts can change settings."),
     )
     protection = "".join(
-        f'<li><h3><a href="../{url}{anchor}">{escape(label)}</a></h3><p>{escape(description)}</p></li>'
-        for label, url, anchor, description in actions if url in urls
+        f'<li><h3><a href="../{url}{anchor}">{title}</a></h3><p>{detail}</p></li>'
+        for title, url, anchor, detail in actions if url in by_url
     )
-    essentials = [(label, "../" + url + anchor) for label, url, anchor, _ in actions if url in urls]
-    essentials.append(("Online privacy", "./#privacy"))
-    sidebar = (
-        '<aside class="newsroom-sidebar" aria-labelledby="security-essentials">'
-        '<section class="newsroom-side-section"><h2 id="security-essentials">Security Essentials</h2><ul>'
-        + "".join(f'<li><a href="{escape(href)}">{escape(label)}</a></li>' for label, href in essentials)
-        + '</ul></section></aside>'
+    tools = json.loads((ROOT / "content" / "security-tools.json").read_text(encoding="utf-8"))
+    toolkit = "".join(
+        f'<article class="security-tool"><h3><a href="{escape(tool["url"])}">{escape(tool["name"])}</a></h3>'
+        f'<p class="security-meta">{escape(tool["audience"])}</p><p>{escape(tool["purpose"])}</p>'
+        f'<p class="security-desc">{escape(tool["limit"])}</p></article>' for tool in tools
     )
-    learning = "".join(
-        '<article class="newsroom-row">' + newsroom_story(urls[url], variant="row", heading="h3") + '</article>'
-        for url in (web_guide, account_guide, linux_guide) if url in urls
-    )
-    threat_reading = security_topic_reading(stories, threat_tags)
-    if not threat_reading and account_guide in urls:
-        threat_reading = (
-            f'<p><a href="../{account_guide}#rehearse-what-youll-do-with-a-suspicious-message">'
-            'Practise checking a suspicious message</a></p>'
-        )
-    return intro, template("cybersecurity").substitute(
-        intro=escape(intro), featured=featured, feed=feed, essentials=sidebar,
-        cves="".join(cve_entry(record) for record in cves) or (
-            '<p>No verified CVE records are listed here yet. '
-            '<a href="https://nvd.nist.gov/vuln/search">Search NIST’s National Vulnerability Database</a>.</p>'
-        ),
-        malware_stories=security_topic_reading(stories, malware_tags),
-        threat_stories=threat_reading,
-        privacy_stories=security_topic_reading(stories, privacy_tags),
-        protection=f'<ul class="security-actions">{protection}</ul>' if protection else "",
-        learning=learning or '<p><a href="../academy/">Browse Tech Academy</a></p>',
+    records = snapshot["records"]
+    return template("cybersecurity").substitute(
+        intro=escape(SECURITY_INTRO), alerts=security_alerts(records),
+        lead=security_story(lead, "lead", heading="h2") if lead else "",
+        secondary="".join(security_story(post, "row") for post in featured[1:]),
+        briefing=f'<ul>{briefing}</ul>' if briefing else '<p>No additional verified updates in this edition.</p>',
+        intelligence=vulnerability_table(snapshot), exploited=security_records([r for r in records if r.get("kev_added")]),
+        advisories=stories("advisories", "No current advisory articles are available."),
+        malware=stories("malware", "No malware articles are available."),
+        breaches=stories("breaches", "No confirmed incident articles are available."),
+        threats=stories("threats", "No threat analysis is available."),
+        learn=stories("learn", "No explainers are available."),
+        protection=protection, toolkit=toolkit, news=news,
+        academy='<p><a href="../academy/">Continue learning in Tech Academy</a></p>',
     ).rstrip()
-
 
 AI_TOOLS = (
     ("Writing", "ChatGPT", "A conversational assistant for drafting and revising text.", "Prepare a first draft from your own notes.", "https://chatgpt.com/"),
@@ -1428,16 +1536,18 @@ def render_site(collections, page=page, target=None):
     published = sorted((post for items in collections.values() for post in items),
                        key=lambda post: post["date"], reverse=True)
     sitewide = [post for post in published if not post.get("softwareFormat")]
-    general_posts = [post for post in sitewide if not post.get("gadgetFormat")]
-    blog_archive = [post for post in collections.get("blog", []) if not post.get("softwareFormat")]
+    shared_editorial = [post for post in sitewide if not post.get("securityDesk")]
+    security_posts = [post for post in published if post.get("securityDesk")]
+    general_posts = [post for post in shared_editorial if not post.get("gadgetFormat")]
+    blog_archive = [post for post in collections.get("blog", []) if not (post.get("softwareFormat") or post.get("securityDesk"))]
     lead = next((post for post in general_posts if post.get("featured")), general_posts[0] if general_posts else None)
     supporting = [post for post in general_posts if post is not lead][:2]
-    sidebar_features = [post for post in published if post.get("featured")] + supporting
+    sidebar_features = [post for post in shared_editorial if post.get("featured")] + supporting
     if lead and not lead.get("featured"):
         sidebar_features.insert(0, lead)
     for name, posts in collections.items():
         # Software articles share the established blog URL namespace and use the Software hub for placement.
-        archive_posts = [post for post in posts if not post.get("softwareFormat")]
+        archive_posts = blog_archive if name == "blog" else posts
         software_posts = [post for post in posts if post.get("softwareFormat")]
         intro, empty = COLLECTIONS[name]
         if name == "blog":
@@ -1453,8 +1563,10 @@ def render_site(collections, page=page, target=None):
             if target is None or target == post["url"]:
                 if post.get("softwareFormat"):
                     article(post, name, software_posts, page, published=software_posts, featured=software_posts[:2])
+                elif post.get("securityDesk"):
+                    article(post, name, security_posts, page, published=security_posts)
                 else:
-                    article(post, name, archive_posts, page, published=sitewide if name == "reviews" else general_posts,
+                    article(post, name, archive_posts, page, published=shared_editorial if name == "reviews" else general_posts,
                             featured=sidebar_features)
             routes.append(post["url"])
 
@@ -1465,15 +1577,16 @@ def render_site(collections, page=page, target=None):
     page("projects/", "Projects", projects_intro,
          section("Projects", projects_intro, template("projects").template))
 
-    posts = sitewide
-    security_intro, security_body = security_hub(posts)
-    page("cybersecurity/", "Cybersecurity", security_intro, security_body)
+    posts = shared_editorial
+    if target in (None, "cybersecurity/"):
+        page("cybersecurity/", "Cybersecurity News, Vulnerabilities & Protection", SECURITY_INTRO,
+             security_hub(published, security_snapshot()))
     routes.append("cybersecurity/")
     ai_intro, ai_body = ai_hub(posts)
     page("ai/", "Artificial Intelligence", ai_intro, ai_body)
     routes.append("ai/")
     if target in (None, "software/"):
-        page("software/", "Software News, Apps & Alternatives", SOFTWARE_INTRO, software_hub(published))
+        page("software/", "Software News, Apps & Alternatives", SOFTWARE_INTRO, software_hub([post for post in published if not post.get("securityDesk")]))
     intro = "The StackedByBayo shop is coming soon."
     page("shop/", "Shop · Coming soon", intro,
          '<section class="news-wrap news-shop"><h1>Shop</h1><p>Coming soon</p></section>')
@@ -1497,7 +1610,7 @@ def render_site(collections, page=page, target=None):
     if target in (None, ""):
         page("", "Independent Technology News and Analysis",
              "Independent reporting and analysis on semiconductors, memory prices, AI hardware, smartphones and the business of technology.",
-             home_edition(published))
+             home_edition([post for post in published if not post.get("securityDesk")]))
     page("404.html", "Page not found", "Find your way back to StackedByBayo.",
          section("Page not found", "The page you requested may have moved.",
                  '<div class="publication-actions"><a class="publication-button primary" href="/">Go to the homepage</a>'

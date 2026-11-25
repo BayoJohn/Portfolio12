@@ -1,0 +1,37 @@
+[
+  {
+    "name": "Have I Been Pwned",
+    "purpose": "Check whether an email address appears in known breaches indexed by the service.",
+    "audience": "Individuals · Web",
+    "limit": "A negative result cannot rule out a breach. Search an address you are entitled to check.",
+    "url": "https://haveibeenpwned.com/FAQs"
+  },
+  {
+    "name": "Bitwarden",
+    "purpose": "Store unique passwords and supported passkeys in a vault.",
+    "audience": "Individuals and teams · Desktop, mobile and browser",
+    "limit": "Plan account recovery and secure the vault before depending on it.",
+    "url": "https://bitwarden.com/download/"
+  },
+  {
+    "name": "Microsoft Defender Antivirus",
+    "purpose": "Use the malware protection built into supported Windows installations.",
+    "audience": "Windows users and administrators · Windows",
+    "limit": "Keep protection updates current. A clean scan alone does not close an investigation.",
+    "url": "https://learn.microsoft.com/en-us/defender-endpoint/microsoft-defender-antivirus-windows"
+  },
+  {
+    "name": "VirusTotal",
+    "purpose": "Compare scanner findings for a public file or URL, or look up an existing report.",
+    "audience": "IT support and analysts · Web",
+    "limit": "Never upload confidential files, private URLs, tokens or customer data to public scanning services. Submissions can be shared.",
+    "url": "https://docs.virustotal.com/docs/how-it-works"
+  },
+  {
+    "name": "Wireshark",
+    "purpose": "Inspect authorised packet captures during network troubleshooting.",
+    "audience": "IT support and network operators · Windows, macOS and Linux",
+    "limit": "Captures may contain sensitive data. Limit collection to networks you are authorised to inspect.",
+    "url": "https://www.wireshark.org/download.html"
+  }
+]

@@ -349,3 +349,10 @@
 .reading-corrections li { margin-bottom: 6px; }
 .reading-corrections time { font: 500 .8125rem/1.5 var(--news-mono); }
 .reading-corrections a { color: var(--editorial-accent-ink); text-decoration: underline; text-underline-offset: .2em; }
+
+.reading-security .reading-facts {
+  border-inline-start: 3px solid var(--editorial-accent);
+}
+.reading-security .reading-table {
+  border-inline: 1px solid var(--editorial-line);
+}

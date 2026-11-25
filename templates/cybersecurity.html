@@ -1,67 +1,79 @@
-<div class="newsroom security-hub news-wrap">
-    <header class="newsroom-header">
-        <h1>Cybersecurity</h1>
+<div class="security-desk news-wrap">
+    <header class="security-masthead">
+        <h1>CYBERSECURITY</h1>
+        <p class="security-motto">Threats. Vulnerabilities. Intelligence. Protection.</p>
         <p>$intro</p>
     </header>
-    <nav class="newsroom-filters" aria-label="Cybersecurity topics">
+    <nav class="security-nav" aria-label="Cybersecurity topics">
         <ul>
             <li><a href="./#security-latest">Latest</a></li>
-            <li><a href="./#cves">CVEs</a></li>
+            <li><a href="./#cves">Vulnerabilities</a></li>
             <li><a href="./#malware">Malware</a></li>
-            <li><a href="./#threats">Threats</a></li>
-            <li><a href="./#privacy">Privacy</a></li>
-            <li><a href="./#security-guides">Security Guides</a></li>
+            <li><a href="./#breaches">Data Breaches</a></li>
+            <li><a href="./#advisories">Security Advisories</a></li>
+            <li><a href="./#threats">Threat Analysis</a></li>
+            <li><a href="./#protect">Protect Yourself</a></li>
+            <li><a href="./#security-tools">Security Tools</a></li>
         </ul>
     </nav>
-$featured
-    <section class="security-section" id="cves" tabindex="-1" aria-labelledby="cve-title">
-        <h2 id="cve-title">CVEs &amp; Vulnerabilities</h2>
-        <p>A CVE identifier gives a publicly disclosed vulnerability a common reference. Check the affected versions and recommended fixes in the vendor’s advisory.</p>
-$cves
+    $alerts
+    <section class="security-front" aria-label="Featured security coverage">
+        $lead
+        <div class="security-secondary">$secondary</div>
+        <aside class="security-brief" aria-labelledby="security-brief-title">
+            <h2 id="security-brief-title">Security Briefing</h2>
+            $briefing
+        </aside>
     </section>
-    <div class="newsroom-layout">
-        <section class="newsroom-feed" id="security-latest" tabindex="-1" aria-labelledby="latest-security-title">
-            <h2 id="latest-security-title">Latest Security Stories</h2>
-$feed
-        </section>
-$essentials
-    </div>
-    <div class="security-topic-grid">
+
+    <section class="security-section security-intelligence" id="cves" tabindex="-1" aria-labelledby="cve-title">
+        <h2 id="cve-title">Vulnerability Intelligence</h2>
+        $intelligence
+        <p class="security-source-links"><a href="https://nvd.nist.gov/vuln/search">NIST vulnerability search</a> <a href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog">CISA Known Exploited Vulnerabilities Catalog</a></p>
+    </section>
+    <section class="security-section" id="exploited" tabindex="-1" aria-labelledby="exploited-title">
+        <h2 id="exploited-title">Known Exploited Vulnerabilities</h2>
+        $exploited
+    </section>
+
+    <section class="security-section" id="advisories" tabindex="-1" aria-labelledby="advisories-title">
+        <h2 id="advisories-title">Security Advisories &amp; Patches</h2>
+        <div class="security-grid">$advisories</div>
+    </section>
+
+    <div class="security-two">
         <section class="security-section" id="malware" tabindex="-1" aria-labelledby="malware-title">
-            <h2 id="malware-title">Malware</h2>
-            <p>Malware is software designed to harm a system or misuse its access.</p>
-            <dl class="security-definitions">
-                <div><dt>Ransomware</dt><dd>Blocks access to files or systems and demands payment. Some incidents also involve stolen data.</dd></div>
-                <div><dt>Trojans</dt><dd>Masquerade as legitimate programs or files to persuade someone to run them.</dd></div>
-                <div><dt>Spyware</dt><dd>Collects information such as activity or sensitive data without informed consent.</dd></div>
-            </dl>
-$malware_stories
+            <h2 id="malware-title">Malware Watch</h2>
+            $malware
         </section>
-        <section class="security-section" id="threats" tabindex="-1" aria-labelledby="threats-title">
-            <h2 id="threats-title">Threats</h2>
-            <p>Some attacks exploit trust in a message, supplier or service.</p>
-            <dl class="security-definitions">
-                <div><dt>Phishing</dt><dd>Messages or sites impersonate trusted people or services to obtain information or prompt an unsafe action.</dd></div>
-                <div><dt>Supply-chain attacks</dt><dd>A compromise at a supplier, software dependency or service provider can affect the people and systems that rely on it.</dd></div>
-            </dl>
-$threat_stories
-            <p><a href="https://www.cisa.gov/sites/default/files/2024-01/2023_fema_planning-considerations-cyber-incidents.pdf">Read CISA and FEMA’s cyber incident guide</a></p>
+        <section class="security-section" id="breaches" tabindex="-1" aria-labelledby="breaches-title">
+            <h2 id="breaches-title">Data Breaches &amp; Cyberattacks</h2>
+            $breaches
         </section>
     </div>
-    <section class="security-section" aria-labelledby="protect-title">
-        <h2 id="protect-title">Protect Yourself</h2>
-        <p>Start with the accounts you use for password resets and the devices you rely on every day.</p>
-$protection
-        <section class="security-privacy" id="privacy" tabindex="-1" aria-labelledby="privacy-title">
-            <h3 id="privacy-title">Online Privacy</h3>
-            <p>Review which apps can access your location, camera, microphone or contacts. Check the privacy controls on shared devices and browsers, too.</p>
-            <p><a href="https://consumer.ftc.gov/articles/how-websites-and-apps-collect-and-use-your-information">See the FTC guide to website and app privacy</a></p>
-$privacy_stories
-        </section>
+    <section class="security-section" id="threats" tabindex="-1" aria-labelledby="threats-title">
+        <h2 id="threats-title">Threat Analysis</h2>
+        <div class="security-grid">$threats</div>
     </section>
-    <section class="security-section" id="security-guides" tabindex="-1" aria-labelledby="security-guides-title">
-        <h2 id="security-guides-title">Security Learning Center</h2>
-        <p>Build the fundamentals in Tech Academy, from how your browser connects to a site to the habits that protect your accounts.</p>
-$learning
+
+    <section class="security-section security-protect" id="protect" tabindex="-1" aria-labelledby="protect-title">
+        <h2 id="protect-title">Protect Yourself</h2>
+        <p>Start with the accounts that control password resets, the devices you use daily, and the files you need to recover.</p>
+        <ul class="security-grid security-actions">$protection</ul>
+        <p id="privacy" tabindex="-1"><a href="https://consumer.ftc.gov/articles/how-websites-and-apps-collect-and-use-your-information">Online privacy and app permissions</a></p>
+    </section>
+
+    <section class="security-section" id="security-tools" tabindex="-1" aria-labelledby="tools-title">
+        <h2 id="tools-title">Security Toolkit</h2>
+        <div class="security-grid">$toolkit</div>
+    </section>
+    <section class="security-section" id="security-guides" tabindex="-1" aria-labelledby="explain-title">
+        <h2 id="explain-title">Security Explained</h2>
+        <div class="security-grid">$learn</div>
+        $academy
+    </section>
+    <section class="security-section" id="security-latest" tabindex="-1" aria-labelledby="latest-security-title">
+        <h2 id="latest-security-title">Latest Security News</h2>
+        $news
     </section>
 </div>
