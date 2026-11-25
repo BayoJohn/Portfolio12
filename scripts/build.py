@@ -60,10 +60,16 @@ ARTICLE_TYPES = {
     "review": "Review",
     "tutorial": "Tutorial",
 }
+GADGET_FORMATS = {
+    "hands-on": "Hands-on review",
+    "research-overview": "Research-based overview",
+    "specification-analysis": "Specification analysis",
+    "buying-guide": "Buying guide",
+}
 ARTICLE_FACTS = (
     ("security", "Security details", {"severity": "Severity", "affectedProducts": "Affected products",
                          "audience": "Who is affected", "recommendedActions": "Recommended actions"}),
-    ("review", "Review details", {"productOverview": "Product overview", "specifications": "Specifications",
+    ("review", "Review details", {"productName": "Product", "productOverview": "Product overview", "specifications": "Specifications",
                        "advantages": "Advantages", "limitations": "Limitations",
                        "verdict": "Verdict", "testingDisclosure": "Evaluation disclosure"}),
     ("tutorial", "Tutorial details", {"prerequisites": "Prerequisites", "troubleshooting": "Troubleshooting"}),
@@ -258,7 +264,10 @@ def image(post, css_class, *, priority=False, sizes=None, decorative=False):
     if not post.get("image"):
         return ""
     responsive = ""
-    if post["image"].startswith("https://images.unsplash.com/") and re.search(r"[?&]w=\d+", post["image"]):
+    if sizes and (variants := post.get("imageVariants")):
+        sources = ", ".join(f"{escape(url)} {int(width)}w" for width, url in variants.items())
+        responsive = f' srcset="{sources}" sizes="{sizes}"'
+    elif post["image"].startswith("https://images.unsplash.com/") and re.search(r"[?&]w=\d+", post["image"]):
         widths = (480, 800, 1200, 1600) if priority else (320, 480, 800)
         variants = [escape(re.sub(r"([?&]w=)\d+", rf"\g<1>{width}", post["image"])) + f" {width}w"
                     for width in widths]
@@ -327,9 +336,7 @@ def author_url(post):
     return web_url(post.get("authorURL", "")) or (ORIGIN + "about/" if post["author"] in {AUTHOR, PUBLICATION} else "")
 
 
-def article_cover(post, *, editorial):
-    if not post.get("image"):
-        return ""
+def image_credit(post):
     url = post["image"]
     credit = escape(post.get("imageCredit", ""))
     credit_url = post.get("imageCreditURL", "")
@@ -338,7 +345,15 @@ def article_cover(post, *, editorial):
         credit_url = url
     if credit and (link := web_url(credit_url)):
         credit = f'<a href="{escape(link)}">{credit}</a>'
-    caption = " · ".join(filter(None, (escape(post.get("imageCaption", "")), credit)))
+    if credit and (license_url := web_url(post.get("imageLicenseURL", ""))):
+        credit += f' · <a href="{escape(license_url)}">{escape(post.get('imageLicense', 'Image license'))}</a>'
+    return credit
+
+
+def article_cover(post, *, editorial):
+    if not post.get("image"):
+        return ""
+    caption = " · ".join(filter(None, (escape(post.get("imageCaption", "")), image_credit(post))))
     sizes = ("(min-width: 1440px) 890px, (min-width: 1060px) 64vw, (min-width: 780px) 720px, 94vw"
              if editorial else "(max-width: 1230px) 94vw, 1160px")
     return (
@@ -478,7 +493,7 @@ def article(post, collection, posts, page=page, *, published=None, featured=()):
             )
     topic_items = "".join(f'<li>{escape(tag)}</li>' for tag in tags)
     topics = f'<section class="reading-topics"><h2>Topics</h2><ul>{topic_items}</ul></section>' if topic_items else ""
-    kind = ARTICLE_TYPES.get(post.get("articleType", ""))
+    kind = GADGET_FORMATS.get(post.get("gadgetFormat")) or ARTICLE_TYPES.get(post.get("articleType", ""))
     content = template("article").substitute(
         collection=escape(NAV[collection]), category=escape(post["category"]), title=escape(post["title"]),
         type_label=f' <span class="reading-type">{kind}</span>' if kind else "",
@@ -879,39 +894,169 @@ def ai_hub(posts):
     ).rstrip()
 
 
+GADGET_INTRO = "Discover the latest devices, understand the technology behind them, and make smarter buying decisions."
+GADGET_DEVICES = (
+    ("phones", "Smartphones", "Smartphones", "mobile-alt", "smartphones", {"smartphone", "smartphones", "phone", "phones"}),
+    ("computers", "Computers", "Laptops and Computers", "laptop", "laptops-and-computers", {"computers", "laptop", "laptops", "computer fundamentals"}),
+    ("hardware", "Hardware", "PC Hardware", "microchip", "pc-hardware", {"hardware", "pc hardware", "components"}),
+    ("wearables", "Wearables", "Wearables", "stopwatch", "wearables", {"wearables", "smartwatch", "smartwatches"}),
+    ("audio", "Audio", "Headphones and Audio", "headphones", "headphones-and-audio", {"audio", "headphones", "earbuds"}),
+    ("accessories", "Accessories", "Accessories", "plug", "accessories", {"accessories", "chargers", "peripherals"}),
+)
+GADGET_GUIDE_URL = "reviews/device-buying-checklist/"
+COMPUTER_GUIDE_URL = "academy/understanding-your-computer/"
+IPHONE_ANALYSIS_URL = "reviews/iphone-16e-specification-analysis/"
+
+
+def gadget_story(post, variant, *, heading="h3", summary=None):
+    review = post.get("review", {})
+    label = GADGET_FORMATS.get(post.get("gadgetFormat"))
+    if post.get("articleType") == "review" or variant == "review":
+        label = label or "Review"
+    kicker = " · ".join(filter(None, (post["category"], label)))
+    sizes = {
+        "lead": "(min-width: 1360px) 815px, (min-width: 840px) 61vw, 92vw",
+        "review": "(min-width: 840px) 340px, (min-width: 600px) 44vw, 92vw",
+        "row": "(min-width: 600px) 156px, 96px",
+    }
+    photo = image(post, "gadgets-image", priority=variant == "lead", sizes=sizes[variant]) if variant in sizes else ""
+    media = ""
+    if photo:
+        credit = image_credit(post)
+        caption = f'<figcaption>{credit}</figcaption>' if credit and variant != "row" else ""
+        media = f'<figure class="gadgets-media">{photo}{caption}</figure>'
+    elif variant in {"lead", "review"}:
+        fallback = review.get("productName") or post["category"]
+        media = f'<div class="gadgets-fallback" aria-hidden="true">{escape(fallback)}</div>'
+    product = review.get("productName")
+    product_line = f'<p class="gadgets-product">{escape(product)}</p>' if product else ""
+    description = summary or review.get("verdict") or post["excerpt"]
+    meta = post_date(post)
+    if variant == "lead":
+        meta = f'<span>{escape(post["author"])}</span>' + meta + f'<span>{escape(reading_duration(post))}</span>'
+    return (
+        f'<article class="gadgets-story gadgets-story-{variant}">{media}<div class="gadgets-copy">'
+        f'<p class="gadgets-kicker">{escape(kicker)}</p>{product_line}'
+        f'<{heading}><a href="../{escape(post["url"])}">{escape(post["title"])}</a></{heading}>'
+        f'<p class="gadgets-summary">{escape(description)}</p>'
+        + (f'<p class="gadgets-meta">{meta}</p>' if meta else "") + '</div></article>'
+    )
+
+
+def gadget_comparison(title, products, rows):
+    columns = "".join(f'<th scope="col"><a href="{escape(url)}">{escape(name)}</a></th>' for name, url in products)
+    body = "".join(
+        f'<tr><th scope="row">{escape(label)}</th>'
+        + "".join(f"<td>{escape(value)}</td>" for value in values) + "</tr>"
+        for label, *values in rows
+    )
+    return (
+        '<div class="gadgets-table" role="region" aria-label="Scrollable product comparison" tabindex="0">'
+        f'<table><caption>{escape(title)}</caption><thead><tr><th scope="col">Specification</th>'
+        f'{columns}</tr></thead><tbody>{body}</tbody></table></div>'
+    )
+
+
 def gadgets_hub(reviews, archive, academy):
-    gadget_tags = {"gadgets", "hardware", "smartphones", "phones", "laptops", "audio",
-                   "wearables", "accessories", "gadget releases"}
-    coverage = matching_topics(archive, gadget_tags)
-    review_posts = [post for post in reviews if post.get("articleType") in {None, "", "review"}]
-    coverage = sorted([*coverage, *(post for post in reviews if post not in review_posts)],
+    device_tags = set().union(*(device[-1] for device in GADGET_DEVICES))
+    coverage_tags = device_tags | {"gadgets", "consumer electronics", "gadget releases", "product launch", "product releases"}
+    coverage = sorted([*reviews, *matching_topics(archive, coverage_tags)],
                       key=lambda post: post["date"], reverse=True)
-    releases = matching_topics(coverage, {"gadget releases", "product launch", "product releases"})
-    candidates = sorted([*review_posts, *coverage], key=lambda post: post["date"], reverse=True)
-    featured = next((post for post in candidates if post.get("featured")), candidates[0] if candidates else None)
-    fundamentals = next((post for post in academy if post["url"] == "academy/understanding-your-computer/"), None)
-    feature = featured or fundamentals
-    if featured in releases and len(releases) > 1:
-        releases = [post for post in releases if post is not featured]
+    guides = [post for post in coverage if post.get("gadgetFormat") == "buying-guide"
+              or matching_topics([post], {"buying guide", "buying guides"})]
+    review_posts = [post for post in coverage if post not in guides and (
+        post.get("articleType") == "review" or post.get("gadgetFormat") in GADGET_FORMATS
+        or (post in reviews and not post.get("articleType"))
+    )]
+    news = [post for post in coverage if post not in guides and post not in review_posts
+            and post.get("articleType") not in {"tutorial", "security-update"}]
+    fundamentals = next((post for post in academy if post["url"] == COMPUTER_GUIDE_URL), None)
+    featured = next((post for post in coverage if post.get("featured")), None)
+    lead = featured or (news[0] if news else None) or fundamentals or (coverage[0] if coverage else None)
+    lead_art = ""
+    if lead:
+        if lead is fundamentals and not lead.get("image"):
+            lead = {**lead, "image": "/assets/img/carousel/reviews-720.webp",
+                    "imageAlt": "Illustration of a laptop, over-ear headphones and a compact hub",
+                    "imageCredit": "StackedByBayo illustration",
+                    "imageVariants": {width: f"/assets/img/carousel/reviews-{width}.webp" for width in (320, 720, 1440)}}
+        lead_art = gadget_story(lead, "lead", heading="h2")
+    lead_url = lead["url"] if lead else ""
+    has_news = bool(news)
+    news = [post for post in news if post["url"] != lead_url]
+    briefing_news = news[:min(3, max(0, len(news) - 1))]
+    briefing_posts = briefing_news or [post for post in coverage if post["url"] != lead_url and post not in news][:3]
+    feed = news[len(briefing_news):]
+    news_empty = ('<p class="gadgets-summary">See the <a href="./#latest">latest coverage</a> above.</p>'
+                  if has_news
+                  else '<p class="gadgets-summary">No gadget news has been published yet.</p>')
+    checklist = next((post for post in guides if post["url"] == GADGET_GUIDE_URL), None)
+    topics = ['<li><a href="./#latest">Latest</a></li>']
+    devices = []
+    panels = []
+    for slug, topic, label, icon, fragment, tags in GADGET_DEVICES:
+        results = matching_topics([post for post in coverage if post is not checklist], tags)
+        if fundamentals and slug in {"computers", "hardware"}:
+            results.append(fundamentals)
+        if not (results or checklist):
+            continue
+        topics.append(f'<li><a href="./#{slug}">{topic}</a></li>')
+        devices.append(f'<li><a href="./#{slug}"><i class="fas fa-{icon}" aria-hidden="true"></i>{label}</a></li>')
+        checklist_link = (f'<p><a class="gadgets-text-link" href="../{GADGET_GUIDE_URL}#{fragment}">'
+                          f'What to check before buying</a></p>') if checklist else ""
+        panels.append(
+            f'<section class="gadgets-section gadgets-topic-panel" id="{slug}" tabindex="-1" aria-labelledby="topic-{slug}-title">'
+            f'<h2 id="topic-{slug}-title">{label}</h2>{checklist_link}'
+            + "".join(gadget_story(post, "row") for post in results)
+            + '<p><a class="gadgets-text-link" href="./#latest">See all Gadgets coverage</a></p></section>'
+        )
+    topics += ['<li><a href="./#reviews">Reviews</a></li>', '<li><a href="./#buying-guides">Buying Guides</a></li>']
 
-    def stories(posts, *, variant, css_class, empty):
-        if not posts:
-            return f'<p class="newsroom-summary">{escape(empty)}</p>'
-        rows = "".join(f'<article class="{css_class}">' + newsroom_story(post, variant=variant, heading="h3")
-                       + '</article>' for post in posts)
-        return f'<div class="gadgets-review-grid">{rows}</div>' if variant == "feature" else rows
-
+    comparison = ""
+    analysis = next((post for post in review_posts if post["url"] == IPHONE_ANALYSIS_URL), None)
+    if analysis:
+        products = (("iPhone 16e", analysis["sources"][0]["url"]), ("iPhone 16", analysis["sources"][1]["url"]))
+        rows = (
+            ("Processor", "A18 with 4-core GPU", "A18 with 5-core GPU"),
+            ("Storage options", "128, 256 or 512 GB", "128, 256 or 512 GB"),
+            ("Display", "6.1-inch OLED", "6.1-inch OLED"),
+            ("Typical maximum brightness", "800 nits", "1,000 nits"),
+            ("Rear lenses", "Main", "Main and Ultra Wide"),
+            ("Wireless charging", "Qi", "MagSafe and Qi2"),
+            ("Height × width × depth", "146.7 × 71.5 × 7.80 mm", "147.6 × 71.6 × 7.80 mm"),
+            ("Weight", "167 g", "170 g"),
+        )
+        comparison = (
+            '<section class="gadgets-section" aria-labelledby="comparison-title"><h2 id="comparison-title">Product Comparisons</h2>'
+            + gadget_comparison("iPhone 16e vs iPhone 16", products, rows)
+            + f'<p class="gadgets-summary">Specifications from Apple. <a href="../{IPHONE_ANALYSIS_URL}">Read the full analysis</a>.</p></section>'
+        )
+    hardware = [
+        ("Processor, RAM and storage", "See how the core parts of a computer work together.",
+         f"../{COMPUTER_GUIDE_URL}#what-keeps-a-program-running" if fundamentals else ""),
+        ("SSD or hard drive?", "An SSD uses flash memory for quick access. A hard drive uses spinning platters and can suit bulk storage.", ""),
+        ("USB-C and charging", "Check what a port, cable and charger can do together.",
+         f"../{GADGET_GUIDE_URL}#accessories" if checklist else ""),
+    ]
+    hardware_cards = "".join(
+        '<article><h3>' + (f'<a href="{href}">{title}</a>' if href else title)
+        + f'</h3><p class="gadgets-summary">{description}</p></article>'
+        for title, description, href in hardware if href or title == "SSD or hard drive?"
+    )
+    review_cards = "".join(gadget_story(post, "review") for post in review_posts if post["url"] != lead_url)
+    if not review_cards and review_posts:
+        review_cards = '<p class="gadgets-summary"><a href="./#latest">Read the featured review</a></p>'
     return template("gadgets").substitute(
-        feature_title="Featured Gadget" if featured else "Featured Reading",
-        feature=newsroom_story(feature, variant="lead", heading="h3") if feature else (
-            '<p class="newsroom-summary">Start with the buying guides and hardware explainers below.</p>'
-        ),
-        releases=stories(releases[:3], variant="row", css_class="newsroom-row",
-                         empty="No gadget releases have been covered yet."),
-        reviews=stories(review_posts, variant="feature", css_class="gadgets-review",
-                        empty="No gadget reviews have been published yet."),
-        news=stories(coverage, variant="row", css_class="newsroom-row",
-                     empty="No gadget news has been published yet."),
+        intro=escape(GADGET_INTRO), topics="".join(topics), devices="".join(devices), topic_results="".join(panels),
+        feature=lead_art, briefing_title="Product Briefing" if briefing_news else "From the Desk",
+        briefing="".join(gadget_story(post, "brief") for post in briefing_posts)
+        or '<p class="gadgets-summary">Explore the latest coverage and hardware explainers below.</p>',
+        reviews=f'<div class="gadgets-review-grid">{review_cards}</div>' if review_cards else
+        '<p class="gadgets-summary">No product reviews have been published yet.</p>',
+        news="".join(gadget_story(post, "row") for post in feed) or news_empty,
+        guides="".join(gadget_story(post, "brief") for post in guides)
+        or '<p class="gadgets-summary">No buying guides have been published yet.</p>',
+        comparison=comparison, hardware=f'<div class="gadgets-hardware">{hardware_cards}</div>',
     ).rstrip()
 
 
@@ -919,8 +1064,9 @@ def render_site(collections, page=page, target=None):
     routes = [f"{route}/" if route else "" for route in NAV]
     published = sorted((post for items in collections.values() for post in items),
                        key=lambda post: post["date"], reverse=True)
-    lead = next((post for post in published if post.get("featured")), published[0] if published else None)
-    supporting = [post for post in published if post is not lead][:2]
+    general_posts = [post for post in published if not post.get("gadgetFormat")]
+    lead = next((post for post in general_posts if post.get("featured")), general_posts[0] if general_posts else None)
+    supporting = [post for post in general_posts if post is not lead][:2]
     sidebar_features = [post for post in published if post.get("featured")] + supporting
     if lead and not lead.get("featured"):
         sidebar_features.insert(0, lead)
@@ -933,11 +1079,12 @@ def render_site(collections, page=page, target=None):
             page("academy/", NAV[name], academy_intro,
                  academy_library(posts, collections.get("blog", []), academy_intro, empty))
         elif name == "reviews":
-            page("reviews/", NAV[name], intro,
+            page("reviews/", "Gadgets, Reviews & Buying Guides", GADGET_INTRO,
                  gadgets_hub(posts, collections.get("blog", []), collections.get("academy", [])))
         for post in posts:
             if target is None or target == post["url"]:
-                article(post, name, posts, page, published=published, featured=sidebar_features)
+                article(post, name, posts, page, published=published if name == "reviews" else general_posts,
+                        featured=sidebar_features)
             routes.append(post["url"])
 
     about = (
@@ -997,9 +1144,9 @@ def render_site(collections, page=page, target=None):
 
     home = template("home").substitute(
         featured=featured,
-        latest=news_list([post for post in posts if post.get("dateTime")][:6],
+        latest=news_list([post for post in general_posts if post.get("dateTime")][:6],
                          "No recent articles.", layout="news-latest"),
-        reviews=news_list(collections["reviews"][:2], "No reviews published yet."),
+        reviews=news_list([post for post in collections["reviews"] if not post.get("gadgetFormat")][:2], "No reviews published yet."),
         academy=news_list(collections["academy"][:2], "No guides published yet."),
     )
     page("", "Technology News, Reviews & Practical Guides",
