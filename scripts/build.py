@@ -151,7 +151,7 @@ def metadata(route, title, description, post=None):
     return "\n    ".join(tags)
 
 
-def navigation(root, active, article_page=False, *, header=False):
+def navigation(root, active, article_page=False, *, header=False, exclude=()):
     routes = HEADER_NAV if header else NAV
     current = "location" if article_page else "page"
     return "\n            ".join(
@@ -160,19 +160,21 @@ def navigation(root, active, article_page=False, *, header=False):
         + f'>{escape(label)}'
         + (' <small class="shop-nav-status">Soon</small>' if route == "shop" else "")
         + '</a>'
-        for route, label in routes.items()
+        for route, label in routes.items() if route not in exclude
     )
 
 
-def footer(root, *, show_wordmark=True):
+def footer(root, *, homepage=False):
+    links = navigation(root, None, exclude={"projects"} if homepage else ())
+    socials = (
+        '<a href="https://github.com/BayoJohn">GitHub</a>'
+        '<a href="https://www.linkedin.com/in/bayo123/">LinkedIn</a>'
+    ) if not homepage else ""
     return (
         '<footer class="blog-footer publication-footer"><div class="blog-container">'
-        '<p>'
-        + ('<strong>StackedByBayo</strong><br>' if show_wordmark else '')
-        + f'© {date.today().year} StackedByBayo</p>'
-        f'<nav aria-label="Footer navigation">{navigation(root, None)}</nav>'
-        '<nav aria-label="Social links"><a href="https://github.com/BayoJohn">GitHub</a>'
-        '<a href="https://www.linkedin.com/in/bayo123/">LinkedIn</a>'
+        f'<p><strong>StackedByBayo</strong><br>© {date.today().year} StackedByBayo</p>'
+        f'<nav aria-label="Footer navigation">{links}</nav>'
+        f'<nav aria-label="{"Contact" if homepage else "Social links"}">{socials}'
         '<a href="mailto:ogundelebayo8@gmail.com">Email</a></nav></div></footer>'
     )
 
@@ -192,7 +194,11 @@ def render_page(route, title, description, content, post=None):
         seo += '\n    <meta name="robots" content="noindex">'
     page_asset = "article" if post else "newsroom" if route == "blog/" else None
     stylesheet = page_asset or ("academy" if route == "academy/" else None)
-    if route in {"cybersecurity/", "ai/"}:
+    scripts = (page_asset,) if page_asset else ()
+    if not route:
+        styles = ("newsroom", "edition")
+        scripts = ("edition", "newsroom")
+    elif route in {"cybersecurity/", "ai/"}:
         styles = ("newsroom", route.rstrip("/"))
     elif route == "reviews/":
         styles = ("newsroom", "gadgets")
@@ -202,9 +208,9 @@ def render_page(route, title, description, content, post=None):
         root=root, title=escape(f"{title} | StackedByBayo" if route else f"StackedByBayo | {title}"),
         description=escape(description),
         article_styles="".join(f'    <link rel="stylesheet" href="{root}assets/css/{name}.css">\n' for name in styles),
-        article_script=f'    <script src="{root}assets/js/{page_asset}.js" defer></script>\n' if page_asset else "",
+        article_script="".join(f'    <script src="{root}assets/js/{name}.js" defer></script>\n' for name in scripts),
         metadata=seo, navigation=navigation(root, active, bool(post), header=True),
-        footer=footer(root, show_wordmark=bool(route)), content=content, body_class=" news-home" if not route else "", main_class="article-main" if post else "platform-main",
+        footer=footer(root, homepage=not route), content=content, body_class=" news-home" if not route else "", main_class="article-main" if post else "platform-main",
     )
 
 
@@ -383,7 +389,8 @@ def reading_links(title, links, *, css_class, heading="h2"):
 
 
 def cited_links(refs):
-    return [(ref["label"], url) for ref in refs if (url := web_url(ref["url"]))]
+    return [(f'{ref["label"]} ({ref["date"]})' if ref.get("date") else ref["label"], url)
+            for ref in refs if (url := web_url(ref["url"]))]
 
 
 def article_facts(post):
@@ -493,7 +500,9 @@ def article(post, collection, posts, page=page, *, published=None, featured=()):
             )
     topic_items = "".join(f'<li>{escape(tag)}</li>' for tag in tags)
     topics = f'<section class="reading-topics"><h2>Topics</h2><ul>{topic_items}</ul></section>' if topic_items else ""
-    kind = GADGET_FORMATS.get(post.get("gadgetFormat")) or ARTICLE_TYPES.get(post.get("articleType", ""))
+    kind = "Analysis" if post.get("homeAnalysis") else (
+        GADGET_FORMATS.get(post.get("gadgetFormat")) or ARTICLE_TYPES.get(post.get("articleType", ""))
+    )
     content = template("article").substitute(
         collection=escape(NAV[collection]), category=escape(post["category"]), title=escape(post["title"]),
         type_label=f' <span class="reading-type">{kind}</span>' if kind else "",
@@ -1060,6 +1069,102 @@ def gadgets_hub(reviews, archive, academy):
     ).rstrip()
 
 
+def edition_story(post, variant, heading="h3"):
+    sizes = {
+        "lead": "(min-width: 1360px) 620px, (min-width: 960px) 48vw, 92vw",
+        "secondary": "(min-width: 960px) 24vw, (min-width: 581px) 45vw, 27vw",
+        "collection": "(min-width: 960px) 54vw, 92vw",
+        "row": "(min-width: 640px) 160px, 25vw",
+    }
+    media = ""
+    if variant in sizes:
+        photo = image(post, "edition-photo", priority=variant == "lead", sizes=sizes[variant])
+        if photo:
+            caption = " · ".join(filter(None, (escape(post.get("imageCaption", "")), image_credit(post))))
+            credit = f'<figcaption>{caption}</figcaption>' if caption and variant in {"lead", "collection", "secondary"} else ""
+            media = f'<figure class="edition-media">{photo}{credit}</figure>'
+        elif variant == "row":
+            media = f'<div class="edition-typographic" aria-hidden="true">{escape(post["category"])}</div>'
+    label = post["category"] + (" · Analysis" if post.get("homeAnalysis") else "")
+    meta = " ".join(filter(None, (post_date(post), f'<span>{escape(reading_duration(post))}</span>' if variant != "brief" else "")))
+    summary = f'<p class="edition-deck">{escape(post["excerpt"])}</p>' if variant in {"lead", "collection", "row"} else ""
+    return (
+        f'<article class="edition-story edition-story-{variant}">{media}<div class="edition-copy">'
+        f'<p class="edition-kicker">{escape(label)}</p>'
+        f'<{heading}><a href="{escape(post["url"])}">{escape(post["title"])}</a></{heading}>{summary}'
+        + (f'<p class="edition-meta">{meta}</p>' if meta else "") + '</div></article>'
+    )
+
+
+def edition_collection(key, title, stories):
+    if not stories:
+        return ""
+    first, *others = stories[:4]
+    return (
+        f'<section class="edition-section edition-collection edition-{key}" id="{key}" aria-labelledby="{key}-title">'
+        f'<div class="edition-section-heading"><h2 id="{key}-title">{title}</h2></div>'
+        '<div class="edition-collection-layout">' + edition_story(first, "collection")
+        + '<div class="edition-collection-list">' + "".join(edition_story(post, "brief") for post in others)
+        + '</div></div></section>'
+    )
+
+
+def home_edition(published):
+    config = json.loads((ROOT / "content" / "home-edition.json").read_text(encoding="utf-8"))
+    def eligible(post):
+        if post.get("homeTopics") or post.get("gadgetFormat"):
+            return True
+        if not post.get("managed") or post.get("articleType") == "tutorial":
+            return False
+        categories = {tag.casefold() for tag in [post["category"], *post.get("categories", [])]}
+        portfolio_topics = SOFTWARE_TOPICS | {"devops", "homelab", "terraform", "cloud computing", "infrastructure"}
+        return bool(categories & {"news", "cybersecurity", "ai", "gadgets"}) and not categories & portfolio_topics
+
+    posts = sorted((post for post in published if eligible(post)),
+                   key=lambda post: post.get("dateTime") or "", reverse=True)
+    by_url = {post["url"]: post for post in posts}
+
+    def choose(urls, limit):
+        selected = dict.fromkeys([*urls, *(post["url"] for post in posts)])
+        return [by_url[url] for url in selected if url in by_url][:limit]
+
+    leads = choose([config["lead"], *config["secondary"]], 3)
+    featured_urls = {post["url"] for post in leads}
+    latest = [post for post in posts if post["url"] not in featured_urls]
+    picks = choose(config["picks"], 3)
+
+    def topic_matches(post, tags):
+        return bool(set(post.get("homeTopics", ())).intersection(tags))
+
+    def collection_stories(key):
+        collection = config["collections"][key]
+        order = {url: index for index, url in enumerate(collection["featured"])}
+        matches = [post for post in posts if topic_matches(post, collection["topics"])]
+        return sorted(matches, key=lambda post: order.get(post["url"], len(order)))
+
+    links = []
+    for label, tag, url in config["focus"]:
+        matching = by_url.get(url) or next((post for post in posts if topic_matches(post, (tag,))), None)
+        if matching:
+            links.append(f'<li><a href="{escape(matching["url"])}">{escape(label)}</a></li>')
+    focus = ('<nav class="edition-focus" aria-label="In Focus"><span>In Focus</span><ul>'
+             + "".join(links) + '</ul></nav>') if links else ""
+    collections = {
+        key: edition_collection(key, title, collection_stories(key))
+        for key, title in (("chips", "THE CHIP WARS"), ("mobile", "THE MOBILE WORLD"), ("analysis", "THE BIG PICTURE"))
+    }
+    return template("home").substitute(
+        focus=focus,
+        primary=edition_story(leads[0], "lead", "h1") if leads else '<h1>StackedByBayo</h1>',
+        secondary="".join(edition_story(post, "secondary", "h2") for post in leads[1:]),
+        briefing="".join(edition_story(post, "brief") for post in latest[:4]),
+        feed="".join(edition_story(post, "row") for post in latest if post.get("dateTime"))
+        or '<p>More StackedByBayo stories are available in the <a href="blog/">Tech News archive</a>.</p>',
+        picks="".join(edition_story(post, "brief", "h4") for post in picks),
+        **collections,
+    ).rstrip()
+
+
 def render_site(collections, page=page, target=None):
     routes = [f"{route}/" if route else "" for route in NAV]
     published = sorted((post for items in collections.values() for post in items),
@@ -1113,14 +1218,6 @@ def render_site(collections, page=page, target=None):
     ai_intro, ai_body = ai_hub(posts)
     page("ai/", "Artificial Intelligence", ai_intro, ai_body)
     routes.append("ai/")
-    featured = '<p class="news-empty">There are no featured stories yet.</p>'
-    if lead:
-        featured = (
-            '<div class="news-features">' + news_card(lead, lead=True, heading="h2")
-            + '<div class="news-support">' + "".join(news_card(post, heading="h2") for post in supporting)
-            + '</div></div>'
-        )
-
     software = matching_topics(posts, SOFTWARE_TOPICS)
     intro = "Explore operating systems, containers and the tools used to build, deploy and monitor software."
     page("software/", "Software", intro, section("Software", intro, news_list(
@@ -1142,16 +1239,10 @@ def render_site(collections, page=page, target=None):
     intro = "Search by headline, topic or author."
     page("search/", "Search", intro, section("Search", intro, search))
 
-    home = template("home").substitute(
-        featured=featured,
-        latest=news_list([post for post in general_posts if post.get("dateTime")][:6],
-                         "No recent articles.", layout="news-latest"),
-        reviews=news_list([post for post in collections["reviews"] if not post.get("gadgetFormat")][:2], "No reviews published yet."),
-        academy=news_list(collections["academy"][:2], "No guides published yet."),
-    )
-    page("", "Technology News, Reviews & Practical Guides",
-         "Discover technology news, cybersecurity, AI, gadgets, software, and practical guides at StackedByBayo.",
-         home)
+    if target in (None, ""):
+        page("", "Independent Technology News and Analysis",
+             "Independent reporting and analysis on semiconductors, memory prices, AI hardware, smartphones and the business of technology.",
+             home_edition(published))
     page("404.html", "Page not found", "Find your way back to StackedByBayo.",
          section("Page not found", "The page you requested may have moved.",
                  '<div class="publication-actions"><a class="publication-button primary" href="/">Go to the homepage</a>'

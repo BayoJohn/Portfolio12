@@ -17,6 +17,10 @@ python3 -m http.server 8000
 
 Use a virtual environment for the Python dependency if your system requires one. Open the preview at `http://localhost:8000/`. The custom 404 page and any server-side redirects depend on the production host.
 
+## Homepage edition
+
+Edit `content/home-edition.json` to select the lead story, two secondary stories, Editor’s Picks, In Focus links, and featured stories for each editorial collection. Use the existing article paths, including the trailing slash. Add matching `homeTopics` to an article to make it eligible for the homepage and its selected sections. Set `homeAnalysis` to true for analysis. The date field records publication by StackedByBayo. Use an optional `date` on each source entry to record the source’s publication date.
+
 ## Article reading template
 
 The article template adds a table of contents to articles with three or more main sections and to tutorials with headings. Use Markdown headings in order, starting at level two. Keep heading text and any explicitly assigned IDs stable after publishing. Use fenced code blocks, Markdown tables, and `!!! note "Title"` followed by an indented paragraph for callouts. For inline captions, use trusted `figure` and `figcaption` HTML. Give embedded iframes descriptive titles and use native controls with captions or transcripts where applicable.

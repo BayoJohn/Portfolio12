@@ -1,57 +1,47 @@
-<div class="news-edition news-wrap">
-    <time class="news-edition-date" data-edition-date hidden></time>
-</div>
+<div class="edition news-wrap">
+    $focus
 
-<section class="news-wrap news-section news-front" aria-labelledby="featured-title">
-    <div class="news-heading"><h1 id="featured-title">Featured Stories</h1><a href="blog/">Browse all articles</a></div>
-    $featured
-</section>
+    <section class="edition-front" aria-label="Top stories">
+        $primary
+        <div class="edition-secondary">$secondary</div>
+        <aside class="edition-briefing" aria-labelledby="briefing-title">
+            <h2 id="briefing-title">Latest News</h2>
+            $briefing
+            <a class="edition-text-link" href="./#latest">More from StackedByBayo</a>
+        </aside>
+    </section>
 
-<section class="news-wrap news-section" id="latest" aria-labelledby="latest-title">
-    <div class="news-heading"><h2 id="latest-title">Latest Articles</h2><a href="blog/">View the archive</a></div>
-    $latest
-</section>
+    $chips
+    $mobile
 
-<div class="news-dark">
-    <div class="news-wrap news-topics">
-        <section id="cybersecurity" class="news-section news-security" aria-labelledby="cybersecurity-title">
-            <h2 id="cybersecurity-title">Cybersecurity</h2>
-            <p>Security coverage and practical guides for protecting your devices and accounts.</p>
-            <a class="news-link" href="cybersecurity/">Explore Cybersecurity</a>
-        </section>
-        <section id="ai" class="news-section news-ai" aria-labelledby="ai-title">
-            <h2 id="ai-title">Artificial Intelligence</h2>
-            <p>Coverage of AI tools, what they can do and where their limitations matter.</p>
-            <a class="news-link" href="ai/">Explore Artificial Intelligence</a>
-        </section>
-    </div>
-</div>
-
-<div class="news-wrap">
-    <section class="news-section news-gadgets" aria-labelledby="gadgets-title">
-        <img src="assets/img/carousel/reviews-720.webp" alt="" srcset="assets/img/carousel/reviews-320.webp 320w, assets/img/carousel/reviews-720.webp 720w, assets/img/carousel/reviews-1440.webp 1440w" sizes="(max-width: 650px) 92vw, (max-width: 1340px) 50vw, 650px" width="720" height="480" loading="lazy" decoding="async">
-        <div>
-            <h2 id="gadgets-title">Gadgets &amp; Reviews</h2>
-            <p>Find out what a device does well, where it falls short and who it suits.</p>
-            $reviews
-            <a class="news-link" href="reviews/">Explore Gadgets &amp; Reviews</a>
+    <section class="edition-section" id="latest" aria-labelledby="latest-title">
+        <div class="edition-section-heading">
+            <h2 id="latest-title">Latest Stories</h2>
+            <a href="blog/">Browse Tech News</a>
+        </div>
+        <div class="edition-feed-layout">
+            <div>
+                <div id="edition-feed" data-edition-feed>$feed</div>
+                <button class="edition-button" type="button" aria-controls="edition-feed" data-edition-more hidden>Load more stories</button>
+                <p class="sr-only" role="status" data-edition-status></p>
+            </div>
+            <aside class="edition-picks" aria-labelledby="picks-title">
+                <h3 id="picks-title">Editor’s Picks</h3>
+                $picks
+            </aside>
         </div>
     </section>
 
-    <section class="news-section news-academy" aria-labelledby="academy-title">
-        <div>
-            <h2 id="academy-title">Tech Academy</h2>
-            <p>Start with everyday questions about the web, Linux and security, then try a practical example.</p>
-            <a class="news-link" href="academy/">Visit Tech Academy</a>
-        </div>
-        <div class="news-academy-guides">$academy</div>
-    </section>
+    $analysis
 
-    <section class="news-section news-about" aria-labelledby="about-title">
-        <h2 id="about-title">About the publication</h2>
-        <div>
-            <p>StackedByBayo covers technology and the practical work of using it. Founder Bayo Ogundele works in IT Help Desk in Lagos, Nigeria, and writes about what he learns from building and troubleshooting systems.</p>
-            <a class="news-link" href="about/">About the publication and its founder</a>
+    <section class="edition-section edition-external newsroom-external" aria-labelledby="around-tech" data-external-news>
+        <div class="edition-section-heading">
+            <h2 id="around-tech">Around Tech</h2>
+            <a href="blog/#around-tech">External news archive</a>
         </div>
+        <p class="newsroom-summary">Headlines from external publishers. Links open the original stories.</p>
+        <p class="newsroom-external-status" role="status" data-external-status>No recent external headlines are available.</p>
+        <ul class="newsroom-external-list" data-external-list></ul>
+        <button class="newsroom-load-more" type="button" data-external-more hidden>Load more headlines</button>
     </section>
 </div>

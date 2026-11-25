@@ -1,0 +1,82 @@
+{
+  "lead": "blog/why-ai-is-pushing-up-ram-costs/",
+  "secondary": [
+    "blog/jensen-huang-returns-nvidia-board/",
+    "blog/iphone-duo-foldable-competition/"
+  ],
+  "picks": [
+    "blog/chinese-phone-makers-memory-costs/",
+    "blog/ai-memory-packaging-bottleneck/",
+    "blog/what-nand-prices-mean-for-ssd-buyers/"
+  ],
+  "focus": [
+    [
+      "Memory Crisis",
+      "memory",
+      "blog/why-ai-is-pushing-up-ram-costs/"
+    ],
+    [
+      "Chip Wars",
+      "semiconductors",
+      "blog/intel-foundry-emib-microsoft/"
+    ],
+    [
+      "Nvidia",
+      "nvidia",
+      "blog/jensen-huang-returns-nvidia-board/"
+    ],
+    [
+      "Foldables",
+      "foldables",
+      "blog/iphone-duo-foldable-competition/"
+    ],
+    [
+      "Chinese Smartphones",
+      "chinese smartphones",
+      "blog/huawei-mate-x8-foldable-display/"
+    ],
+    [
+      "AI Hardware",
+      "ai hardware",
+      "blog/amd-helios-azure-validation/"
+    ]
+  ],
+  "collections": {
+    "chips": {
+      "topics": [
+        "memory",
+        "semiconductors",
+        "ai hardware"
+      ],
+      "featured": [
+        "blog/intel-foundry-emib-microsoft/",
+        "blog/what-nand-prices-mean-for-ssd-buyers/",
+        "blog/amd-helios-azure-validation/",
+        "blog/ai-memory-packaging-bottleneck/"
+      ]
+    },
+    "mobile": {
+      "topics": [
+        "smartphones",
+        "foldables",
+        "chinese smartphones"
+      ],
+      "featured": [
+        "blog/iphone-duo-foldable-competition/",
+        "blog/huawei-mate-x8-foldable-display/",
+        "blog/chinese-phone-makers-memory-costs/"
+      ]
+    },
+    "analysis": {
+      "topics": [
+        "industry analysis"
+      ],
+      "featured": [
+        "blog/ai-memory-packaging-bottleneck/",
+        "blog/jensen-huang-returns-nvidia-board/",
+        "blog/what-nand-prices-mean-for-ssd-buyers/",
+        "blog/chinese-phone-makers-memory-costs/"
+      ]
+    }
+  }
+}
