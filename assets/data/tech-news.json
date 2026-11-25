@@ -2,6 +2,15 @@
   "version": 1,
   "stories": [
     {
+      "id": "27b075fc2a99658c989b143e03239039111d839ee6f36f1afb8dd0a90ff5a5b1",
+      "headline": "\ud83c\udfa9 Tech Monopolies Make Outages Worse | EFFector 38.21",
+      "publisher": "Electronic Frontier Foundation",
+      "url": "https://www.eff.org/deeplinks/2026/11/tech-monopolies-make-outages-worse-effector-3820",
+      "published_at": "2026-11-25T18:26:19+00:00",
+      "category": "Digital Rights",
+      "fetched_at": "2026-11-25T21:49:54+00:00"
+    },
+    {
       "id": "dabc28092bf3471e55f04233c20e62a8d7253822d018e305a596a1b7817f8c0e",
       "headline": "New York and California Age Gating Rules Go Into Effect in the New Year",
       "publisher": "Electronic Frontier Foundation",
@@ -169,15 +178,6 @@
       "publisher": "Electronic Frontier Foundation",
       "url": "https://www.eff.org/deeplinks/2026/11/tech-companies-are-trying-shift-entire-concept-privacy-again",
       "published_at": "2026-11-13T21:29:31+00:00",
-      "category": "Digital Rights",
-      "fetched_at": "2026-11-24T10:05:15+00:00"
-    },
-    {
-      "id": "221b843a86f5563e47d622148f85968935a36983a70676b98d583f5e66e4f510",
-      "headline": "\ud83e\udd15 Medicare's AI Experiment | EFFector 38.20",
-      "publisher": "Electronic Frontier Foundation",
-      "url": "https://www.eff.org/deeplinks/2026/11/medicares-ai-experiment-effector-3820",
-      "published_at": "2026-11-11T18:32:37+00:00",
       "category": "Digital Rights",
       "fetched_at": "2026-11-24T10:05:15+00:00"
     }
