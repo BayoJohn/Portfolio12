@@ -66,12 +66,23 @@ GADGET_FORMATS = {
     "specification-analysis": "Specification analysis",
     "buying-guide": "Buying guide",
 }
+SOFTWARE_FORMATS = {
+    "news": "Software news",
+    "guide": "Guide",
+    "comparison": "Comparison",
+    "overview": "Research-based overview",
+    "hands-on": "Hands-on review",
+}
 ARTICLE_FACTS = (
     ("security", "Security details", {"severity": "Severity", "affectedProducts": "Affected products",
                          "audience": "Who is affected", "recommendedActions": "Recommended actions"}),
     ("review", "Review details", {"productName": "Product", "productOverview": "Product overview", "specifications": "Specifications",
                        "advantages": "Advantages", "limitations": "Limitations",
                        "verdict": "Verdict", "testingDisclosure": "Evaluation disclosure"}),
+    ("softwareReview", "Software review details", {"overview": "Overview", "features": "Main features",
+        "interface": "Interface", "platforms": "Supported platforms", "advantages": "Advantages",
+        "limitations": "Limitations", "license": "Pricing and licensing", "audience": "Suitable users",
+        "alternatives": "Alternatives", "verdict": "Final assessment", "evaluation": "Evaluation disclosure"}),
     ("tutorial", "Tutorial details", {"prerequisites": "Prerequisites", "troubleshooting": "Troubleshooting"}),
 )
 
@@ -188,6 +199,8 @@ def write(route, html):
 def render_page(route, title, description, content, post=None):
     missing = route == "404.html"
     active = None if missing else route.split("/", 1)[0]
+    if post and post.get("softwareFormat"):
+        active = "software"
     root = "/" if missing else "../" * route.count("/") or "./"
     seo = '<meta name="robots" content="noindex">' if missing else metadata(route, title, description, post)
     if route == "search/":
@@ -200,6 +213,8 @@ def render_page(route, title, description, content, post=None):
         scripts = ("edition", "newsroom")
     elif route in {"cybersecurity/", "ai/"}:
         styles = ("newsroom", route.rstrip("/"))
+    elif route == "software/":
+        styles = ("software",)
     elif route == "reviews/":
         styles = ("newsroom", "gadgets")
     else:
@@ -501,10 +516,12 @@ def article(post, collection, posts, page=page, *, published=None, featured=()):
     topic_items = "".join(f'<li>{escape(tag)}</li>' for tag in tags)
     topics = f'<section class="reading-topics"><h2>Topics</h2><ul>{topic_items}</ul></section>' if topic_items else ""
     kind = "Analysis" if post.get("homeAnalysis") else (
-        GADGET_FORMATS.get(post.get("gadgetFormat")) or ARTICLE_TYPES.get(post.get("articleType", ""))
+        SOFTWARE_FORMATS.get(post.get("softwareFormat")) or GADGET_FORMATS.get(post.get("gadgetFormat"))
+        or ARTICLE_TYPES.get(post.get("articleType", ""))
     )
     content = template("article").substitute(
-        collection=escape(NAV[collection]), category=escape(post["category"]), title=escape(post["title"]),
+        collection="Software" if post.get("softwareFormat") else escape(NAV[collection]),
+        back_url="../../software/" if post.get("softwareFormat") else "../", category=escape(post["category"]), title=escape(post["title"]),
         type_label=f' <span class="reading-type">{kind}</span>' if kind else "",
         summary=escape(intro), author=author, author_bio=f'<p>{escape(bio)}</p>' if bio else "",
         publication=f'<span>Published {post_date(post)}</span>' if post.get("dateTime") else "",
@@ -1165,31 +1182,172 @@ def home_edition(published):
     ).rstrip()
 
 
+SOFTWARE_INTRO = "Discover better software, explore operating systems, and find the tools that make your digital life easier."
+SOFTWARE_FILTERS = (
+    ("windows", "Windows", {"windows"}),
+    ("linux", "Linux", {"linux", "ubuntu"}),
+    ("macos", "macOS", {"macos"}),
+    ("mobile-apps", "Mobile Apps", {"android", "ios", "mobile apps"}),
+    ("productivity", "Productivity", {"productivity"}),
+)
+
+
+def software_story(post, style, *, heading="h3", img=True):
+    label = SOFTWARE_FORMATS.get(post.get("softwareFormat"))
+    category = " · ".join(filter(None, (post["category"], label)))
+    metadata = " ".join(filter(None, (post_date(post), f'<span>{escape(reading_duration(post))}</span>')))
+    summary = f'<p class="software-deck">{escape(post["excerpt"])}</p>' if style != "brief" else ""
+    sizes = {
+        "lead": "(min-width: 1350px) 600px, (min-width: 1020px) 47vw, 92vw",
+        "secondary": "(min-width: 1020px) 25vw, (min-width: 650px) 43vw, 92vw",
+        "row": "(min-width: 650px) 145px, 25vw",
+    }
+    media = ""
+    if img and style in sizes:
+        photo = image(post, "software-photo", priority=style == "lead", sizes=sizes[style])
+        if photo:
+            caption = " · ".join(filter(None, (escape(post.get("imageCaption", "")), image_credit(post))))
+            credit = f'<figcaption>{caption}</figcaption>' if caption and style in {"lead", "secondary"} else ""
+            media = f'<figure class="software-media">{photo}{credit}</figure>'
+    return (
+        f'<article class="software-story software-story-{style}">{media}<div>'
+        f'<p class="software-label">{escape(category)}</p>'
+        f'<{heading}><a href="../{escape(post["url"])}">{escape(post["title"])}</a></{heading}>'
+        f'{summary}<p class="software-meta">{metadata}</p></div></article>'
+    )
+
+
+def software_app_directory(posts):
+    directory = json.loads((ROOT / "content" / "software-apps.json").read_text(encoding="utf-8"))
+    urls = {post["url"] for post in posts}
+    categories = []
+    for index, (category, apps) in enumerate(directory.items()):
+        entries = []
+        for app in apps:
+            name, icon = escape(app["name"]), escape(app["icon"])
+            family = "fab" if app.get("brandIcon") else "fas"
+            route = f'blog/{app["article"]}/'
+            reading = f'<a href="../{escape(route)}" aria-label="Read about {name}">Read the article</a>' if route in urls else ""
+            entries.append(
+                '<li class="software-app">'
+                f'<i class="{family} fa-{icon}" aria-hidden="true"></i><div><h3>{name}</h3>'
+                f'<p>{escape(app["description"])}</p><p class="software-meta">{escape(app["platforms"])}</p>'
+                f'<p class="software-license">{escape(app["license"])}</p><p class="software-app-links">'
+                f'<a href="{escape(app["official"])}" aria-label="Official site for {name}">Official site</a>'
+                f'{reading}</p></div></li>'
+            )
+        opened = " open" if index == 0 else ""
+        categories.append(f'<details{opened}><summary>{escape(category)}</summary><ul>{"".join(entries)}</ul></details>')
+    return "".join(categories)
+
+
+def software_hub(all_posts):
+    stories = [post for post in all_posts if post.get("softwareFormat") in SOFTWARE_FORMATS]
+    by_url = {post["url"]: post for post in stories}
+
+    def selected(*slugs):
+        return [by_url[url] for slug in slugs if (url := f"blog/{slug}/") in by_url]
+
+    front = list({post["url"]: post for post in [*selected(
+        "software-for-a-new-computer", "linux-or-windows", "firefox-or-chromium"
+    ), *stories]}.values())[:3]
+    front_urls = {post["url"] for post in front}
+    news = sorted(
+        (post for post in stories if post["softwareFormat"] == "news" and post["url"] not in front_urls),
+        key=lambda post: (post["date"], post.get("softwareEventDate", "")), reverse=True,
+    )
+    # The briefing indexes the feed. Featured articles stay out of both.
+    briefing = "".join(
+        f'<li><a href="./#story-{escape(post["url"].strip("/").split("/")[-1])}">{escape(post["title"])}</a>'
+        f'<p class="software-meta">{post_date(post)}</p></li>' for post in news[:3]
+    )
+    feed = "".join(
+        f'<div id="story-{escape(post["url"].strip("/").split("/")[-1])}" tabindex="-1">'
+        + software_story(post, "row") + '</div>' for post in news
+    )
+
+    def cards(posts, empty):
+        return "".join(software_story(post, "card") for post in posts) or f'<p>{empty}</p>'
+
+    platform_links, filters = [], []
+    topic_links = ['<li><a href="./#latest">Latest</a></li>']
+    for key, label, tags in SOFTWARE_FILTERS:
+        if key == "productivity":
+            topic_links.append('<li><a href="./#open-source">Open Source</a></li>')
+        matches = matching_topics(stories, tags)
+        if not matches:
+            continue
+        topic_links.append(f'<li><a href="./#{key}">{label}</a></li>')
+        if key == "mobile-apps":
+            platform_links.extend(f'<li><a href="./#{key}">{platform}</a></li>' for platform in ("Android", "iOS"))
+        elif key != "productivity":
+            platform = "Ubuntu &amp; Linux" if key == "linux" else label
+            platform_links.append(f'<li><a href="./#{key}">{platform}</a></li>')
+        filters.append(
+            f'<section class="software-section software-topic-panel" id="{key}" tabindex="-1" aria-labelledby="software-{key}-title">'
+            f'<h2 id="software-{key}-title">{label}</h2><div class="software-grid">'
+            + cards(matches, "") + '</div><p><a href="./#latest">Back to all Software stories</a></p></section>'
+        )
+    topic_links += ['<li><a href="./#reviews">Reviews</a></li>', '<li><a href="./#alternatives">Alternatives</a></li>']
+    # Keep older Software reading available without mixing how-to articles into the news feed.
+    archive_posts = matching_topics([post for post in all_posts if post["url"] not in by_url], SOFTWARE_TOPICS)
+    archive = ('<details class="software-archive"><summary>Software archive</summary><ul>' + "".join(
+        f'<li><a href="../{escape(post["url"])}">{escape(post["title"])}</a></li>' for post in archive_posts
+    ) + '</ul></details>') if archive_posts else ""
+    guide_links = [(post["title"], "../" + post["url"]) for post in selected(
+        "software-for-it-support", "safe-software-downloads-and-licenses", "powertoys-workflow-overview"
+    )]
+    guide_links += [(post["title"], "../" + post["url"]) for post in all_posts
+                    if post["url"] == "academy/linux-terminal-essentials/"]
+    return template("software").substitute(
+        intro=escape(SOFTWARE_INTRO), topics="".join(topic_links), filters="".join(filters),
+        lead=software_story(front[0], "lead", heading="h2") if front else "",
+        secondary="".join(software_story(post, "secondary") for post in front[1:]),
+        briefing=(f'<ul>{briefing}</ul>' if briefing else '<p>There are no recent releases in the briefing.</p>'),
+        apps=software_app_directory(stories),
+        open_source=cards(selected("safe-software-downloads-and-licenses", "software-for-a-new-computer", "creative-software-alternatives"), "No open-source features have been published yet."),
+        alternatives=cards([post for post in stories if post["softwareFormat"] == "comparison"], "No comparisons have been published yet."),
+        platforms=f'<ul>{"".join(platform_links)}</ul>',
+        reviews=cards([post for post in stories if post["softwareFormat"] in {"overview", "hands-on"}], "No software reviews have been published yet."),
+        news=feed or '<p>No software news has been published yet.</p>',
+        guides='<ul>' + "".join(f'<li><a href="{escape(url)}">{escape(title)}</a></li>' for title, url in guide_links) + '</ul>',
+        archive=archive,
+    ).rstrip()
+
+
 def render_site(collections, page=page, target=None):
     routes = [f"{route}/" if route else "" for route in NAV]
     published = sorted((post for items in collections.values() for post in items),
                        key=lambda post: post["date"], reverse=True)
-    general_posts = [post for post in published if not post.get("gadgetFormat")]
+    sitewide = [post for post in published if not post.get("softwareFormat")]
+    general_posts = [post for post in sitewide if not post.get("gadgetFormat")]
+    blog_archive = [post for post in collections.get("blog", []) if not post.get("softwareFormat")]
     lead = next((post for post in general_posts if post.get("featured")), general_posts[0] if general_posts else None)
     supporting = [post for post in general_posts if post is not lead][:2]
     sidebar_features = [post for post in published if post.get("featured")] + supporting
     if lead and not lead.get("featured"):
         sidebar_features.insert(0, lead)
     for name, posts in collections.items():
+        # Software articles share the established blog URL namespace and use the Software hub for placement.
+        archive_posts = [post for post in posts if not post.get("softwareFormat")]
+        software_posts = [post for post in posts if post.get("softwareFormat")]
         intro, empty = COLLECTIONS[name]
         if name == "blog":
-            page("blog/", NAV[name], intro, newsroom(posts, collections.get("academy", []), intro, empty))
+            page("blog/", NAV[name], intro, newsroom(archive_posts, collections.get("academy", []), intro, empty))
         elif name == "academy":
             academy_intro = "Learn the basics of computers, networks and online security, then put them to work in Linux, IT support, cloud computing and DevOps."
             page("academy/", NAV[name], academy_intro,
-                 academy_library(posts, collections.get("blog", []), academy_intro, empty))
+                 academy_library(posts, blog_archive, academy_intro, empty))
         elif name == "reviews":
             page("reviews/", "Gadgets, Reviews & Buying Guides", GADGET_INTRO,
-                 gadgets_hub(posts, collections.get("blog", []), collections.get("academy", [])))
+                 gadgets_hub(posts, blog_archive, collections.get("academy", [])))
         for post in posts:
             if target is None or target == post["url"]:
-                article(post, name, posts, page, published=published if name == "reviews" else general_posts,
-                        featured=sidebar_features)
+                if post.get("softwareFormat"):
+                    article(post, name, software_posts, page, published=software_posts, featured=software_posts[:2])
+                else:
+                    article(post, name, archive_posts, page, published=sitewide if name == "reviews" else general_posts,
+                            featured=sidebar_features)
             routes.append(post["url"])
 
     about = (
@@ -1211,18 +1369,15 @@ def render_site(collections, page=page, target=None):
     ]:
         page(route + "/", title, intro, section(title, intro, body))
 
-    posts = published
+    posts = sitewide
     security_intro, security_body = security_hub(posts)
     page("cybersecurity/", "Cybersecurity", security_intro, security_body)
     routes.append("cybersecurity/")
     ai_intro, ai_body = ai_hub(posts)
     page("ai/", "Artificial Intelligence", ai_intro, ai_body)
     routes.append("ai/")
-    software = matching_topics(posts, SOFTWARE_TOPICS)
-    intro = "Explore operating systems, containers and the tools used to build, deploy and monitor software."
-    page("software/", "Software", intro, section("Software", intro, news_list(
-        software, "There are no published software articles yet.", root="../"
-    )))
+    if target in (None, "software/"):
+        page("software/", "Software News, Apps & Alternatives", SOFTWARE_INTRO, software_hub(published))
     intro = "The StackedByBayo shop is coming soon."
     page("shop/", "Shop · Coming soon", intro,
          '<section class="news-wrap news-shop"><h1>Shop</h1><p>Coming soon</p></section>')
@@ -1234,7 +1389,7 @@ def render_site(collections, page=page, target=None):
         '<button type="submit">Search</button></div></form>'
         '<noscript><p>Use your browser’s Find command to search the articles below.</p></noscript>'
         '<p id="search-status" role="status"></p><div id="search-results">'
-        + news_list(posts, "There are no published articles yet.", root="../") + '</div>'
+        + news_list(published, "There are no published articles yet.", root="../") + '</div>'
     )
     intro = "Search by headline, topic or author."
     page("search/", "Search", intro, section("Search", intro, search))

@@ -21,6 +21,10 @@ Use a virtual environment for the Python dependency if your system requires one.
 
 Edit `content/home-edition.json` to select the lead story, two secondary stories, Editor’s Picks, In Focus links, and featured stories for each editorial collection. Use the existing article paths, including the trailing slash. Add matching `homeTopics` to an article to make it eligible for the homepage and its selected sections. Set `homeAnalysis` to true for analysis. The date field records publication by StackedByBayo. Use an optional `date` on each source entry to record the source’s publication date.
 
+## Software hub
+
+Edit `content/software-apps.json` to update directory entries. Keep publisher links on official sites and point each `article` field to a published Software article slug. Software articles use the existing `content/blog/` collection and article URLs. Set `softwareFormat` to `news`, `guide`, `comparison`, `overview`, or `hands-on`, and add platform or subject tags to place the article in filters. News can include `softwareEventDate` for the release or announcement date. For reviews, use `softwareReview` with fields such as `platforms`, `license`, `limitations`, `verdict`, and `evaluation`. Reserve the hands-on label for documented testing.
+
 ## Article reading template
 
 The article template adds a table of contents to articles with three or more main sections and to tutorials with headings. Use Markdown headings in order, starting at level two. Keep heading text and any explicitly assigned IDs stable after publishing. Use fenced code blocks, Markdown tables, and `!!! note "Title"` followed by an indented paragraph for callouts. For inline captions, use trusted `figure` and `figcaption` HTML. Give embedded iframes descriptive titles and use native controls with captions or transcripts where applicable.

@@ -1,0 +1,127 @@
+{
+  "Productivity": [
+    {
+      "name": "LibreOffice",
+      "icon": "file-alt",
+      "description": "A desktop suite for documents, spreadsheets and presentations with native OpenDocument support.",
+      "platforms": "Windows, macOS, Linux",
+      "license": "Free and open source",
+      "official": "https://www.libreoffice.org/download/download-libreoffice/",
+      "article": "software-for-a-new-computer"
+    }
+  ],
+  "Browsers": [
+    {
+      "name": "Firefox",
+      "icon": "firefox",
+      "description": "Mozilla’s browser with desktop Gecko and cross-device bookmarks through a Mozilla account.",
+      "platforms": "Windows, macOS, Linux, Android, iOS",
+      "license": "Free and open source",
+      "official": "https://www.firefox.com/",
+      "article": "firefox-or-chromium",
+      "brandIcon": true
+    }
+  ],
+  "Media": [
+    {
+      "name": "VLC",
+      "icon": "play-circle",
+      "description": "Play local audio and video in a wide range of formats.",
+      "platforms": "Windows, macOS, Linux, Android, iOS",
+      "license": "Free and open source",
+      "official": "https://www.videolan.org/vlc/",
+      "article": "software-for-a-new-computer"
+    },
+    {
+      "name": "OBS Studio",
+      "icon": "video",
+      "description": "Compose scenes and record or stream audio and video.",
+      "platforms": "Windows, macOS, Linux",
+      "license": "Free and open source",
+      "official": "https://obsproject.com/download",
+      "article": "software-for-a-new-computer"
+    }
+  ],
+  "Design": [
+    {
+      "name": "GIMP",
+      "icon": "image",
+      "description": "Edit raster images with layers, masks and colour tools.",
+      "platforms": "Windows, macOS, Linux",
+      "license": "Free and open source",
+      "official": "https://www.gimp.org/downloads/",
+      "article": "creative-software-alternatives"
+    },
+    {
+      "name": "Krita",
+      "icon": "paint-brush",
+      "description": "A digital painting application with configurable brushes and canvas tools.",
+      "platforms": "Windows, macOS, Linux",
+      "license": "Free and open source",
+      "official": "https://krita.org/en/download/",
+      "article": "creative-software-alternatives"
+    }
+  ],
+  "Security": [
+    {
+      "name": "Bitwarden",
+      "icon": "lock",
+      "description": "Store and sync passwords with desktop, mobile and browser clients.",
+      "platforms": "Windows, macOS, Linux, Android, iOS, browser extensions",
+      "license": "Open-source clients, with free and paid hosted plans",
+      "official": "https://bitwarden.com/download/",
+      "article": "safe-software-downloads-and-licenses"
+    }
+  ],
+  "File Management": [
+    {
+      "name": "KDE Connect",
+      "icon": "exchange-alt",
+      "description": "Send files and share selected functions between paired devices. Features vary by platform.",
+      "platforms": "Linux, Windows, Android, iOS; macOS builds available",
+      "license": "Free and open source",
+      "official": "https://kdeconnect.kde.org/download.html",
+      "article": "software-for-a-new-computer"
+    },
+    {
+      "name": "calibre",
+      "icon": "book",
+      "description": "Organise an ebook library and convert supported unprotected files.",
+      "platforms": "Windows, macOS, Linux",
+      "license": "Free and open source",
+      "official": "https://calibre-ebook.com/download",
+      "article": "software-for-a-new-computer"
+    }
+  ],
+  "IT Utilities": [
+    {
+      "name": "PowerToys",
+      "icon": "wrench",
+      "description": "Microsoft utilities for window layouts, batch file renaming and previews.",
+      "platforms": "Windows",
+      "license": "Free and open source",
+      "official": "https://learn.microsoft.com/en-us/windows/powertoys/install",
+      "article": "powertoys-workflow-overview"
+    },
+    {
+      "name": "Wireshark",
+      "icon": "sitemap",
+      "description": "Inspect authorised packet captures for network troubleshooting.",
+      "platforms": "Windows, macOS, Linux",
+      "license": "Free and open source",
+      "official": "https://www.wireshark.org/download.html",
+      "article": "software-for-it-support"
+    }
+  ],
+  "Developer Tools": [
+    {
+      "name": "Visual Studio Code",
+      "icon": "code",
+      "description": "Microsoft’s editor for code, debugging and extensions.",
+      "platforms": "Windows, macOS, Linux",
+      "license": "Proprietary freeware distribution built on open-source Code - OSS",
+      "official": "https://code.visualstudio.com/Download",
+      "article": "software-for-it-support"
+    }
+  ]
+}
