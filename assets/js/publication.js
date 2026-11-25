@@ -63,7 +63,7 @@
         article.hidden = !terms.every(function (term) { return text.includes(term); });
         if (!article.hidden) count++;
       });
-      status.textContent = count === 1 ? '1 article found' : count + ' articles found';
+      status.textContent = count === 1 ? '1 result found' : count + ' results found';
     }
 
     showResults();

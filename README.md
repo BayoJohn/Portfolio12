@@ -25,6 +25,14 @@ Edit `content/home-edition.json` to select the lead story, two secondary stories
 
 Edit `content/software-apps.json` to update directory entries. Keep publisher links on official sites and point each `article` field to a published Software article slug. Software articles use the existing `content/blog/` collection and article URLs. Set `softwareFormat` to `news`, `guide`, `comparison`, `overview`, or `hands-on`, and add platform or subject tags to place the article in filters. News can include `softwareEventDate` for the release or announcement date. For reviews, use `softwareReview` with fields such as `platforms`, `license`, `limitations`, `verdict`, and `evaluation`. Reserve the hands-on label for documented testing.
 
+## Publication information
+
+The About, Contact, Editorial Standards, Corrections, Privacy and Disclosures pages use templates in `templates/`. The shared route labels and verified contact address are in `scripts/build.py`. The legacy `contact.html` URL leads to the email-based Contact page.
+
+For a material factual correction to a Markdown article, add a `corrections` entry with its actual `date` (YYYY-MM-DD) and a factual `note` describing the change. The build displays the dated note and uses the later of the correction or `updatedTime` for article metadata. For database-managed articles, place a dated correction note in the existing article body. The dashboard and data model require no changes.
+
+Before publishing the policy pages, verify the production hosting and analytics settings, provider log retention, email handling and retention, and any advertising, affiliate or sponsorship arrangements that are managed outside this repository. Confirm the public contact mailbox is monitored and approve the editorial commitments.
+
 ## Article reading template
 
 The article template adds a table of contents to articles with three or more main sections and to tutorials with headings. Use Markdown headings in order, starting at level two. Keep heading text and any explicitly assigned IDs stable after publishing. Use fenced code blocks, Markdown tables, and `!!! note "Title"` followed by an indented paragraph for callouts. For inline captions, use trusted `figure` and `figcaption` HTML. Give embedded iframes descriptive titles and use native controls with captions or transcripts where applicable.
